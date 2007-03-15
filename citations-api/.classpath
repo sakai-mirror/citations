@@ -3,8 +3,8 @@
   <classpathentry excluding="**/.DS_Store" kind="src" path="api/src/java"/>
   <classpathentry sourcepath="JRE_SRC" kind="var" path="JRE_LIB"/>
   <classpathentry combineaccessrules="false" kind="src" path="/component-api"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/citations-util"/>
   <classpathentry combineaccessrules="false" kind="src" path="/entity-api"/>
-  <classpathentry combineaccessrules="false" kind="src" path="/sakaibrary-util-api"/>
   <classpathentry combineaccessrules="false" kind="src" path="/util-api"/>
   <classpathentry combineaccessrules="false" kind="src" path="/util-util"/>
   <classpathentry kind="var" path="MAVEN_REPO/OKI/jars/OkiOSID-2.0.jar"/>
