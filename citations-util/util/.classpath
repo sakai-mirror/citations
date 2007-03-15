@@ -6,7 +6,7 @@
   <classpathentry kind="var"
     path="MAVEN_REPO/commons-logging/jars/commons-logging-1.0.4.jar"/>
   <classpathentry combineaccessrules="false" kind="src"
-    path="/sakaibrary-util-api"/>
+    path="/citations-api"/>
   <classpathentry kind="output" path="bin"/>
 </classpath>
 
