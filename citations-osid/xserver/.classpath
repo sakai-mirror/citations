@@ -3,10 +3,9 @@
   <classpathentry excluding="**/.DS_Store" kind="src" path="src/java"/>
   <classpathentry sourcepath="JRE_SRC" kind="var" path="JRE_LIB"/>
 
-  <classpathentry kind="var"
-    path="MAVEN_REPO/sakaibrary/jars/sakaibrary-util-api-0.1.jar"/>
-  <classpathentry kind="var"
-    path="MAVEN_REPO/sakaibrary/jars/sakaibrary-util-impl-0.1.jar"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/citations-api"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/citations-util"/>
+
   <classpathentry kind="var"
     path="MAVEN_REPO/commons-logging/jars/commons-logging-1.0.4.jar"/>
   <classpathentry kind="var" 
