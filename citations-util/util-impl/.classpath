@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+  <classpathentry excluding="**/.DS_Store" kind="src" path="src/java"/>
+  <classpathentry sourcepath="JRE_SRC" kind="var" path="JRE_LIB"/>
+  <classpathentry kind="var" path="MAVEN_REPO/zing/jars/cql-java-0.7.jar"/>
+  <classpathentry kind="var"
+    path="MAVEN_REPO/commons-logging/jars/commons-logging-1.0.4.jar"/>
+  <classpathentry combineaccessrules="false" kind="src"
+    path="/sakaibrary-util-api"/>
+  <classpathentry kind="output" path="bin"/>
+</classpath>
+
