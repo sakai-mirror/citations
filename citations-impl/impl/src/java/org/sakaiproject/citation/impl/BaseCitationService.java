@@ -3359,6 +3359,95 @@ public abstract class BaseCitationService implements CitationService
 		return m_resourceTypeRegistry;
 	}
 	
+	public static final String PROP_TEMPORARY_CITATION_LIST = "citations.temporary_citation_list";
+
+	/**
+	 * Checks permissions to add a CitationList.  Returns true if the user 
+	 * has permission to add a resource in the collection identified by the
+	 * parameter.
+	 * @param contentCollectionId
+	 * @return
+	 */
+	public boolean allowAddCitationList(String contentCollectionId)
+	{
+		return m_contentHostingService.allowAddResource(contentCollectionId + "testing");
+	}
+	
+	/**
+	 * Checks permission to revise a CitationList, including permissions 
+	 * to add, remove or revise citations within the CitationList. Returns
+	 * true if the user has permission to revise the resource identified by
+	 * the parameter.  Also returns true if all of these conditions are met:
+	 * (1) the user is the creator of the specified resource, (2) the specified
+	 * resource is a temporary CitationList (as identified by the value of
+	 * the PROP_TEMPORARY_CITATION_LIST property), and (3) the user has 
+	 * permission to add resources in the collection containing the 
+	 * resource.
+	 * @param contentResourceId
+	 * @return
+	 */
+	public boolean allowReviseCitationList(String contentResourceId)
+	{
+		boolean allowed = m_contentHostingService.allowUpdateResource(contentResourceId);
+		if(!allowed)
+		{
+			try
+			{
+				ResourceProperties props = m_contentHostingService.getProperties(contentResourceId);
+				String temp_res = props.getProperty(CitationService.PROP_TEMPORARY_CITATION_LIST);
+				String creator = props.getProperty(ResourceProperties.PROP_CREATOR);
+				String contentCollectionId = m_contentHostingService.getContainingCollectionId(contentResourceId);
+	     		SessionManager sessionManager = (SessionManager) ComponentManager.get("org.sakaiproject.tool.api.SessionManager");
+				String currentUser = sessionManager.getCurrentSessionUserId();
+				
+				allowed = this.allowAddCitationList(contentCollectionId) && (temp_res != null) && currentUser.equals(creator);
+			}
+			catch(PermissionException e)
+			{
+				// do nothing: return false
+			}
+            catch (IdUnusedException e)
+            {
+				// do nothing: return false
+            }
+		}
+		return allowed;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean allowRemoveCitationList(String contentResourceId)
+	{
+		boolean allowed = m_contentHostingService.allowUpdateResource(contentResourceId);
+		if(!allowed)
+		{
+			try
+			{
+				ResourceProperties props = m_contentHostingService.getProperties(contentResourceId);
+				String temp_res = props.getProperty(CitationService.PROP_TEMPORARY_CITATION_LIST);
+				String creator = props.getProperty(ResourceProperties.PROP_CREATOR);
+				String contentCollectionId = m_contentHostingService.getContainingCollectionId(contentResourceId);
+	     		SessionManager sessionManager = (SessionManager) ComponentManager.get("org.sakaiproject.tool.api.SessionManager");
+				String currentUser = sessionManager.getCurrentSessionUserId();
+				
+				allowed = this.allowAddCitationList(contentCollectionId) && (temp_res != null) && currentUser.equals(creator);
+			}
+			catch(PermissionException e)
+			{
+				// do nothing: return false
+			}
+            catch (IdUnusedException e)
+            {
+				// do nothing: return false
+            }
+		}
+		return allowed;
+	}
+
+
+	
 	public Citation addCitation(String mediatype)
 	{
 		Citation edit = m_storage.addCitation(mediatype);

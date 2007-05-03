@@ -26,7 +26,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -42,13 +41,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.osid.repository.Repository;
-import org.osid.repository.RepositoryException;
 import org.sakaiproject.authz.api.SecurityAdvisor;
 import org.sakaiproject.authz.cover.SecurityService;
-import org.sakaiproject.citation.util.api.SearchQuery;
-
 import org.sakaiproject.cheftool.Context;
 import org.sakaiproject.cheftool.JetspeedRunData;
 import org.sakaiproject.cheftool.RunData;
@@ -60,13 +54,14 @@ import org.sakaiproject.citation.api.CitationCollection;
 import org.sakaiproject.citation.api.CitationHelper;
 import org.sakaiproject.citation.api.CitationIterator;
 import org.sakaiproject.citation.api.Schema;
-import org.sakaiproject.citation.api.Schema.Field;
-import org.sakaiproject.citation.api.SearchDatabaseHierarchy;
 import org.sakaiproject.citation.api.SearchCategory;
+import org.sakaiproject.citation.api.SearchDatabaseHierarchy;
+import org.sakaiproject.citation.api.Schema.Field;
 import org.sakaiproject.citation.cover.CitationService;
 import org.sakaiproject.citation.cover.ConfigurationService;
 import org.sakaiproject.citation.cover.SearchManager;
 import org.sakaiproject.citation.util.api.SearchException;
+import org.sakaiproject.citation.util.api.SearchQuery;
 import org.sakaiproject.component.cover.ComponentManager;
 import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.content.api.ContentResource;
@@ -1456,24 +1451,36 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 		if(pipe.getAction().getActionType() == ResourceToolAction.ActionType.CREATE)
 		{
 			SessionState state = ((JetspeedRunData)data).getPortletSessionState (((JetspeedRunData)data).getJs_peid ());
-			
+
 	    	// delete the temporary resource
 			String temporaryResourceId = (String) state.getAttribute(CitationHelper.RESOURCE_ID);
 			ContentHostingService contentService = (ContentHostingService) ComponentManager.get("org.sakaiproject.content.api.ContentHostingService");
-			ContentResourceEdit edit = null;
+			ContentResource tempResource = null;
 			try
             {
-	            edit = contentService.editResource(temporaryResourceId);
-	            pipe.setRevisedContent(edit.getContent());
-	            pipe.setRevisedMimeType(ResourceType.MIME_TYPE_HTML);
+				// get the temp resource
+	            tempResource = contentService.getResource(temporaryResourceId);
 	            
-	            String currentUser = SessionManager.getCurrentSessionUserId();
-	            SecurityService.pushAdvisor(new CitationListSecurityAdviser(currentUser, ContentHostingService.AUTH_RESOURCE_REMOVE_ANY, edit.getReference()));
-	            SecurityService.pushAdvisor(new CitationListSecurityAdviser(currentUser, ContentHostingService.AUTH_RESOURCE_REMOVE_OWN, edit.getReference()));
-	            contentService.removeResource(edit);
-	            SecurityService.clearAdvisors();
+	            // use the temp resource to 'create' the real resource
+	            pipe.setRevisedContent(tempResource.getContent());
 	            
-	            edit = null;
+	            // remove the temp resource
+	            if( CitationService.allowRemoveCitationList( temporaryResourceId ) )
+	            {
+	            	// setup a SecurityAdvisor
+		            SecurityService.pushAdvisor( new CitationListSecurityAdviser(
+		            		SessionManager.getCurrentSessionUserId(),
+		            		ContentHostingService.AUTH_RESOURCE_REMOVE_ANY,
+		            		tempResource.getReference() ) );
+		            
+		            // remove temp resource
+		            contentService.removeResource(temporaryResourceId);
+		            
+		            // clear advisors
+		            SecurityService.clearAdvisors();
+		            
+		            tempResource = null;
+	            }
             }
             catch (PermissionException e)
             {
@@ -1499,11 +1506,6 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
             {
 	            // TODO Auto-generated catch block
 	            logger.warn("ServerOverloadException ", e);
-            }
-            
-            if(edit != null)
-            {
-            	contentService.cancelResource(edit);
             }
 		}
 
@@ -3208,12 +3210,14 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 			// set the alternative_reference to point to reference_root for CitationService
 			props.addProperty(contentService.PROP_ALTERNATE_REFERENCE, org.sakaiproject.citation.api.CitationService.REFERENCE_ROOT);
 			props.addProperty(ResourceProperties.PROP_CONTENT_TYPE, ResourceType.MIME_TYPE_HTML);
+			props.addProperty(CitationService.PROP_TEMPORARY_CITATION_LIST, Boolean.TRUE.toString());
 			
 			CitationCollection collection = CitationService.addCollection();
 			newItem.setContent(collection.getId().getBytes());
 			newItem.setContentType(ResourceType.MIME_TYPE_HTML);
 			
 			contentService.commitResource(newItem, NotificationService.NOTI_NONE);
+			
 			return newItem;
         }
         catch (PermissionException e)

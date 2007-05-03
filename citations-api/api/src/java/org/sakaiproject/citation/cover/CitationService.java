@@ -34,9 +34,64 @@ public class CitationService
 	public static final String REF_TYPE_EXPORT_RIS_ALL = org.sakaiproject.citation.api.CitationService.REF_TYPE_EXPORT_RIS_ALL;
 	public static final String REF_TYPE_VIEW_LIST = org.sakaiproject.citation.api.CitationService.REF_TYPE_VIEW_LIST;
 	public static final String CITATION_LIST_ID = org.sakaiproject.citation.api.CitationService.CITATION_LIST_ID;
+	public static final String PROP_TEMPORARY_CITATION_LIST = org.sakaiproject.citation.api.CitationService.PROP_TEMPORARY_CITATION_LIST;
 	
 	private static org.sakaiproject.citation.api.CitationService m_instance;
 
+	/**
+	 * Checks permissions to add a CitationList.  Returns true if the user 
+	 * has permission to add a resource in the collection identified by the
+	 * parameter.
+	 * @param contentCollectionId
+	 * @return
+	 */
+	public static boolean allowAddCitationList(String contentCollectionId)
+	{
+		org.sakaiproject.citation.api.CitationService instance = getInstance();
+		if(instance == null)
+		{
+			return false;
+		}
+		return instance.allowAddCitationList(contentCollectionId);
+	}
+	
+	/**
+	 * Checks permission to revise a CitationList, including permissions 
+	 * to add, remove or revise citations within the CitationList. Returns
+	 * true if the user has permission to revise the resource identified by
+	 * the parameter.  Also returns true if all of these conditions are met:
+	 * (1) the user is the creator of the specified resource, (2) the specified
+	 * resource is a temporary CitationList (as identified by the value of
+	 * the PROP_TEMPORARY_CITATION_LIST property), and (3) the user has 
+	 * permission to add resources in the collection containing the 
+	 * resource.
+	 * @param contentResourceId
+	 * @return
+	 */
+	public static boolean allowReviseCitationList(String contentResourceId)
+	{
+		org.sakaiproject.citation.api.CitationService instance = getInstance();
+		if(instance == null)
+		{
+			return false;
+		}
+		return instance.allowReviseCitationList(contentResourceId);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static boolean allowRemoveCitationList(String contentResourceId)
+	{
+		org.sakaiproject.citation.api.CitationService instance = getInstance();
+		if(instance == null)
+		{
+			return false;
+		}
+		return instance.allowRemoveCitationList(contentResourceId);
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.sakaiproject.citation.api.CitationService#newCitation(java.lang.String)
 	 */
