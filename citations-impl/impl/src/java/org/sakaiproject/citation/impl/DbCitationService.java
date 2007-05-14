@@ -61,7 +61,7 @@ import org.sakaiproject.time.cover.TimeService;
 public class DbCitationService extends BaseCitationService
 {
 	/**
-	 *
+	 * 
 	 */
 	public class DbCitationStorage implements Storage
 	{
@@ -1686,26 +1686,20 @@ public class DbCitationService extends BaseCitationService
 
 	public void init()
 	{
-		if(m_configService.isCitationsEnabledByDefault() ||
-				m_configService.isAllowSiteBySiteOverride() )
+		try
 		{
-			try
+			// if we are auto-creating our schema, check and create
+			if (m_autoDdl)
 			{
-				// if we are auto-creating our schema, check and create
-				if (m_autoDdl)
-				{
-					m_sqlService.ddl(this.getClass().getClassLoader(), "sakai_citation");
-				}
-	
-				super.init();
-	
+				m_sqlService.ddl(this.getClass().getClassLoader(), "sakai_citation");
 				M_log.info("init(): tables: " + m_collectionTableName + ", " + m_citationTableName + ", " + m_schemaTableName + ", " + m_schemaFieldTableName);
-	
 			}
-			catch (Throwable t)
-			{
-				M_log.warn("init(): ", t);
-			}
+
+			super.init();
+		}
+		catch (Throwable t)
+		{
+			M_log.warn("init(): ", t);
 		}
 
 	}	// init
