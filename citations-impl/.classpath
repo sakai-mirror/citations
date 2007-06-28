@@ -9,6 +9,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/citations-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/citations-util"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/component-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/site-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/user-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/util-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/util-util"/>
