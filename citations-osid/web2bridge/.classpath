@@ -2,11 +2,11 @@
 <classpath>
   <classpathentry kind="src" path="src/java"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="var" path="MAVEN_REPO/commons-logging/jars/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/OKI/jars/OkiOSID-2.0.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/servletapi/jars/servletapi-2.4.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/OKI/jars/okiRegistry-2005-10-19.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/net.sf.ehcache/jars/ehcache-1.2.4.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/zing/jars/cql-java-0.7.jar"/>
-	<classpathentry kind="output" path="bin"/>
+  <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/OKI/OkiOSID/2.0/OkiOSID-2.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/OKI/okiRegistry/2005-10-19/okiRegistry-2005-10-19.jar"/>
+  <classpathentry kind="var" path="M2_REPO/net/sf/ehcache/ehcache/1.2.4/ehcache-1.2.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/zing/cql-java/0.7/cql-java-0.7.jar"/>
+  <classpathentry kind="output" path="bin"/>
 </classpath>

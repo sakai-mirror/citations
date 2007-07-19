@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="servlet/src/java"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="var" path="MAVEN_REPO/commons-logging/jars/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/servletapi/jars/servletapi-2.4.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/entity-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/entity-util"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/event-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/citations-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/citations-util"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/component-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/content-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/db-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/util-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/util-util"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/tool-api"/>
-	<classpathentry kind="src" path="/velocity"/>
-	<classpathentry kind="src" path="/user-util"/>
-	<classpathentry kind="src" path="/user-api"/>
-	<classpathentry kind="output" path="bin"/>
+  <classpathentry kind="src" path="servlet/src/java"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/entity-api"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/entity-util"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/event-api"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/citations-api"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/citations-util"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/component-api"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/content-api"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/db-api"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/util-api"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/util-util"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/tool-api"/>
+  <classpathentry kind="src" path="/velocity"/>
+  <classpathentry kind="src" path="/user-util"/>
+  <classpathentry kind="src" path="/user-api"/>
+  <classpathentry kind="output" path="bin"/>
 </classpath>
