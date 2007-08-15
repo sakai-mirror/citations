@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+  <extend>../../../master/project.xml</extend>
+  <name>sakai-osid-configuration</name>
+  <groupId>sakaiproject</groupId>
+  <id>sakai-osid-configuration-impl</id>
+  <currentVersion>${sakai.version}</currentVersion>
+  <organization>
+    <name>Indiana University</name>
+    <url>http://sakaiproject.org/</url>
+  </organization>
+  <inceptionYear>2006</inceptionYear>
+
+  <properties>
+    <!-- deploy as a jar -->
+    <deploy.type>jar</deploy.type>
+    <!-- deploy to "shared", "common" or "server" -->
+    <deploy.target>shared</deploy.target>
+  </properties>
+
+  <dependencies>
+
+		<dependency>
+			<groupId>sakaiproject</groupId>
+			<artifactId>sakai-authz-api</artifactId>
+			<version>${sakai.version}</version>
+		</dependency>
+
+   <dependency>
+    	<groupId>sakaiproject</groupId>
+    	<artifactId>sakai-citations-api</artifactId>
+<!-- 	<version>${sakai.version}</version> -->
+    	<version>dev</version>
+    </dependency>
+
+    <dependency>
+      <groupId>sakaiproject</groupId>
+      <artifactId>sakai-component-api</artifactId>
+      <version>${sakai.version}</version>
+    </dependency>
+
+
+		<dependency>
+      <groupId>sakaiproject</groupId>
+      <artifactId>sakai-component</artifactId>
+      <version>${sakai.version}</version>
+    </dependency>
+
+		<dependency>
+			<groupId>sakaiproject</groupId>
+			<artifactId>sakai-entity-api</artifactId>
+			<version>${sakai.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>sakaiproject</groupId>
+			<artifactId>sakai-site-api</artifactId>
+			<version>${sakai.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>sakaiproject</groupId>
+			<artifactId>sakai-tool-api</artifactId>
+			<version>${sakai.version}</version>
+		</dependency>
+
+		<dependency>
+      <groupId>sakaiproject</groupId>
+      <artifactId>sakai-user-api</artifactId>
+      <version>${sakai.version}</version>
+    </dependency>
+
+		<dependency>
+			<groupId>sakaiproject</groupId>
+			<artifactId>sakai-util-api</artifactId>
+			<version>${sakai.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>sakaiproject</groupId>
+			<artifactId>sakai-util</artifactId>
+			<version>${sakai.version}</version>
+		</dependency>
+
+    <dependency>
+      <groupId>UIS_java_lib</groupId>
+      <artifactId>gdsclient</artifactId>
+      <version>1.60</version>
+      <properties>
+<!--        <deploy.target>shared</deploy.target> -->
+      </properties>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>OKI</groupId>
+      <artifactId>OkiOSID</artifactId>
+      <version>2.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>OKI</groupId>
+      <artifactId>okiRegistry</artifactId>
+      <version>2005-10-19</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+
+    <!-- java source -->
+    <sourceDirectory>src/java</sourceDirectory>
+
+    <!-- xml configuration -->
+    <resources>
+      <resource>
+        <directory>${basedir}/src/bundle</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+    </resources>
+
+    <!-- other resources for the jar -->
+    <resources>
+      <resource>
+        <directory>${basedir}/src/bundle</directory>
+        <includes>
+          <include>**/*.properties</include>
+        </includes>
+      </resource>
+    </resources>
+
+  </build>
+
+</project>
