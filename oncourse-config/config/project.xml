@@ -30,8 +30,7 @@
    <dependency>
     	<groupId>sakaiproject</groupId>
     	<artifactId>sakai-citations-api</artifactId>
-<!-- 	<version>${sakai.version}</version> -->
-    	<version>dev</version>
+     	<version>${sakai.version}</version>
     </dependency>
 
     <dependency>
@@ -82,15 +81,6 @@
 			<artifactId>sakai-util</artifactId>
 			<version>${sakai.version}</version>
 		</dependency>
-
-    <dependency>
-      <groupId>UIS_java_lib</groupId>
-      <artifactId>gdsclient</artifactId>
-      <version>1.60</version>
-      <properties>
-<!--        <deploy.target>shared</deploy.target> -->
-      </properties>
-    </dependency>
 
     <dependency>
       <groupId>commons-logging</groupId>
