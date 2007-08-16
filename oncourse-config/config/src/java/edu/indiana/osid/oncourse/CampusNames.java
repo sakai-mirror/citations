@@ -29,11 +29,11 @@ import java.util.HashMap;
 public interface CampusNames
 {
 	/*
-	 * Campus abbreviations (what about FW, SY, CS?)
+	 * Campus abbreviations (what about CO, SY, CS?)
 	 */
 	public final static String		IUB							  = "BL";		        // Bloomington
 	public final static String		IUPUI						  = "IN";		        // Indianapolis
-	public final static String		IPFW						  = "CO";		        // Fort Wayne
+	public final static String		IPFW						  = "FW";		        // Fort Wayne
 	public final static String		IUE							  = "EA";	        	// Richmond
 	public final static String		IUK							  = "KO";		        // Kokomo
 	public final static String		IUNW						  = "NW";		        // Gary

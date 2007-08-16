@@ -50,6 +50,16 @@ public class OncourseOsidConfiguration implements SiteOsidConfiguration, CampusN
   public final static String  IUB_CONFIG        = "sakaibrary.iub.configuration";
   public final static String  IUB_DB            = "sakaibrary.iub.database";
   /*
+   * Other configuration
+   */
+  public final static String  IUPUI_CONFIG      = "sakaibrary.iupui.configuration";
+  public final static String  IPFW_CONFIG       = "sakaibrary.ipfw.configuration";
+  public final static String  IUE_CONFIG        = "sakaibrary.iue.configuration";
+  public final static String  IUK_CONFIG        = "sakaibrary.iuk.configuration";
+  public final static String  IUNW_CONFIG       = "sakaibrary.iunw.configuration";
+  public final static String  IUSB_CONFIG       = "sakaibrary.iusb.configuration";
+  public final static String  IUSE_CONFIG       = "sakaibrary.iuse.configuration";
+  /*
    * Default configuration
    */
   public final static String  DEFAULT_CONFIG    = "sakaibrary.default.configuration";
@@ -78,7 +88,17 @@ public class OncourseOsidConfiguration implements SiteOsidConfiguration, CampusN
   private String    _iubDatabase        = null;
   private String    _iubConfig          = null;
   /*
-   * IUPUI details
+   * Other campus details
+   */
+  private String    _iupuiConfig        = null;
+  private String    _ipfwConfig         = null;
+  private String    _iueConfig          = null;
+  private String    _iukConfig          = null;
+  private String    _iunwConfig         = null;
+  private String    _iusbConfig         = null;
+  private String    _iuseConfig         = null;
+  /*
+   * Default details
    */
   private String    _defaultDatabase    = null;
   private String    _defaultConfig      = null;
@@ -110,6 +130,15 @@ public class OncourseOsidConfiguration implements SiteOsidConfiguration, CampusN
     _iubConfig        = getSakaiPropertiesValue(IUB_CONFIG);
     _iubDatabase      = getSakaiPropertiesValue(IUB_DB);
 
+    _iupuiConfig      = getSakaiPropertiesValue(IUPUI_CONFIG);
+    _ipfwConfig       = getSakaiPropertiesValue(IPFW_CONFIG);
+    _iueConfig        = getSakaiPropertiesValue(IUE_CONFIG);
+    _iukConfig        = getSakaiPropertiesValue(IUK_CONFIG);
+    _iunwConfig       = getSakaiPropertiesValue(IUNW_CONFIG);
+    _iusbConfig       = getSakaiPropertiesValue(IUSB_CONFIG);
+    _iuseConfig       = getSakaiPropertiesValue(IUSE_CONFIG);
+
+
     _defaultConfig    = getSakaiPropertiesValue(DEFAULT_CONFIG);
     _defaultDatabase  = getSakaiPropertiesValue(DEFAULT_DB);
   }
@@ -120,14 +149,26 @@ public class OncourseOsidConfiguration implements SiteOsidConfiguration, CampusN
    */
   public String getConfigurationXml() throws OsidConfigurationException
   {
-    String campus;
+    String campus, config;
 
     getCampusAssociation();
 
     campus = _campusAssociation.suggestCampus();
 
-    _log.debug("Configuration: " + (IUB.equals(campus) ? _iubConfig : _defaultConfig));
-    return IUB.equals(campus) ? _iubConfig : _defaultConfig;
+
+    config = _defaultConfig;
+
+    if (IUB.equals(campus))       config = _iubConfig;
+    if (IUPUI.equals(campus))     config = _iupuiConfig;
+    if (IPFW.equals(campus))      config = _ipfwConfig;
+    if (IUE.equals(campus))       config = _iueConfig;
+    if (IUK.equals(campus))       config = _iukConfig;
+    if (IUNW.equals(campus))      config = _iunwConfig;
+    if (IUSB.equals(campus))      config = _iusbConfig;
+    if (IUSE.equals(campus))      config = _iuseConfig;
+
+    _log.debug("Configuration: " + config);
+    return config;
   }
 
   /**
