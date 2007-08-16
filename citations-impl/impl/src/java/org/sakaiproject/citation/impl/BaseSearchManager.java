@@ -146,7 +146,7 @@ public class BaseSearchManager implements SearchManager
 		protected int end = DEFAULT_PAGE_SIZE;
 		protected int m_viewPageSize = DEFAULT_PAGE_SIZE;
 		protected String statusMessage = null;
-		
+
 		// saves the thread that the current search is running in
 		protected Thread m_searchThread;
 
@@ -1664,7 +1664,7 @@ public class BaseSearchManager implements SearchManager
 	public static final String SAKAI_SESSION = "sakai.session";
 	public static final String SAKAI_KEY = "sakai.key";
 	public static final String SAKAI_HOST = "sakai.host";
-	
+
 	public static final String SERVLET_NAME = "savecite";
 
 	// Our types (defined in setupTypes())
@@ -1719,7 +1719,9 @@ public class BaseSearchManager implements SearchManager
 			((BasicSearch) search).setSearchResults(citations);
 		}
 
-		Set duplicateCheck = ((BasicSearch) search).getDuplicateCheck();
+/* *** Omit the duplicate check *********************************************/
+//  Set duplicateCheck = ((BasicSearch) search).getDuplicateCheck();
+
 		boolean done = false;
 		try
 		{
@@ -1734,6 +1736,8 @@ public class BaseSearchManager implements SearchManager
 
 					String openUrlParams = citation.getOpenurlParameters();
 
+/* *** Omit the duplicate check *********************************************
+
 					if(duplicateCheck.contains(openUrlParams))
 					{
 						continue;
@@ -1744,6 +1748,12 @@ public class BaseSearchManager implements SearchManager
 						citations.add(citation);
 						duplicateCheck.add(openUrlParams);
 					}
+******************************************************************************/
+          /*
+           * Always save the citation
+           */
+					((BasicSearch) search).m_pageOrder.add(citation.getId());
+					citations.add(citation);
 
 					// check if we've got enough to return
 					done = (citations.size() >= last);
@@ -1873,7 +1883,7 @@ public class BaseSearchManager implements SearchManager
      */
 	public ActiveSearch doSearch(ActiveSearch search)
 		throws SearchException
-	{	
+	{
 		// search parameters
 		Repository repository     = hierarchy.getRepository();
 		Integer    pageSize       = search.getPageSize();
@@ -1944,7 +1954,9 @@ public class BaseSearchManager implements SearchManager
 	    		((BasicSearch) search).setSearchResults(citations);
 	    	}
 
-	    	Set duplicateCheck = ((BasicSearch) search).getDuplicateCheck();
+/* *** Omit the duplicate check *********************************************/
+//    	Set duplicateCheck = ((BasicSearch) search).getDuplicateCheck();
+
 	    	int assetsRetrieved = 0;
 	    	boolean done = false;
 	    	try
@@ -1959,6 +1971,9 @@ public class BaseSearchManager implements SearchManager
 	    				Citation citation = CitationService.getTemporaryCitation(asset);
 
 	    				String openUrlParams = citation.getOpenurlParameters();
+
+/* *** Omit the duplicate check *********************************************
+
 	    				if(duplicateCheck.contains(openUrlParams))
 	    				{
 	    					continue;
@@ -1969,6 +1984,12 @@ public class BaseSearchManager implements SearchManager
 	    					citations.add(citation);
 	    					duplicateCheck.add(openUrlParams);
 	    				}
+*****************************************************************************/
+              /*
+               * Always save the citation
+               */
+    					((BasicSearch) search).m_pageOrder.add(citation.getId());
+	   					citations.add(citation);
 
 	    				// check if we've got enough to return
 	    				if( ++assetsRetrieved >= pageSize.intValue() )
@@ -2073,7 +2094,7 @@ public class BaseSearchManager implements SearchManager
 			throw new SearchException( re.getMessage() );
 		}
 	}
-	
+
 	protected String newSearchId()
 	{
 /******* A unique ID per-session ********/
