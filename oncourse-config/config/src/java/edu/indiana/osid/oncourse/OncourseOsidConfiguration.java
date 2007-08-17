@@ -154,12 +154,11 @@ public class OncourseOsidConfiguration implements SiteOsidConfiguration, CampusN
     getCampusAssociation();
 
     campus = _campusAssociation.suggestCampus();
-
-
     config = _defaultConfig;
 
     if (IUB.equals(campus))       config = _iubConfig;
     if (IUPUI.equals(campus))     config = _iupuiConfig;
+    if (IUPUICO.equals(campus))   config = _iupuiConfig;
     if (IPFW.equals(campus))      config = _ipfwConfig;
     if (IUE.equals(campus))       config = _iueConfig;
     if (IUK.equals(campus))       config = _iukConfig;
@@ -167,7 +166,7 @@ public class OncourseOsidConfiguration implements SiteOsidConfiguration, CampusN
     if (IUSB.equals(campus))      config = _iusbConfig;
     if (IUSE.equals(campus))      config = _iuseConfig;
 
-    _log.debug("Configuration: " + config);
+    _log.debug("Configuration for " + campus + ": " + config);
     return config;
   }
 

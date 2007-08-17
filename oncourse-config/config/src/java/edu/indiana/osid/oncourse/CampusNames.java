@@ -33,6 +33,7 @@ public interface CampusNames
 	 */
 	public final static String		IUB							  = "BL";		        // Bloomington
 	public final static String		IUPUI						  = "IN";		        // Indianapolis
+	public final static String		IUPUICO					  = "IN";		        // Indianapolis
 	public final static String		IPFW						  = "FW";		        // Fort Wayne
 	public final static String		IUE							  = "EA";	        	// Richmond
 	public final static String		IUK							  = "KO";		        // Kokomo
