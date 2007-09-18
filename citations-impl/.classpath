@@ -23,6 +23,6 @@
 	<classpathentry kind="src" path="/content-util"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/citations-web2bridge"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/citations-xserver"/>
-	<classpathentry kind="var" path="M2_REPO/net/sf/ehcache/ehcache/1.2.4/ehcache-1.2.4.jar"/>
+	<classpathentry kind="var" path="M2_REPO/net/sf/ehcache/ehcache/1.3.0/ehcache-1.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
