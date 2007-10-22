@@ -770,17 +770,9 @@ public class BaseSearchManager implements SearchManager, Observer
 		/* (non-Javadoc)
          * @see org.sakaiproject.citation.api.ActiveSearch#viewPage()
          */
-        public List viewPage()
+        public List viewPage() throws SearchException
         {
-	        try
-            {
-	            return viewPage(0);
-            }
-            catch (SearchException e)
-            {
-	            m_log.warn("viewPage ", e);
-            }
-			return null;
+        	return viewPage(0);
         }
 
 		public int getFirstRecordIndex()
@@ -1749,7 +1741,7 @@ public class BaseSearchManager implements SearchManager, Observer
 
 	// String array for databases being searched and database hierarchy
 	protected Map<String, String> hierarchyMap = new HashMap<String, String>();
-  protected SortedSet<String>   updatableResources = Collections.synchronizedSortedSet(new TreeSet<String>());
+	protected SortedSet<String>   updatableResources = Collections.synchronizedSortedSet(new TreeSet<String>());
 
 	private static Random m_generator;
 
@@ -1970,15 +1962,15 @@ public class BaseSearchManager implements SearchManager, Observer
 		String     guid           = search.getSearchId();
 		String[]   searchDbs      = search.getDatabaseIds();
 
-    /*
-     * Repository set up
-     */
-    SearchDatabaseHierarchy hierarchy = getSearchHierarchy();
-    if (hierarchy == null)
-    {
-   		throw new SearchException("ERROR: No appropriate database hierarchy available");
-    }
-    Repository repository = hierarchy.getRepository();
+		/*
+		 * Repository set up
+		 */
+		SearchDatabaseHierarchy hierarchy = getSearchHierarchy();
+		if (hierarchy == null)
+		{
+			throw new SearchException("ERROR: No appropriate database hierarchy available");
+		}
+		Repository repository = hierarchy.getRepository();
 
 		// CQL search query setup
 		String cqlQuery = null;
@@ -1997,10 +1989,10 @@ public class BaseSearchManager implements SearchManager, Observer
 		}
 		m_log.debug( "CQL query: " + cqlQuery );
 
-	    // initiate the search
-	    try
-	    {
-	    	if( cqlQuery == null )
+		// initiate the search
+		try
+		{
+			if( cqlQuery == null )
 	    	{
 	    		// something went horrible
 	    		throw new SearchException( "ERROR: could not properly " +
@@ -2044,7 +2036,7 @@ public class BaseSearchManager implements SearchManager, Observer
 	    	}
 
 	    	Set duplicateCheck  = ((BasicSearch) search).getDuplicateCheck();
-   	    int duplicateCount  = 0;
+	    	int duplicateCount  = 0;
 	    	int assetsRetrieved = 0;
 	    	boolean done = false;
 	    	try
@@ -2060,15 +2052,15 @@ public class BaseSearchManager implements SearchManager, Observer
 
 	    				String openUrlParams = citation.getOpenurlParameters();
 
-    					if (((BasicSearch) search).isDuplicateCheckEnabled() &&
-    					      duplicateCheck.contains(openUrlParams))
-    					{
-    					  m_log.debug("Duplicate #" + (duplicateCount + 1) + " found");
-    					  if (duplicateCount++ >= MAX_DUPLICATES)
-    					  {
-    					    ((BasicSearch) search).setDuplicateCheckEnabled(false);
-    					  }
-    						continue;
+	    				if (((BasicSearch) search).isDuplicateCheckEnabled() &&
+	    						duplicateCheck.contains(openUrlParams))
+	    				{
+	    					m_log.debug("Duplicate #" + (duplicateCount + 1) + " found");
+	    					if (duplicateCount++ >= MAX_DUPLICATES)
+	    					{
+	    						((BasicSearch) search).setDuplicateCheckEnabled(false);
+	    					}
+	    					continue;
 	    				}
 	    				else
 	    				{
@@ -2076,7 +2068,7 @@ public class BaseSearchManager implements SearchManager, Observer
 	    					citations.add(citation);
 
 	    					duplicateCheck.add(openUrlParams);
-    						duplicateCount = 0;
+	    					duplicateCount = 0;
 	    				}
 
 	    				// check if we've got enough to return
@@ -2178,18 +2170,17 @@ public class BaseSearchManager implements SearchManager, Observer
 	    catch( RepositoryException re )
 		{
 			m_log.warn("doSearch -- RepositoryException: " + re.getMessage());
-
 			throw new SearchException( re.getMessage() );
 		}
 	}
 
 	protected String newSearchId()
 	{
-/******* A unique ID per-session ********/
+		/******* A unique ID per-session ********/
 
-    return m_sessionManager.getCurrentSession().getId();
+		return m_sessionManager.getCurrentSession().getId();
 
-/******* Unique ID per-search (original)
+		/******* Unique ID per-search (original)
 
 		String sessionId = m_sessionManager.getCurrentSession().getId();
 		long number = m_generator.nextLong();
@@ -2197,7 +2188,7 @@ public class BaseSearchManager implements SearchManager, Observer
 		m_log.debug("getSearchId:  " + sessionId + hexString);
 		return sessionId + hexString;
 
-*************************************************************************/
+		 *************************************************************************/
 	}
 
 	protected Type getPropertyType(Repository repository)
