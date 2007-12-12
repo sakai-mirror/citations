@@ -49,10 +49,12 @@ public class OncourseOsidConfiguration implements SiteOsidConfiguration, CampusN
    */
   public final static String  IUB_CONFIG        = "sakaibrary.iub.configuration";
   public final static String  IUB_DB            = "sakaibrary.iub.database";
+
+  public final static String  IUPUI_CONFIG      = "sakaibrary.iupui.configuration";
+  public final static String  IUPUI_DB          = "sakaibrary.iupui.database";
   /*
    * Other configuration
    */
-  public final static String  IUPUI_CONFIG      = "sakaibrary.iupui.configuration";
   public final static String  IPFW_CONFIG       = "sakaibrary.ipfw.configuration";
   public final static String  IUE_CONFIG        = "sakaibrary.iue.configuration";
   public final static String  IUK_CONFIG        = "sakaibrary.iuk.configuration";
@@ -87,10 +89,13 @@ public class OncourseOsidConfiguration implements SiteOsidConfiguration, CampusN
    */
   private String    _iubDatabase        = null;
   private String    _iubConfig          = null;
+
+  private String    _iupuiConfig        = null;
+  private String    _iupuiDatabase      = null;
+
   /*
    * Other campus details
    */
-  private String    _iupuiConfig        = null;
   private String    _ipfwConfig         = null;
   private String    _iueConfig          = null;
   private String    _iukConfig          = null;
@@ -131,6 +136,8 @@ public class OncourseOsidConfiguration implements SiteOsidConfiguration, CampusN
     _iubDatabase      = getSakaiPropertiesValue(IUB_DB);
 
     _iupuiConfig      = getSakaiPropertiesValue(IUPUI_CONFIG);
+    _iupuiDatabase    = getSakaiPropertiesValue(IUPUI_DB);
+
     _ipfwConfig       = getSakaiPropertiesValue(IPFW_CONFIG);
     _iueConfig        = getSakaiPropertiesValue(IUE_CONFIG);
     _iukConfig        = getSakaiPropertiesValue(IUK_CONFIG);
@@ -176,7 +183,7 @@ public class OncourseOsidConfiguration implements SiteOsidConfiguration, CampusN
    */
   public String getDatabaseHierarchyXml() throws OsidConfigurationException
   {
-    String campus;
+    String campus, database;
 
     getCampusAssociation();
 
@@ -188,8 +195,12 @@ public class OncourseOsidConfiguration implements SiteOsidConfiguration, CampusN
       return NO_DATABASE;
     }
 
-    _log.debug("Hierarchy: " + (IUB.equals(campus) ? _iubDatabase : _defaultDatabase));
-    return IUB.equals(campus) ? _iubDatabase : _defaultDatabase;
+    database = _defaultDatabase;
+
+    if (IUB.equals(campus))         database = _iubDatabase;
+    if (IUPUI.equals(campus))       database = _iupuiDatabase;
+
+    return database;
   }
 
   /**

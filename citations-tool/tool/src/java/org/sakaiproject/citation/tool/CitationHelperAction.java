@@ -2462,7 +2462,7 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 	    {
 	        // addAlert(state, rb.getString("search.problem"));
 	        addAlert(state, e.getMessage());
-			setMode(state, Mode.ERROR);
+			    setMode(state, Mode.ERROR);
 	    }
 
 	}	// doSearch
@@ -2869,7 +2869,8 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
         {
         	logger.warn("doNextSearchPage: " + e.getMessage());
         	addAlert(state, rb.getString( "error.search" ) );
-			setMode(state, Mode.RESULTS);
+          search.setStatusMessage();    // Clear any pre-existing error status
+    			setMode(state, Mode.RESULTS);
         }
         catch(Exception e)
         {
@@ -2910,7 +2911,8 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
         {
         	logger.warn("doPrevSearchPage: " + e.getMessage());
         	addAlert(state, rb.getString( "error.search" ) );
-			setMode(state, Mode.RESULTS);
+          search.setStatusMessage();    // Clear any pre-existing error status
+    			setMode(state, Mode.RESULTS);
         }
         catch(Exception e)
         {

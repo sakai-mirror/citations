@@ -21,9 +21,9 @@ import org.sakaiproject.component.cover.ServerConfigurationService;
 
 
 public class CampusAffiliationService {
-	
+
 	private static final Log LOG = LogFactory.getLog(CampusAffiliationService.class);
-	
+
 
 	/**
 	 * @param args
@@ -66,15 +66,10 @@ public class CampusAffiliationService {
 		try
 		{
 			results = ctx.search("ou=Accounts," + domain, "(&(objectCategory=user)(cn="+userEid+"))", constrains);
-
-			System.out.println("Results for " + userEid);
-
 			while (results.hasMore())
 			{
 		    SearchResult thisResult = (SearchResult) results.next();
 		    Attributes attr = thisResult.getAttributes();
-
-		    LOG.debug("  " + attr);
 
 		    // add each value
 		    namingEnumeration = (NamingEnumeration) attr.getAll();
@@ -88,7 +83,6 @@ public class CampusAffiliationService {
             String attributeString = (String) thisAttribute.get(i);
 
 		        attrs.add(attributeString);
-		        System.out.println("Added " + attributeString);
 		      }
 		    }
 		  }
