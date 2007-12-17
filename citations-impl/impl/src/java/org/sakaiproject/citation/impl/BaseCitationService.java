@@ -1003,7 +1003,8 @@ public abstract class BaseCitationService implements CitationService
 				return "";
 			}
 
-			// default to journal type
+			// default to journal type, article genre
+			boolean articleGenre = true;
 			boolean journalOpenUrlType = true;
 			String referentValueFormat = OPENURL_JOURNAL_FORMAT;
 			// check to see whether we should construct a journal OpenUrl
@@ -1019,11 +1020,13 @@ public abstract class BaseCitationService implements CitationService
 			{
 				if (type.equals("article") || type.equals("report") || type.equals("unknown"))
 				{
+					articleGenre = true;
 					journalOpenUrlType = true;
 					referentValueFormat = OPENURL_JOURNAL_FORMAT;
 				}
 				else
 				{
+					articleGenre = false;
 					journalOpenUrlType = false;
 					referentValueFormat = OPENURL_BOOK_FORMAT;
 				}
@@ -1042,6 +1045,12 @@ public abstract class BaseCitationService implements CitationService
 				// get first author
 				String author = getFirstAuthor();
 
+				 // flag articles
+				if (articleGenre)
+				{
+					openUrl.append("&rft.genre=article");
+				}
+				
 				// get first author's last/first name
 				if (author != null)
 				{
