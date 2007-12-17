@@ -73,9 +73,10 @@ public class OncourseOsidConfiguration implements SiteOsidConfiguration, CampusN
 	/*
 	 * Default campus for guests (used when all else fails)
 	 *
-	 * For Fall, 2007: this can be anything but IUB
+	 * The "none" value will cause us to the use default configuration
+	 *      (for Spring 2008 this is DEFAULT_configuration.xml)
 	 */
-	public final static String  GUEST_CAMPUS      = IUPUI;
+	public final static String  GUEST_CAMPUS      = "<<none>>";
   /*
    * Unknown user and/or site
    */

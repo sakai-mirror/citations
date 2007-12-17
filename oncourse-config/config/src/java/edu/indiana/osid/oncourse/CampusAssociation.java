@@ -36,7 +36,7 @@ import org.sakaiproject.citation.util.api.OsidConfigurationException;
  */
 public class CampusAssociation implements CampusNames
 {
- 	private static Log _log = LogFactory.getLog(CampusAssociation.class);
+  private static Log _log = LogFactory.getLog(CampusAssociation.class);
 
   /*
    * Scores for each affilition type
@@ -64,6 +64,16 @@ public class CampusAssociation implements CampusNames
    * Sakai Site ID
    */
   private String    _sakaiSiteId;
+  /*
+   * Force GUEST acess for this user?
+   */
+  private boolean   _forceGuestAccess;
+
+  /**
+   * Private (simple) constructor
+   */
+  private CampusAssociation() { }
+
   /**
    * Constructor
    * @param kerberosUsername Kerberos/CAS user
@@ -72,6 +82,7 @@ public class CampusAssociation implements CampusNames
   {
     _kerberosUsername = kerberosUsername;
     _sakaiSiteId      = siteId;
+    _forceGuestAccess = false;
   }
 
   /**
@@ -145,6 +156,9 @@ public class CampusAssociation implements CampusNames
 
   /**
    * Create associations for a guest user (existing associations are discarded)
+   *<p>
+   *<b>NB</b>: This method restricts the current user to GUEST access.
+   *
    * @param campus Campus association for this guest
    */
   protected void getGuestAssociations(String campus)
@@ -155,20 +169,36 @@ public class CampusAssociation implements CampusNames
     affiliationList.add(CATEGORY_GUEST);
 
     _detailMap.clear();
+
+    forceGuestAccess();
     addScore(new CampusDetail(campus, affiliationList));
   }
 
   /**
-   * Is this a guest?
+   * Manually establish guest status for the current user
+   */
+  protected void forceGuestAccess()
+  {
+    _forceGuestAccess = true;
+  }
+
+  /**
+   * Is this a guest?  Note that in some cases (errors when accessing ADS, etc) a
+   * user may be arbitraily restricted to guest access.
    * @return true If so
    */
   protected boolean isGuest()
   {
+    if (_forceGuestAccess)
+    {
+      return true;
+    }
+
     if (_kerberosUsername != null)
     {
       return (_kerberosUsername.indexOf('@') != -1);
     }
-    return false;
+    return true;
   }
 
   /**
