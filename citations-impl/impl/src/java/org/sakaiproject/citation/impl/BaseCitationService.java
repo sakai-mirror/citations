@@ -1003,10 +1003,10 @@ public abstract class BaseCitationService implements CitationService
 				return "";
 			}
 
-			// default to journal type, article genre
-			boolean articleGenre = true;
+			// default to journal
 			boolean journalOpenUrlType = true;
 			String referentValueFormat = OPENURL_JOURNAL_FORMAT;
+			
 			// check to see whether we should construct a journal OpenUrl
 			// (includes types: article, report, unknown)
 			// or a book OpenUrl (includes types: book, chapter)
@@ -1020,13 +1020,11 @@ public abstract class BaseCitationService implements CitationService
 			{
 				if (type.equals("article") || type.equals("report") || type.equals("unknown"))
 				{
-					articleGenre = true;
 					journalOpenUrlType = true;
 					referentValueFormat = OPENURL_JOURNAL_FORMAT;
 				}
 				else
 				{
-					articleGenre = false;
 					journalOpenUrlType = false;
 					referentValueFormat = OPENURL_BOOK_FORMAT;
 				}
@@ -1042,15 +1040,15 @@ public abstract class BaseCitationService implements CitationService
 						+ "&url_ctx_fmt=" + URLEncoder.encode(OPENURL_CONTEXT_FORMAT, "utf8")
 						+ "&rft_val_fmt=" + URLEncoder.encode(referentValueFormat, "utf8"));
 
-				// get first author
-				String author = getFirstAuthor();
-
-				 // flag articles
-				if (articleGenre)
+				// flag articles
+				if (journalOpenUrlType)
 				{
 					openUrl.append("&rft.genre=article");
 				}
-				
+
+				// get first author
+				String author = getFirstAuthor();
+
 				// get first author's last/first name
 				if (author != null)
 				{
@@ -1095,17 +1093,21 @@ public abstract class BaseCitationService implements CitationService
 						"utf8"));
 					}
 				}
-				// atitle <journal:article title; book: chapter title>
-				/*
-				if( m_displayName != null )
-				{
-					openUrl.append("&rft.atitle=" + URLEncoder.encode(m_displayName, "utf8"));
-				}
-				*/
+
+				// titles
 				String title = (String) m_citationProperties.get( Schema.TITLE );
 				if( title != null )
 				{
-					openUrl.append("&rft.atitle=" + URLEncoder.encode(title.trim(), "utf8"));
+					if( journalOpenUrlType )
+					{
+						// article title
+						openUrl.append("&rft.atitle=" + URLEncoder.encode(title.trim(), "utf8"));
+					}
+					else
+					{
+						// book title
+						openUrl.append("&rft.btitle=" + URLEncoder.encode(title.trim(), "utf8"));
+					}
 				}
 				else
 				{
@@ -3804,7 +3806,7 @@ public abstract class BaseCitationService implements CitationService
 		else if (mediatype.equalsIgnoreCase("book"))
 		{
 			synonyms.add("book");
-
+			synonyms.add("bk");
 		}
 		else if (mediatype.equalsIgnoreCase("chapter"))
 		{
