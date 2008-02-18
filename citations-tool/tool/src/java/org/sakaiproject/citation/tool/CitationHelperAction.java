@@ -1352,7 +1352,20 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 		Object[] instrArgs = { rb.getString( "submit.search" ) };
 		context.put( "instrArgs", instrArgs );
 
-	    return TEMPLATE_SEARCH;
+    	String searchType = null;
+
+    	if (searchInfo != null)
+    	{
+    		searchType = searchInfo.getSearchType();
+    	}
+
+    	if (searchType == null)
+    		searchType = ActiveSearch.BASIC_SEARCH_TYPE;
+
+    	context.put("searchType", searchType);
+
+
+    	return TEMPLATE_SEARCH;
 
 	}	// buildSearchPanelContext
 
@@ -3136,10 +3149,17 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 		{
 			return;
 		}
-
-		Mode mode = (Mode) state.getAttribute(CitationHelper.STATE_HELPER_MODE);
-		if(mode == null)
+		
+		/*
+		 * Resources Tool/Citation Helper support
+		 */
+		
+		String initId = pipe.getInitializationId();
+		if( initId == null )
 		{
+			// we're starting afresh: an action has been clicked in Resources
+			
+			// set the Mode according to our action
 			switch(pipe.getAction().getActionType())
 			{
 				case CREATE:
@@ -3175,6 +3195,24 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 					break;
 				default:
 					break;
+			}
+			
+			// set Citations Helper to "initialized"
+			pipe.setInitializationId( "initialized" );
+		}
+		
+		else
+		{
+			// we're in the middle of a Citations Helper workflow:
+			// Citations Helper has been "initialized"
+			// (pipe.initializationId != null)
+			
+			// make sure we have a Mode to display
+			Mode mode = (Mode) state.getAttribute(CitationHelper.STATE_HELPER_MODE);
+			if( mode == null )
+			{
+				// default to ADD_CITATIONS
+				setMode( state, Mode.ADD_CITATIONS );
 			}
 		}
 
