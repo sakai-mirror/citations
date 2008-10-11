@@ -1,0 +1,28 @@
+.wumpa
+{
+	margin-bottom: 0em;
+	border: solid black 1px;
+	background-color: white;
+	padding: 0em 0em 0em 1em;
+}
+.hintable
+{
+	background-color: white;
+	margin: 0em;
+	padding: 0em 0em 1em 0em;
+}
+div.hintable:hover
+{
+	background-color: blue;
+}
+.dingbat
+{
+	padding: 0em;
+	background-color: white;
+	margin: 0em;
+}
+div.wumpa:hover
+{
+	background-color: white;
+}
+

@@ -1,0 +1,1739 @@
+<link rel="stylesheet" type="text/css" href="../css/citationCollection.css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="../js/citationCollection.js"></script>
+<div rsf:id="citationCollection:" class="citationCollection">
+	<div rsf:id="citationContext:" class="citationContext">
+		<div rsf:id="titleBar:" class="citationTitleBar">
+			<span rsf:id="title" class="citationTitle">
+				Revising Citations for SRG
+			</span> 
+			<span rsf:id="actions:" class="citationActions">
+				<span rsf:id="" class="">
+					12 citations in list
+				</span>
+				<input rsf:id="doneButton" type="button" value="Save" />
+				<input rsf:id="cancelButton" type="button" value="Cancel" />
+			</span>
+		</div>
+		<div rsf:id="citationNavBar:" class="citationNavBar">
+			<span rsf:id="" class="chooseView disabledLink">
+				<span rsf:id="" style="display: none">
+					<a rsf:id="" class="chooseViewLink" href="#" disabled="true">View Citations</a>
+				</span>
+				<span rsf:id="">
+					View Citations
+				</span>
+			</span>
+			<span rsf:id="" class="chooseSearch enabledLink">
+				<span rsf:id="">
+					<a rsf:id="" class="chooseSearchLink" href="#">Search Library</a>
+				</span>
+				<span rsf:id="" style="display: none">
+					Search Library
+				</span>
+			
+			</span>
+			<span rsf:id="" class="chooseGoogle enabledLink">
+				<span rsf:id="">
+					<a rsf:id="" class="chooseGoogleLink" href="http://scholar.google.com/" target="_black">Search Google</a>
+				</span>
+				<span rsf:id="" style="display: none">
+					Search Google
+				</span>
+			
+			</span>
+			<span rsf:id="" class="chooseAdd enabledLink">
+				<span rsf:id="">
+					<a rsf:id="" class="chooseAddLink" href="#">Add Citation</a>
+				</span>
+				<span rsf:id="" style="display: none">
+					Add Citation
+				</span>
+			
+			</span>
+			<span rsf:id="" class="chooseImport enabledLink">
+				<span rsf:id="">
+					<a rsf:id="" class="chooseImportLink" href="#">Import Citations</a>
+				</span>
+				<span rsf:id="" style="display: none">
+					Import Citations
+				</span>
+			
+			</span>
+		</div>
+		
+		<div rsf:id="citationNavAlternative:" class="citationNavAlternative citationViewContext visibleContext">
+			<div rsf:id="" class="">
+				<span rsf:id="" class=""><a rsf:id="" class="" href="">Previous</a></span> <span rsf:id="" class=""><a rsf:id="" class="" href="">Next</a></span>
+			</div>
+			<div rsf:id="" class="">
+				<a rsf:id="" class="" href="" target="_blank">Citation display name (title)</a>
+				<br />
+				citation.creators  citation.source.
+				<div class="citationDetails" rsf:id="" style="display:none;">
+					<p><span rsf:id="" class="">Keywords:</span> citation.subjectString</p>
+					<p><span rsf:id="" class="">Abstract:</span> citation.abstract</p>
+					<p><span rsf:id="" class="">no details</span></p>
+				</div>
+				<div rsf:id="" class="">
+					<a rsf:id="" class="" href="">Remove</a>
+					<a rsf:id="" class="" href="">Revise</a>
+				</div>
+			
+			</div>
+			<div rsf:id="" class="">
+				<a rsf:id="" class="" href="" target="_blank">Citation display name (title)</a>
+				<br />
+				citation.creators  citation.source.
+				<div class="citationDetails" rsf:id="" style="display:none;">
+					<p><span rsf:id="" class="">Keywords:</span> citation.subjectString</p>
+					<p><span rsf:id="" class="">Abstract:</span> citation.abstract</p>
+					<p><span rsf:id="" class="">no details</span></p>
+				</div>
+				<div rsf:id="" class="">
+					<a rsf:id="" class="" href="">Remove</a>
+					<a rsf:id="" class="" href="">Revise</a>
+				</div>
+			
+			</div>
+			<div rsf:id="" class="">
+				<a rsf:id="" class="" href="" target="_blank">Citation display name (title)</a>
+				<br />
+				citation.creators  citation.source.
+				<div class="citationDetails" rsf:id="" style="display:none;">
+					<p><span rsf:id="" class="">Keywords:</span> citation.subjectString</p>
+					<p><span rsf:id="" class="">Abstract:</span> citation.abstract</p>
+					<p><span rsf:id="" class="">no details</span></p>
+				</div>
+				<div rsf:id="" class="">
+					<a rsf:id="" class="" href="">Remove</a>
+					<a rsf:id="" class="" href="">Revise</a>
+				</div>
+			
+			</div>
+		
+		</div>
+		
+		<div rsf:id="citationNavAlternative:" class="citationNavAlternative citationSearchContext hiddenContext">
+			<div rsf:id="citationSearchOptions:" class="citationSearchOptions">
+				<form rsf:id="" action="">
+					<p rsf:id="" class="">
+						<label rsf:id="" class="">
+							Search Terms:
+						</label>
+						<input type="text" rsf:id="search_terms" size="30" class="" />
+						<input type="button" value="Search" rsf:id="" class="" />
+					</p>
+					<p rsf:id="" class="">
+						<label rsf:id="" class="">
+							Category:
+						</label>
+						<select rsf:id="" class="">
+							<option rsf:id="" class="">
+								General
+							</option>
+							<option rsf:id="" class="">
+								Arts
+							</option>
+							<option rsf:id="" class="">
+								Engineering
+							</option>
+							<option rsf:id="" class="">
+								Humanities
+							</option>
+							<option rsf:id="" class="">
+								Sciences
+							</option>
+						</select>
+					</p>
+					<p rsf:id="" class="">
+						<label rsf:id="" class="">
+							Subcategory:
+						</label>
+						<select rsf:id="" class="">
+							<option rsf:id="" class="">
+								Blah Blah
+							</option>
+							<option rsf:id="" class="">
+								Gaps in Thinking
+							</option>
+							<option rsf:id="" class="">
+								Reversals
+							</option>
+							<option rsf:id="" class="">
+								Innuendo
+							</option>
+							<option rsf:id="" class="">
+								Clap-trap
+							</option>
+						</select>
+					</p>
+				</form>
+			</div>
+			<div rsf:id="citationSearchResults:" class="citationSearchResults">
+				<div rsf:id="" class="">
+					<span rsf:id="" class=""><a rsf:id="" class="" href="">Previous</a></span> <span rsf:id="" class=""><a rsf:id="" class="" href="">Next</a></span>
+				</div>
+				<table>
+					<tbody>
+						<tr>
+							<th id="actions">
+							</th>
+							<th id="expand">
+							</th>
+							<th id="details">
+							</th>
+						</tr>
+						<tr rsf:id="" class="">
+							<td headers="actions" rsf:id="" class="">
+								<input type="button" rsf:id="" value="Add" />
+							</td>
+							<td headers="expand" rsf:id="" class="attach">
+								<img onclick="" rsf:id="" class="toggleIcon" src="/library/image/sakai/expand.gif" alt="show results" align="top" border="0" height="13" width="13" />
+							</td>
+							<td headers="details" rsf:id="" class="">
+								<a rsf:id="" class="" href="" target="_blank">Citation display name (title)</a>
+								<br />
+								citation.creators  citation.source.
+								<div class="citationDetails" rsf:id="" style="display:none;">
+									<p><span rsf:id="" class="">Keywords:</span> citation.subjectString</p>
+									<p><span rsf:id="" class="">Abstract:</span> citation.abstract</p>
+									<p><span rsf:id="" class="">no details</span></p>
+								</div>
+							</td>
+						</tr>
+						<tr rsf:id="" class="">
+							<td headers="actions" rsf:id="" class="">
+								<input type="button" rsf:id="" value="Add" />
+							</td>
+							<td headers="expand" rsf:id="" class="attach">
+								<img onclick="" rsf:id="" class="toggleIcon" src="/library/image/sakai/expand.gif" alt="show results" align="top" border="0" height="13" width="13" />
+							</td>
+							<td headers="details" rsf:id="" class="">
+								<a rsf:id="" class="" href="" target="_blank">Citation display name (title)</a>
+								<br />
+								citation.creators  citation.source.
+								<div class="citationDetails" rsf:id="" style="display:none;">
+									<p><span rsf:id="" class="">Keywords:</span> citation.subjectString</p>
+									<p><span rsf:id="" class="">Abstract:</span> citation.abstract</p>
+									<p><span rsf:id="" class="">no details</span></p>
+								</div>
+							</td>
+						</tr>
+						<tr rsf:id="" class="">
+							<td headers="actions" rsf:id="" class="">
+								<input type="button" rsf:id="" value="Add" />
+							</td>
+							<td headers="expand" rsf:id="" class="attach">
+								<img onclick="" rsf:id="" class="toggleIcon" src="/library/image/sakai/expand.gif" alt="show results" align="top" border="0" height="13" width="13" />
+							</td>
+							<td headers="details" rsf:id="" class="">
+								<a rsf:id="" class="" href="" target="_blank">Citation display name (title)</a>
+								<br />
+								citation.creators  citation.source.
+								<div class="citationDetails" rsf:id="" style="display:none;">
+									<p><span rsf:id="" class="">Keywords:</span> citation.subjectString</p>
+									<p><span rsf:id="" class="">Abstract:</span> citation.abstract</p>
+									<p><span rsf:id="" class="">no details</span></p>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div rsf:id="citationNavAlternative:" class="citationNavAlternative citationImportContext hiddenContext">
+			<form name="" rsf:id="" action="" method="post" enctype="multipart/form-data" >
+				<input name="sakai_action" id="sakai_action" value="" type="hidden" />
+				<input name="searchType" id="searchType" value="$basicSearchType" type="hidden" />
+				<p rsf:id="" class="instruction">import directions</p>
+				<p rsf:id="" class="">
+					<input type="button" value='Import' id="import1" />
+				</p>
+				<p>
+					<span rsf:id="risFileUpload">
+						Import from file:
+						<input name="risupload" id="risupload" type="file" /> 
+					</span>
+					<span rsf:id="importingMessage" style="display: none;">
+						<img src="/library/image/sakai/spinner.gif" alt="importing"/> 
+						Importing
+					</span>
+				</p>
+				<p>
+					<span rsf:id="risTextUpload">
+						Import from text:
+					</span>
+					<textarea cols="80" rows="4" name="ristext" id="ristext"></textarea>
+				</p>
+				<p rsf:id="" class="">
+					<input type="button" value='Import' id="import1" />
+				</p>
+				
+			</form>		
+		</div>
+		<div rsf:id="citationNavAlternative:" class="citationNavAlternative citationAddContext hiddenContext">
+			<form name="" rsf:id="" action="" class="citationEditForm">
+				<p class="act">
+					<input type="button" class="active" name="Submit" id="Submit"
+						value="Add This Citation" />
+					<input type="reset" name="Reset" id="reset"
+						value="Reset"/>
+				</p>
+				<p class="shorttext">
+					<label for="type">
+						<strong>Media Type</strong>
+					</label>
+					<select name="type" id="type_selector" class="citationSchemaSelector">
+						<option value="book">
+							Book
+						</option>
+						<option value="chapter">
+							Chapter
+						</option>
+						<option value="article">
+							Journal Article
+						</option>
+						<option value="report">
+							Technical Report
+						</option>
+						<option value="unknown">
+							Unknown
+						</option>
+					</select>					
+				</p>
+				<div id="div_createForm" class="citationEditFormDiv">
+					<p class="shorttext">
+						<label for="creator0">
+							<strong>Author(s)</strong>
+						</label>
+						<div id="div_creator">
+							<table>
+								<tr>
+									<td>
+										<input name="creator0" id="creator0" value="" class="citationEditValue" type="text" size="50" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<a href="#" onclick="javascript:getAnother('article', 0)">Add another</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<input type="hidden" name="creator_count" id="creator_count" class="creator_count" value="1" />
+					</p>
+					<p class="shorttext">
+						<span class="reqStar">*</span>
+						<span class="requiredField">
+							<label for="title">
+								<strong>Article Title</strong>
+							</label>
+							<input name="title" id="title" value="" type="text" class="citationEditValue" size="50" />
+						</span>
+					</p>
+					<p class="shorttext">
+						<label for="sourceTitle">
+							<strong>Journal Title</strong>
+						</label>
+						<input name="sourceTitle" id="sourceTitle" value="" type="text" class="citationEditValue" size="50" />
+					</p>
+					<p class="shorttext">
+						<label for="year">
+							<strong>Year</strong>
+						</label>
+						<input name="year" id="year" value="" type="text" class="citationEditValue" size="20" />
+					</p>
+					<p class="shorttext">
+						<label for="date">
+							<strong>Date</strong>
+						</label>
+						<input name="date" id="date" value="" type="text" class="citationEditValue" size="20" />
+					</p>
+					<p class="shorttext">
+						<label for="volume">
+							<strong>Volume</strong>
+						</label>
+						<input name="volume" id="volume" value="" type="text" class="citationEditValue" size="20" />
+					</p>
+					<p class="shorttext">
+						<label for="issue">
+							<strong>Issue</strong>
+						</label>
+						<input name="issue" id="issue" value="" type="text" class="citationEditValue" size="20" />
+					</p>
+					<p class="shorttext">
+						<label for="pages">
+							<strong>Pages</strong>
+						</label>
+						<input name="pages" id="pages" value="" type="text" class="citationEditValue" size="20" />
+					</p>
+					<p class="shorttext">
+						<label for="startPage">
+							<strong>Start Page</strong>
+						</label>
+						<input name="startPage" id="startPage" value="" type="text" class="citationEditValue" size="20" />
+					</p>
+					<p class="shorttext">
+						<label for="endPage">
+							<strong>End Page</strong>
+						</label>
+						<input name="endPage" id="endPage" value="" type="text" class="citationEditValue" size="20" />
+					</p>
+					<p class="shorttext">
+						<label for="abstract">
+							<strong>Abstract</strong>
+						</label>
+						<textarea name="abstract" id="abstract" cols="50" rows="4"></textarea>
+					</p>
+					<p class="shorttext">
+						<label for="note0">
+							<strong>Note(s)</strong>
+						</label>
+						<div id="div_note">
+							<table>
+								<tr>
+									<td>
+										<input name="note0" id="note0" value="" type="text" class="citationEditValue" size="50" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<a href="#" onclick="javascript:getAnother('article', 11)">Add another</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<input type="hidden" name="note_count" id="note_count" class="note_count" value="1" />
+					</p>
+					<p class="shorttext">
+						<label for="isnIdentifier">
+							<strong>ISSN</strong>
+						</label>
+						<input name="isnIdentifier" id="isnIdentifier" value="" type="text" class="citationEditValue" size="50" />
+					</p>
+					<p class="shorttext">
+						<label for="subject0">
+							<strong>Subject(s)</strong>
+						</label>
+						<div id="div_subject">
+							<table>
+								<tr>
+									<td>
+										<input name="subject0" id="subject0" value="" type="text" class="citationEditValue" size="50" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<a href="#" onclick="javascript:getAnother('article', 13)">Add another</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<input type="hidden" name="subject_count" id="subject_count" class="subject_count" value="1" />
+					</p>
+					<p class="shorttext">
+						<label for="Language">
+							<strong>Language</strong>
+						</label>
+						<input name="Language" id="Language" value="" type="text" class="citationEditValue" size="20" />
+					</p>
+					<p class="shorttext">
+						<label for="locIdentifier">
+							<strong>Call Number</strong>
+						</label>
+						<input name="locIdentifier" id="locIdentifier" value="" type="text" class="citationEditValue" size="50" />
+					</p>
+					<p class="shorttext">
+						<label for="dateRetrieved">
+							<strong>Date Retrieved</strong>
+						</label>
+						<input name="dateRetrieved" id="dateRetrieved" value="" type="text" size="20" class="citationEditValue" />
+																		</p>
+														<p class="shorttext">
+
+																			<label for="openURL">
+								<strong>Open URL</strong>
+							</label>
+										<input name="openURL" id="openURL" value="" type="text" class="citationEditValue" size="50" />
+																		</p>
+														<p class="shorttext">
+																			<label for="doi">
+								<strong>DOI</strong>
+
+							</label>
+										<input name="doi" id="doi" value="" type="text" size="20" class="citationEditValue" />
+																		</p>
+														<p class="shorttext">
+																			<label for="rights0">
+								<strong>Rights</strong>
+							</label>
+								<div id="div_rights">
+
+		<table>
+							<tr>
+					<td>
+									<input name="rights0" id="rights0" value="" type="text" class="citationEditValue" size="50" />
+						</td>
+				</tr>
+						<tr>
+				<td>
+					<a href="#" onclick="javascript:getAnother('article', 19)">Add another</a>
+
+				</td>
+			</tr>
+		</table>
+	</div>
+	<input type="hidden" name="rights_count" id="rights_count" class="rights_count" value="1" />
+																	</p>
+												</div>
+			<div id="url_div" class="shorttext">
+				<label>
+
+					<strong>Link(s)</strong>
+				</label>
+				<table>
+					<tr>
+						<td>
+							<label class="block" for="url_0">
+								URL
+							</label>
+							<input name="url_0" id="url_0" value="" type="text" class="citationEditValue" size="50" />
+
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label class="block" for="pref_0">
+								Use as title link?
+							</label>
+							<input class="prefLink" name="pref_0" id="pref_0"  class="citationEditValue"
+								type="checkbox" value="preferred" onclick="trackPreferredUrl('pref_0');" />
+						</td>
+
+					</tr>
+					<tr>
+						<td>
+							<label class="block" for="label_0">
+								Label
+							</label>
+							<input name="label_0" id="label_0" type="text" class="citationEditValue" size="20" />
+							<hr />
+						</td>
+
+					</tr>
+					<tr id="bottomRow">
+						<td>
+							<a href="#" onclick="javascript:citation.addUrl();">Add another</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<input type="hidden" name="url_count" id="url_count" class="url_count" value="1" />
+
+				
+				<p class="act">
+					<input type="button" class="active" name="Submit" id="Submit"
+						value="Add This Citation"
+						onclick="" />
+					<input type="reset" name="Reset" id="reset"
+						value="Reset"
+						onclick=""/>
+				</p>
+			</form>
+		</div
+	</div>
+</div>
+<script type="text/javascript">
+
+	var templates = new Array();
+	var defaultTemplate = "article";
+	var templateIdentifiers = new Array();
+
+		
+	templateIdentifiers[templateIdentifiers.length] = "article";
+	templates["article"] = new Array();
+	templates["article"]["label"] = "Journal Article";
+	templates["article"]["fields"] = new Array();
+	
+	templates["article"][0] = new Object();
+	templates["article"][0].identifier = "creator";
+	templates["article"][0].label = "Author(s)"
+	templates["article"][0].description = "";
+	templates["article"][0].minCardinality = 0;
+	templates["article"][0].maxCardinality = 2147483647;
+	templates["article"][0].defaultValue = "";
+	templates["article"][0].isRequired = false;
+	templates["article"][0].valueType = "shorttext";
+	templates["article"][0].index = 0;
+						
+	templates["article"][1] = new Object();
+	templates["article"][1].identifier = "title";
+	templates["article"][1].label = "Article Title"
+	templates["article"][1].description = "";
+	templates["article"][1].minCardinality = 1;
+	templates["article"][1].maxCardinality = 1;
+	templates["article"][1].defaultValue = "";
+	templates["article"][1].isRequired = true;
+	templates["article"][1].valueType = "shorttext";
+	templates["article"][1].index = 1;
+						
+	templates["article"][2] = new Object();
+	templates["article"][2].identifier = "sourceTitle";
+	templates["article"][2].label = "Journal Title"
+	templates["article"][2].description = "";
+	templates["article"][2].minCardinality = 0;
+	templates["article"][2].maxCardinality = 1;
+	templates["article"][2].defaultValue = "";
+	templates["article"][2].isRequired = false;
+	templates["article"][2].valueType = "shorttext";
+	templates["article"][2].index = 2;
+						
+	templates["article"][3] = new Object();
+	templates["article"][3].identifier = "year";
+	templates["article"][3].label = "Year"
+	templates["article"][3].description = "";
+	templates["article"][3].minCardinality = 0;
+	templates["article"][3].maxCardinality = 1;
+	templates["article"][3].defaultValue = "";
+	templates["article"][3].isRequired = false;
+	templates["article"][3].valueType = "number";
+	templates["article"][3].index = 3;
+						
+	templates["article"][4] = new Object();
+	templates["article"][4].identifier = "date";
+	templates["article"][4].label = "Date"
+	templates["article"][4].description = "";
+	templates["article"][4].minCardinality = 0;
+	templates["article"][4].maxCardinality = 1;
+	templates["article"][4].defaultValue = "";
+	templates["article"][4].isRequired = false;
+	templates["article"][4].valueType = "number";
+	templates["article"][4].index = 4;
+	
+	templates["article"][5] = new Object();
+	templates["article"][5].identifier = "volume";
+	templates["article"][5].label = "Volume"
+	templates["article"][5].description = "";
+	templates["article"][5].minCardinality = 0;
+	templates["article"][5].maxCardinality = 1;
+	templates["article"][5].defaultValue = "";
+	templates["article"][5].isRequired = false;
+	templates["article"][5].valueType = "number";
+	templates["article"][5].index = 5;
+
+	templates["article"][6] = new Object();
+	templates["article"][6].identifier = "issue";
+	templates["article"][6].label = "Issue"
+	templates["article"][6].description = "";
+	templates["article"][6].minCardinality = 0;
+	templates["article"][6].maxCardinality = 1;
+	templates["article"][6].defaultValue = "";
+	templates["article"][6].isRequired = false;
+	templates["article"][6].valueType = "number";
+	templates["article"][6].index = 6;
+
+	templates["article"][7] = new Object();
+	templates["article"][7].identifier = "pages";
+	templates["article"][7].label = "Pages"
+	templates["article"][7].description = "";
+	templates["article"][7].minCardinality = 0;
+	templates["article"][7].maxCardinality = 1;
+	templates["article"][7].defaultValue = "";
+	templates["article"][7].isRequired = false;
+	templates["article"][7].valueType = "number";
+	templates["article"][7].index = 7;
+
+	templates["article"][8] = new Object();
+	templates["article"][8].identifier = "startPage";
+	templates["article"][8].label = "Start Page"
+	templates["article"][8].description = "";
+	templates["article"][8].minCardinality = 0;
+	templates["article"][8].maxCardinality = 1;
+	templates["article"][8].defaultValue = "";
+	templates["article"][8].isRequired = false;
+	templates["article"][8].valueType = "number";
+	templates["article"][8].index = 8;
+
+	templates["article"][9] = new Object();
+	templates["article"][9].identifier = "endPage";
+	templates["article"][9].label = "End Page"
+	templates["article"][9].description = "";
+	templates["article"][9].minCardinality = 0;
+	templates["article"][9].maxCardinality = 1;
+	templates["article"][9].defaultValue = "";
+	templates["article"][9].isRequired = false;
+	templates["article"][9].valueType = "number";
+	templates["article"][9].index = 9;
+
+	templates["article"][10] = new Object();
+	templates["article"][10].identifier = "abstract";
+	templates["article"][10].label = "Abstract"
+	templates["article"][10].description = "";
+	templates["article"][10].minCardinality = 0;
+	templates["article"][10].maxCardinality = 1;
+	templates["article"][10].defaultValue = "";
+	templates["article"][10].isRequired = false;
+	templates["article"][10].valueType = "longtext";
+	templates["article"][10].index = 10;
+
+	templates["article"][11] = new Object();
+	templates["article"][11].identifier = "note";
+	templates["article"][11].label = "Note(s)"
+	templates["article"][11].description = "";
+	templates["article"][11].minCardinality = 0;
+	templates["article"][11].maxCardinality = 2147483647;
+	templates["article"][11].defaultValue = "";
+	templates["article"][11].isRequired = false;
+	templates["article"][11].valueType = "shorttext";
+	templates["article"][11].index = 11;
+
+	templates["article"][12] = new Object();
+	templates["article"][12].identifier = "isnIdentifier";
+	templates["article"][12].label = "ISSN"
+	templates["article"][12].description = "";
+	templates["article"][12].minCardinality = 0;
+	templates["article"][12].maxCardinality = 1;
+	templates["article"][12].defaultValue = "";
+	templates["article"][12].isRequired = false;
+	templates["article"][12].valueType = "shorttext";
+	templates["article"][12].index = 12;
+
+	templates["article"][13] = new Object();
+	templates["article"][13].identifier = "subject";
+	templates["article"][13].label = "Subject(s)"
+	templates["article"][13].description = "";
+	templates["article"][13].minCardinality = 0;
+	templates["article"][13].maxCardinality = 2147483647;
+	templates["article"][13].defaultValue = "";
+	templates["article"][13].isRequired = false;
+	templates["article"][13].valueType = "shorttext";
+	templates["article"][13].index = 13;
+
+	templates["article"][14] = new Object();
+	templates["article"][14].identifier = "Language";
+	templates["article"][14].label = "Language"
+	templates["article"][14].description = "";
+	templates["article"][14].minCardinality = 0;
+	templates["article"][14].maxCardinality = 1;
+	templates["article"][14].defaultValue = "";
+	templates["article"][14].isRequired = false;
+	templates["article"][14].valueType = "number";
+	templates["article"][14].index = 14;
+
+	templates["article"][15] = new Object();
+	templates["article"][15].identifier = "locIdentifier";
+	templates["article"][15].label = "Call Number"
+	templates["article"][15].description = "";
+	templates["article"][15].minCardinality = 0;
+	templates["article"][15].maxCardinality = 1;
+	templates["article"][15].defaultValue = "";
+	templates["article"][15].isRequired = false;
+	templates["article"][15].valueType = "shorttext";
+	templates["article"][15].index = 15;
+
+	templates["article"][16] = new Object();
+	templates["article"][16].identifier = "dateRetrieved";
+	templates["article"][16].label = "Date Retrieved"
+	templates["article"][16].description = "";
+	templates["article"][16].minCardinality = 0;
+	templates["article"][16].maxCardinality = 1;
+	templates["article"][16].defaultValue = "";
+	templates["article"][16].isRequired = false;
+	templates["article"][16].valueType = "date";
+	templates["article"][16].index = 16;
+
+	templates["article"][17] = new Object();
+	templates["article"][17].identifier = "openURL";
+	templates["article"][17].label = "Open URL"
+	templates["article"][17].description = "";
+	templates["article"][17].minCardinality = 0;
+	templates["article"][17].maxCardinality = 1;
+	templates["article"][17].defaultValue = "";
+	templates["article"][17].isRequired = false;
+	templates["article"][17].valueType = "shorttext";
+	templates["article"][17].index = 17;
+	
+	templates["article"][18] = new Object();
+	templates["article"][18].identifier = "doi";
+	templates["article"][18].label = "DOI"
+	templates["article"][18].description = "";
+	templates["article"][18].minCardinality = 0;
+	templates["article"][18].maxCardinality = 1;
+	templates["article"][18].defaultValue = "";
+	templates["article"][18].isRequired = false;
+	templates["article"][18].valueType = "number";
+	templates["article"][18].index = 18;
+	
+	templates["article"][19] = new Object();
+	templates["article"][19].identifier = "rights";
+	templates["article"][19].label = "Rights"
+	templates["article"][19].description = "";
+	templates["article"][19].minCardinality = 0;
+	templates["article"][19].maxCardinality = 2147483647;
+	templates["article"][19].defaultValue = "";
+	templates["article"][19].isRequired = false;
+	templates["article"][19].valueType = "shorttext";
+	templates["article"][19].index = 19;
+
+	templateIdentifiers[templateIdentifiers.length] = "book";
+	templates["book"] = new Array();
+	templates["book"]["label"] = "Book";
+	templates["book"]["fields"] = new Array();
+	
+	templates["book"][0] = new Object();
+	templates["book"][0].identifier = "creator";
+	templates["book"][0].label = "Author(s)"
+	templates["book"][0].description = "";
+	templates["book"][0].minCardinality = 1;
+	templates["book"][0].maxCardinality = 2147483647;
+	templates["book"][0].defaultValue = "";
+	templates["book"][0].isRequired = true;
+	templates["book"][0].valueType = "shorttext";
+	templates["book"][0].index = 0;
+
+	templates["book"][1] = new Object();
+	templates["book"][1].identifier = "title";
+	templates["book"][1].label = "Book Title"
+	templates["book"][1].description = "";
+	templates["book"][1].minCardinality = 1;
+	templates["book"][1].maxCardinality = 1;
+	templates["book"][1].defaultValue = "";
+	templates["book"][1].isRequired = true;
+	templates["book"][1].valueType = "shorttext";
+	templates["book"][1].index = 1;
+
+	templates["book"][2] = new Object();
+	templates["book"][2].identifier = "year";
+	templates["book"][2].label = "Year"
+	templates["book"][2].description = "";
+	templates["book"][2].minCardinality = 0;
+	templates["book"][2].maxCardinality = 1;
+	templates["book"][2].defaultValue = "";
+	templates["book"][2].isRequired = false;
+	templates["book"][2].valueType = "number";
+	templates["book"][2].index = 2;
+
+	templates["book"][3] = new Object();
+	templates["book"][3].identifier = "date";
+	templates["book"][3].label = "Date"
+	templates["book"][3].description = "";
+	templates["book"][3].minCardinality = 0;
+	templates["book"][3].maxCardinality = 1;
+	templates["book"][3].defaultValue = "";
+	templates["book"][3].isRequired = false;
+	templates["book"][3].valueType = "number";
+	templates["book"][3].index = 3;
+
+	templates["book"][4] = new Object();
+	templates["book"][4].identifier = "publisher";
+	templates["book"][4].label = "Publisher"
+	templates["book"][4].description = "";
+	templates["book"][4].minCardinality = 0;
+	templates["book"][4].maxCardinality = 1;
+	templates["book"][4].defaultValue = "";
+	templates["book"][4].isRequired = false;
+	templates["book"][4].valueType = "shorttext";
+	templates["book"][4].index = 4;
+
+	templates["book"][5] = new Object();
+	templates["book"][5].identifier = "publicationLocation";
+	templates["book"][5].label = "Publication Location"
+	templates["book"][5].description = "";
+	templates["book"][5].minCardinality = 0;
+	templates["book"][5].maxCardinality = 1;
+	templates["book"][5].defaultValue = "";
+	templates["book"][5].isRequired = false;
+	templates["book"][5].valueType = "shorttext";
+	templates["book"][5].index = 5;
+
+	templates["book"][6] = new Object();
+	templates["book"][6].identifier = "edition";
+	templates["book"][6].label = "Edition"
+	templates["book"][6].description = "";
+	templates["book"][6].minCardinality = 0;
+	templates["book"][6].maxCardinality = 1;
+	templates["book"][6].defaultValue = "";
+	templates["book"][6].isRequired = false;
+	templates["book"][6].valueType = "number";
+	templates["book"][6].index = 6;
+
+	templates["book"][7] = new Object();
+	templates["book"][7].identifier = "editor";
+	templates["book"][7].label = "Editor(s)"
+	templates["book"][7].description = "";
+	templates["book"][7].minCardinality = 0;
+	templates["book"][7].maxCardinality = 2147483647;
+	templates["book"][7].defaultValue = "";
+	templates["book"][7].isRequired = false;
+	templates["book"][7].valueType = "shorttext";
+	templates["book"][7].index = 7;
+
+	templates["book"][8] = new Object();
+	templates["book"][8].identifier = "sourceTitle";
+	templates["book"][8].label = "Series Title"
+	templates["book"][8].description = "";
+	templates["book"][8].minCardinality = 0;
+	templates["book"][8].maxCardinality = 1;
+	templates["book"][8].defaultValue = "";
+	templates["book"][8].isRequired = false;
+	templates["book"][8].valueType = "shorttext";
+	templates["book"][8].index = 8;
+
+	templates["book"][9] = new Object();
+	templates["book"][9].identifier = "abstract";
+	templates["book"][9].label = "Abstract"
+	templates["book"][9].description = "";
+	templates["book"][9].minCardinality = 0;
+	templates["book"][9].maxCardinality = 1;
+	templates["book"][9].defaultValue = "";
+	templates["book"][9].isRequired = false;
+	templates["book"][9].valueType = "longtext";
+	templates["book"][9].index = 9;
+
+	templates["book"][10] = new Object();
+	templates["book"][10].identifier = "note";
+	templates["book"][10].label = "Note(s)"
+	templates["book"][10].description = "";
+	templates["book"][10].minCardinality = 0;
+	templates["book"][10].maxCardinality = 2147483647;
+	templates["book"][10].defaultValue = "";
+	templates["book"][10].isRequired = false;
+	templates["book"][10].valueType = "shorttext";
+	templates["book"][10].index = 10;
+
+	templates["book"][11] = new Object();
+	templates["book"][11].identifier = "isnIdentifier";
+	templates["book"][11].label = "ISBN"
+	templates["book"][11].description = "";
+	templates["book"][11].minCardinality = 0;
+	templates["book"][11].maxCardinality = 1;
+	templates["book"][11].defaultValue = "";
+	templates["book"][11].isRequired = false;
+	templates["book"][11].valueType = "shorttext";
+	templates["book"][11].index = 11;
+
+	templates["book"][12] = new Object();
+	templates["book"][12].identifier = "subject";
+	templates["book"][12].label = "Subject(s)"
+	templates["book"][12].description = "";
+	templates["book"][12].minCardinality = 0;
+	templates["book"][12].maxCardinality = 2147483647;
+	templates["book"][12].defaultValue = "";
+	templates["book"][12].isRequired = false;
+	templates["book"][12].valueType = "shorttext";
+	templates["book"][12].index = 12;
+
+	templates["book"][13] = new Object();
+	templates["book"][13].identifier = "Language";
+	templates["book"][13].label = "Language"
+	templates["book"][13].description = "";
+	templates["book"][13].minCardinality = 0;
+	templates["book"][13].maxCardinality = 1;
+	templates["book"][13].defaultValue = "";
+	templates["book"][13].isRequired = false;
+	templates["book"][13].valueType = "number";
+	templates["book"][13].index = 13;
+
+	templates["book"][14] = new Object();
+	templates["book"][14].identifier = "locIdentifier";
+	templates["book"][14].label = "Call Number"
+	templates["book"][14].description = "";
+	templates["book"][14].minCardinality = 0;
+	templates["book"][14].maxCardinality = 1;
+	templates["book"][14].defaultValue = "";
+	templates["book"][14].isRequired = false;
+	templates["book"][14].valueType = "shorttext";
+	templates["book"][14].index = 14;
+
+	templates["book"][15] = new Object();
+	templates["book"][15].identifier = "dateRetrieved";
+	templates["book"][15].label = "Date Retrieved"
+	templates["book"][15].description = "";
+	templates["book"][15].minCardinality = 0;
+	templates["book"][15].maxCardinality = 1;
+	templates["book"][15].defaultValue = "";
+	templates["book"][15].isRequired = false;
+	templates["book"][15].valueType = "date";
+	templates["book"][15].index = 15;
+
+	templates["book"][16] = new Object();
+	templates["book"][16].identifier = "openURL";
+	templates["book"][16].label = "Open URL"
+	templates["book"][16].description = "";
+	templates["book"][16].minCardinality = 0;
+	templates["book"][16].maxCardinality = 1;
+	templates["book"][16].defaultValue = "";
+	templates["book"][16].isRequired = false;
+	templates["book"][16].valueType = "shorttext";
+	templates["book"][16].index = 16;
+
+	templates["book"][17] = new Object();
+	templates["book"][17].identifier = "doi";
+	templates["book"][17].label = "DOI"
+	templates["book"][17].description = "";
+	templates["book"][17].minCardinality = 0;
+	templates["book"][17].maxCardinality = 1;
+	templates["book"][17].defaultValue = "";
+	templates["book"][17].isRequired = false;
+	templates["book"][17].valueType = "number";
+	templates["book"][17].index = 17;
+
+	templates["book"][18] = new Object();
+	templates["book"][18].identifier = "rights";
+	templates["book"][18].label = "Rights"
+	templates["book"][18].description = "";
+	templates["book"][18].minCardinality = 0;
+	templates["book"][18].maxCardinality = 2147483647;
+	templates["book"][18].defaultValue = "";
+	templates["book"][18].isRequired = false;
+	templates["book"][18].valueType = "shorttext";
+	templates["book"][18].index = 18;
+	
+	templateIdentifiers[templateIdentifiers.length] = "chapter";
+	templates["chapter"] = new Array();
+	templates["chapter"]["label"] = "Book Section";
+	templates["chapter"]["fields"] = new Array();
+
+	templates["chapter"][0] = new Object();
+	templates["chapter"][0].identifier = "creator";
+	templates["chapter"][0].label = "Author(s)"
+	templates["chapter"][0].description = "";
+	templates["chapter"][0].minCardinality = 1;
+	templates["chapter"][0].maxCardinality = 2147483647;
+	templates["chapter"][0].defaultValue = "";
+	templates["chapter"][0].isRequired = true;
+	templates["chapter"][0].valueType = "shorttext";
+	templates["chapter"][0].index = 0;
+
+	templates["chapter"][1] = new Object();
+	templates["chapter"][1].identifier = "title";
+	templates["chapter"][1].label = "Section Title"
+	templates["chapter"][1].description = "";
+	templates["chapter"][1].minCardinality = 1;
+	templates["chapter"][1].maxCardinality = 1;
+	templates["chapter"][1].defaultValue = "";
+	templates["chapter"][1].isRequired = true;
+	templates["chapter"][1].valueType = "shorttext";
+	templates["chapter"][1].index = 1;
+
+	templates["chapter"][2] = new Object();
+	templates["chapter"][2].identifier = "year";
+	templates["chapter"][2].label = "Year"
+	templates["chapter"][2].description = "";
+	templates["chapter"][2].minCardinality = 0;
+	templates["chapter"][2].maxCardinality = 1;
+	templates["chapter"][2].defaultValue = "";
+	templates["chapter"][2].isRequired = false;
+	templates["chapter"][2].valueType = "number";
+	templates["chapter"][2].index = 2;
+
+	templates["chapter"][3] = new Object();
+	templates["chapter"][3].identifier = "date";
+	templates["chapter"][3].label = "Date"
+	templates["chapter"][3].description = "";
+	templates["chapter"][3].minCardinality = 0;
+	templates["chapter"][3].maxCardinality = 1;
+	templates["chapter"][3].defaultValue = "";
+	templates["chapter"][3].isRequired = false;
+	templates["chapter"][3].valueType = "number";
+	templates["chapter"][3].index = 3;
+
+	templates["chapter"][4] = new Object();
+	templates["chapter"][4].identifier = "publisher";
+	templates["chapter"][4].label = "Publisher"
+	templates["chapter"][4].description = "";
+	templates["chapter"][4].minCardinality = 0;
+	templates["chapter"][4].maxCardinality = 1;
+	templates["chapter"][4].defaultValue = "";
+	templates["chapter"][4].isRequired = false;
+	templates["chapter"][4].valueType = "shorttext";
+	templates["chapter"][4].index = 4;
+
+	templates["chapter"][5] = new Object();
+	templates["chapter"][5].identifier = "publicationLocation";
+	templates["chapter"][5].label = "Publication Location"
+	templates["chapter"][5].description = "";
+	templates["chapter"][5].minCardinality = 0;
+	templates["chapter"][5].maxCardinality = 1;
+	templates["chapter"][5].defaultValue = "";
+	templates["chapter"][5].isRequired = false;
+	templates["chapter"][5].valueType = "shorttext";
+	templates["chapter"][5].index = 5;
+
+	templates["chapter"][6] = new Object();
+	templates["chapter"][6].identifier = "edition";
+	templates["chapter"][6].label = "Edition"
+	templates["chapter"][6].description = "";
+	templates["chapter"][6].minCardinality = 0;
+	templates["chapter"][6].maxCardinality = 1;
+	templates["chapter"][6].defaultValue = "";
+	templates["chapter"][6].isRequired = false;
+	templates["chapter"][6].valueType = "number";
+	templates["chapter"][6].index = 6;
+
+	templates["chapter"][7] = new Object();
+	templates["chapter"][7].identifier = "editor";
+	templates["chapter"][7].label = "Editor(s)"
+	templates["chapter"][7].description = "";
+	templates["chapter"][7].minCardinality = 0;
+	templates["chapter"][7].maxCardinality = 2147483647;
+	templates["chapter"][7].defaultValue = "";
+	templates["chapter"][7].isRequired = false;
+	templates["chapter"][7].valueType = "shorttext";
+	templates["chapter"][7].index = 7;
+
+	templates["chapter"][8] = new Object();
+	templates["chapter"][8].identifier = "sourceTitle";
+	templates["chapter"][8].label = "Book Title"
+	templates["chapter"][8].description = "";
+	templates["chapter"][8].minCardinality = 0;
+	templates["chapter"][8].maxCardinality = 1;
+	templates["chapter"][8].defaultValue = "";
+	templates["chapter"][8].isRequired = false;
+	templates["chapter"][8].valueType = "shorttext";
+	templates["chapter"][8].index = 8;
+
+	templates["chapter"][9] = new Object();
+	templates["chapter"][9].identifier = "pages";
+	templates["chapter"][9].label = "Pages"
+	templates["chapter"][9].description = "";
+	templates["chapter"][9].minCardinality = 0;
+	templates["chapter"][9].maxCardinality = 1;
+	templates["chapter"][9].defaultValue = "";
+	templates["chapter"][9].isRequired = false;
+	templates["chapter"][9].valueType = "number";
+	templates["chapter"][9].index = 9;
+
+	templates["chapter"][10] = new Object();
+	templates["chapter"][10].identifier = "startPage";
+	templates["chapter"][10].label = "Start Page"
+	templates["chapter"][10].description = "";
+	templates["chapter"][10].minCardinality = 0;
+	templates["chapter"][10].maxCardinality = 1;
+	templates["chapter"][10].defaultValue = "";
+	templates["chapter"][10].isRequired = false;
+	templates["chapter"][10].valueType = "number";
+	templates["chapter"][10].index = 10;
+
+	templates["chapter"][11] = new Object();
+	templates["chapter"][11].identifier = "endPage";
+	templates["chapter"][11].label = "End Page"
+	templates["chapter"][11].description = "";
+	templates["chapter"][11].minCardinality = 0;
+	templates["chapter"][11].maxCardinality = 1;
+	templates["chapter"][11].defaultValue = "";
+	templates["chapter"][11].isRequired = false;
+	templates["chapter"][11].valueType = "number";
+	templates["chapter"][11].index = 11;
+
+	templates["chapter"][12] = new Object();
+	templates["chapter"][12].identifier = "abstract";
+	templates["chapter"][12].label = "Abstract"
+	templates["chapter"][12].description = "";
+	templates["chapter"][12].minCardinality = 0;
+	templates["chapter"][12].maxCardinality = 1;
+	templates["chapter"][12].defaultValue = "";
+	templates["chapter"][12].isRequired = false;
+	templates["chapter"][12].valueType = "longtext";
+	templates["chapter"][12].index = 12;
+
+	templates["chapter"][13] = new Object();
+	templates["chapter"][13].identifier = "note";
+	templates["chapter"][13].label = "Note(s)"
+	templates["chapter"][13].description = "";
+	templates["chapter"][13].minCardinality = 0;
+	templates["chapter"][13].maxCardinality = 2147483647;
+	templates["chapter"][13].defaultValue = "";
+	templates["chapter"][13].isRequired = false;
+	templates["chapter"][13].valueType = "shorttext";
+	templates["chapter"][13].index = 13;
+
+	templates["chapter"][14] = new Object();
+	templates["chapter"][14].identifier = "isnIdentifier";
+	templates["chapter"][14].label = "ISBN"
+	templates["chapter"][14].description = "";
+	templates["chapter"][14].minCardinality = 0;
+	templates["chapter"][14].maxCardinality = 1;
+	templates["chapter"][14].defaultValue = "";
+	templates["chapter"][14].isRequired = false;
+	templates["chapter"][14].valueType = "shorttext";
+	templates["chapter"][14].index = 14;
+
+	templates["chapter"][15] = new Object();
+	templates["chapter"][15].identifier = "subject";
+	templates["chapter"][15].label = "Subject(s)"
+	templates["chapter"][15].description = "";
+	templates["chapter"][15].minCardinality = 0;
+	templates["chapter"][15].maxCardinality = 2147483647;
+	templates["chapter"][15].defaultValue = "";
+	templates["chapter"][15].isRequired = false;
+	templates["chapter"][15].valueType = "shorttext";
+	templates["chapter"][15].index = 15;
+
+	templates["chapter"][16] = new Object();
+	templates["chapter"][16].identifier = "Language";
+	templates["chapter"][16].label = "Language"
+	templates["chapter"][16].description = "";
+	templates["chapter"][16].minCardinality = 0;
+	templates["chapter"][16].maxCardinality = 1;
+	templates["chapter"][16].defaultValue = "";
+	templates["chapter"][16].isRequired = false;
+	templates["chapter"][16].valueType = "number";
+	templates["chapter"][16].index = 16;
+
+	templates["chapter"][17] = new Object();
+	templates["chapter"][17].identifier = "locIdentifier";
+	templates["chapter"][17].label = "Call Number"
+	templates["chapter"][17].description = "";
+	templates["chapter"][17].minCardinality = 0;
+	templates["chapter"][17].maxCardinality = 1;
+	templates["chapter"][17].defaultValue = "";
+	templates["chapter"][17].isRequired = false;
+	templates["chapter"][17].valueType = "shorttext";
+	templates["chapter"][17].index = 17;
+
+	templates["chapter"][18] = new Object();
+	templates["chapter"][18].identifier = "dateRetrieved";
+	templates["chapter"][18].label = "Date Retrieved"
+	templates["chapter"][18].description = "";
+	templates["chapter"][18].minCardinality = 0;
+	templates["chapter"][18].maxCardinality = 1;
+	templates["chapter"][18].defaultValue = "";
+	templates["chapter"][18].isRequired = false;
+	templates["chapter"][18].valueType = "date";
+	templates["chapter"][18].index = 18;
+
+	templates["chapter"][19] = new Object();
+	templates["chapter"][19].identifier = "openURL";
+	templates["chapter"][19].label = "Open URL"
+	templates["chapter"][19].description = "";
+	templates["chapter"][19].minCardinality = 0;
+	templates["chapter"][19].maxCardinality = 1;
+	templates["chapter"][19].defaultValue = "";
+	templates["chapter"][19].isRequired = false;
+	templates["chapter"][19].valueType = "shorttext";
+	templates["chapter"][19].index = 19;
+
+	templates["chapter"][20] = new Object();
+	templates["chapter"][20].identifier = "doi";
+	templates["chapter"][20].label = "DOI"
+	templates["chapter"][20].description = "";
+	templates["chapter"][20].minCardinality = 0;
+	templates["chapter"][20].maxCardinality = 1;
+	templates["chapter"][20].defaultValue = "";
+	templates["chapter"][20].isRequired = false;
+	templates["chapter"][20].valueType = "number";
+	templates["chapter"][20].index = 20;
+
+	templates["chapter"][21] = new Object();
+	templates["chapter"][21].identifier = "rights";
+	templates["chapter"][21].label = "Rights"
+	templates["chapter"][21].description = "";
+	templates["chapter"][21].minCardinality = 0;
+	templates["chapter"][21].maxCardinality = 2147483647;
+	templates["chapter"][21].defaultValue = "";
+	templates["chapter"][21].isRequired = false;
+	templates["chapter"][21].valueType = "shorttext";
+	templates["chapter"][21].index = 21;
+	
+	templateIdentifiers[templateIdentifiers.length] = "report";
+	templates["report"] = new Array();
+	templates["report"]["label"] = "Report";
+	templates["report"]["fields"] = new Array();
+
+	templates["report"][0] = new Object();
+	templates["report"][0].identifier = "creator";
+	templates["report"][0].label = "Author(s)"
+	templates["report"][0].description = "";
+	templates["report"][0].minCardinality = 1;
+	templates["report"][0].maxCardinality = 2147483647;
+	templates["report"][0].defaultValue = "";
+	templates["report"][0].isRequired = true;
+	templates["report"][0].valueType = "shorttext";
+	templates["report"][0].index = 0;
+
+	templates["report"][1] = new Object();
+	templates["report"][1].identifier = "title";
+	templates["report"][1].label = "Report Title"
+	templates["report"][1].description = "";
+	templates["report"][1].minCardinality = 1;
+	templates["report"][1].maxCardinality = 1;
+	templates["report"][1].defaultValue = "";
+	templates["report"][1].isRequired = true;
+	templates["report"][1].valueType = "shorttext";
+	templates["report"][1].index = 1;
+
+	templates["report"][2] = new Object();
+	templates["report"][2].identifier = "year";
+	templates["report"][2].label = "Year"
+	templates["report"][2].description = "";
+	templates["report"][2].minCardinality = 0;
+	templates["report"][2].maxCardinality = 1;
+	templates["report"][2].defaultValue = "";
+	templates["report"][2].isRequired = false;
+	templates["report"][2].valueType = "number";
+	templates["report"][2].index = 2;
+
+	templates["report"][3] = new Object();
+	templates["report"][3].identifier = "date";
+	templates["report"][3].label = "Full Date"
+	templates["report"][3].description = "";
+	templates["report"][3].minCardinality = 0;
+	templates["report"][3].maxCardinality = 1;
+	templates["report"][3].defaultValue = "";
+	templates["report"][3].isRequired = false;
+	templates["report"][3].valueType = "number";
+	templates["report"][3].index = 3;
+
+	templates["report"][4] = new Object();
+	templates["report"][4].identifier = "publisher";
+	templates["report"][4].label = "Institution"
+	templates["report"][4].description = "";
+	templates["report"][4].minCardinality = 0;
+	templates["report"][4].maxCardinality = 1;
+	templates["report"][4].defaultValue = "";
+	templates["report"][4].isRequired = false;
+	templates["report"][4].valueType = "shorttext";
+	templates["report"][4].index = 4;
+
+	templates["report"][5] = new Object();
+	templates["report"][5].identifier = "publicationLocation";
+	templates["report"][5].label = "Publication Location"
+	templates["report"][5].description = "";
+	templates["report"][5].minCardinality = 0;
+	templates["report"][5].maxCardinality = 1;
+	templates["report"][5].defaultValue = "";
+	templates["report"][5].isRequired = false;
+	templates["report"][5].valueType = "shorttext";
+	templates["report"][5].index = 5;
+
+	templates["report"][6] = new Object();
+	templates["report"][6].identifier = "editor";
+	templates["report"][6].label = "Editor(s)"
+	templates["report"][6].description = "";
+	templates["report"][6].minCardinality = 0;
+	templates["report"][6].maxCardinality = 2147483647;
+	templates["report"][6].defaultValue = "";
+	templates["report"][6].isRequired = false;
+	templates["report"][6].valueType = "shorttext";
+	templates["report"][6].index = 6;
+
+	templates["report"][7] = new Object();
+	templates["report"][7].identifier = "edition";
+	templates["report"][7].label = "Edition"
+	templates["report"][7].description = "";
+	templates["report"][7].minCardinality = 0;
+	templates["report"][7].maxCardinality = 1;
+	templates["report"][7].defaultValue = "";
+	templates["report"][7].isRequired = false;
+	templates["report"][7].valueType = "number";
+	templates["report"][7].index = 7;
+
+	templates["report"][8] = new Object();
+	templates["report"][8].identifier = "sourceTitle";
+	templates["report"][8].label = "Series Title"
+	templates["report"][8].description = "";
+	templates["report"][8].minCardinality = 0;
+	templates["report"][8].maxCardinality = 1;
+	templates["report"][8].defaultValue = "";
+	templates["report"][8].isRequired = false;
+	templates["report"][8].valueType = "shorttext";
+	templates["report"][8].index = 8;
+
+	templates["report"][9] = new Object();
+	templates["report"][9].identifier = "pages";
+	templates["report"][9].label = "Pages"
+	templates["report"][9].description = "";
+	templates["report"][9].minCardinality = 0;
+	templates["report"][9].maxCardinality = 1;
+	templates["report"][9].defaultValue = "";
+	templates["report"][9].isRequired = false;
+	templates["report"][9].valueType = "number";
+	templates["report"][9].index = 9;
+
+	templates["report"][10] = new Object();
+	templates["report"][10].identifier = "abstract";
+	templates["report"][10].label = "Abstract"
+	templates["report"][10].description = "";
+	templates["report"][10].minCardinality = 0;
+	templates["report"][10].maxCardinality = 1;
+	templates["report"][10].defaultValue = "";
+	templates["report"][10].isRequired = false;
+	templates["report"][10].valueType = "longtext";
+	templates["report"][10].index = 10;
+
+	templates["report"][11] = new Object();
+	templates["report"][11].identifier = "isnIdentifier";
+	templates["report"][11].label = "ISBN"
+	templates["report"][11].description = "";
+	templates["report"][11].minCardinality = 0;
+	templates["report"][11].maxCardinality = 1;
+	templates["report"][11].defaultValue = "";
+	templates["report"][11].isRequired = false;
+	templates["report"][11].valueType = "shorttext";
+	templates["report"][11].index = 11;
+
+	templates["report"][12] = new Object();
+	templates["report"][12].identifier = "note";
+	templates["report"][12].label = "Note(s)"
+	templates["report"][12].description = "";
+	templates["report"][12].minCardinality = 0;
+	templates["report"][12].maxCardinality = 2147483647;
+	templates["report"][12].defaultValue = "";
+	templates["report"][12].isRequired = false;
+	templates["report"][12].valueType = "shorttext";
+	templates["report"][12].index = 12;
+
+	templates["report"][13] = new Object();
+	templates["report"][13].identifier = "subject";
+	templates["report"][13].label = "Keywords"
+	templates["report"][13].description = "";
+	templates["report"][13].minCardinality = 0;
+	templates["report"][13].maxCardinality = 2147483647;
+	templates["report"][13].defaultValue = "";
+	templates["report"][13].isRequired = false;
+	templates["report"][13].valueType = "shorttext";
+	templates["report"][13].index = 13;
+
+	templates["report"][14] = new Object();
+	templates["report"][14].identifier = "Language";
+	templates["report"][14].label = "Language"
+	templates["report"][14].description = "";
+	templates["report"][14].minCardinality = 0;
+	templates["report"][14].maxCardinality = 1;
+	templates["report"][14].defaultValue = "";
+	templates["report"][14].isRequired = false;
+	templates["report"][14].valueType = "number";
+	templates["report"][14].index = 14;
+
+	templates["report"][15] = new Object();
+	templates["report"][15].identifier = "locIdentifier";
+	templates["report"][15].label = "Call Number"
+	templates["report"][15].description = "";
+	templates["report"][15].minCardinality = 0;
+	templates["report"][15].maxCardinality = 1;
+	templates["report"][15].defaultValue = "";
+	templates["report"][15].isRequired = false;
+	templates["report"][15].valueType = "shorttext";
+	templates["report"][15].index = 15;
+
+	templates["report"][16] = new Object();
+	templates["report"][16].identifier = "dateRetrieved";
+	templates["report"][16].label = "Date Retrieved"
+	templates["report"][16].description = "";
+	templates["report"][16].minCardinality = 0;
+	templates["report"][16].maxCardinality = 1;
+	templates["report"][16].defaultValue = "";
+	templates["report"][16].isRequired = false;
+	templates["report"][16].valueType = "date";
+	templates["report"][16].index = 16;
+
+	templates["report"][17] = new Object();
+	templates["report"][17].identifier = "openURL";
+	templates["report"][17].label = "Open URL"
+	templates["report"][17].description = "";
+	templates["report"][17].minCardinality = 0;
+	templates["report"][17].maxCardinality = 1;
+	templates["report"][17].defaultValue = "";
+	templates["report"][17].isRequired = false;
+	templates["report"][17].valueType = "shorttext";
+	templates["report"][17].index = 17;
+
+	templates["report"][18] = new Object();
+	templates["report"][18].identifier = "doi";
+	templates["report"][18].label = "DOI"
+	templates["report"][18].description = "";
+	templates["report"][18].minCardinality = 0;
+	templates["report"][18].maxCardinality = 1;
+	templates["report"][18].defaultValue = "";
+	templates["report"][18].isRequired = false;
+	templates["report"][18].valueType = "number";
+	templates["report"][18].index = 18;
+
+	templates["report"][19] = new Object();
+	templates["report"][19].identifier = "rights";
+	templates["report"][19].label = "Rights"
+	templates["report"][19].description = "";
+	templates["report"][19].minCardinality = 0;
+	templates["report"][19].maxCardinality = 2147483647;
+	templates["report"][19].defaultValue = "";
+	templates["report"][19].isRequired = false;
+	templates["report"][19].valueType = "shorttext";
+	templates["report"][19].index = 19;
+	
+	templateIdentifiers[templateIdentifiers.length] = "unknown";
+	templates["unknown"] = new Array();
+	templates["unknown"]["label"] = "Unknown";
+	templates["unknown"]["fields"] = new Array();
+
+	templates["unknown"][0] = new Object();
+	templates["unknown"][0].identifier = "creator";
+	templates["unknown"][0].label = "Author(s)"
+	templates["unknown"][0].description = "";
+	templates["unknown"][0].minCardinality = 0;
+	templates["unknown"][0].maxCardinality = 2147483647;
+	templates["unknown"][0].defaultValue = "";
+	templates["unknown"][0].isRequired = false;
+	templates["unknown"][0].valueType = "shorttext";
+	templates["unknown"][0].index = 0;
+
+	templates["unknown"][1] = new Object();
+	templates["unknown"][1].identifier = "title";
+	templates["unknown"][1].label = "Title"
+	templates["unknown"][1].description = "";
+	templates["unknown"][1].minCardinality = 1;
+	templates["unknown"][1].maxCardinality = 1;
+	templates["unknown"][1].defaultValue = "";
+	templates["unknown"][1].isRequired = true;
+	templates["unknown"][1].valueType = "shorttext";
+	templates["unknown"][1].index = 1;
+
+	templates["unknown"][2] = new Object();
+	templates["unknown"][2].identifier = "year";
+	templates["unknown"][2].label = "Year"
+	templates["unknown"][2].description = "";
+	templates["unknown"][2].minCardinality = 0;
+	templates["unknown"][2].maxCardinality = 1;
+	templates["unknown"][2].defaultValue = "";
+	templates["unknown"][2].isRequired = false;
+	templates["unknown"][2].valueType = "number";
+	templates["unknown"][2].index = 2;
+
+	templates["unknown"][3] = new Object();
+	templates["unknown"][3].identifier = "date";
+	templates["unknown"][3].label = "Publication Date"
+	templates["unknown"][3].description = "";
+	templates["unknown"][3].minCardinality = 0;
+	templates["unknown"][3].maxCardinality = 1;
+	templates["unknown"][3].defaultValue = "";
+	templates["unknown"][3].isRequired = false;
+	templates["unknown"][3].valueType = "number";
+	templates["unknown"][3].index = 3;
+
+	templates["unknown"][4] = new Object();
+	templates["unknown"][4].identifier = "publisher";
+	templates["unknown"][4].label = "Publisher"
+	templates["unknown"][4].description = "";
+	templates["unknown"][4].minCardinality = 0;
+	templates["unknown"][4].maxCardinality = 1;
+	templates["unknown"][4].defaultValue = "";
+	templates["unknown"][4].isRequired = false;
+	templates["unknown"][4].valueType = "shorttext";
+	templates["unknown"][4].index = 4;
+
+	templates["unknown"][5] = new Object();
+	templates["unknown"][5].identifier = "publicationLocation";
+	templates["unknown"][5].label = "Publication Location"
+	templates["unknown"][5].description = "";
+	templates["unknown"][5].minCardinality = 0;
+	templates["unknown"][5].maxCardinality = 1;
+	templates["unknown"][5].defaultValue = "";
+	templates["unknown"][5].isRequired = false;
+	templates["unknown"][5].valueType = "shorttext";
+	templates["unknown"][5].index = 5;
+
+	templates["unknown"][6] = new Object();
+	templates["unknown"][6].identifier = "volume";
+	templates["unknown"][6].label = "Volume"
+	templates["unknown"][6].description = "";
+	templates["unknown"][6].minCardinality = 0;
+	templates["unknown"][6].maxCardinality = 1;
+	templates["unknown"][6].defaultValue = "";
+	templates["unknown"][6].isRequired = false;
+	templates["unknown"][6].valueType = "number";
+	templates["unknown"][6].index = 6;
+
+	templates["unknown"][7] = new Object();
+	templates["unknown"][7].identifier = "issue";
+	templates["unknown"][7].label = "Issue"
+	templates["unknown"][7].description = "";
+	templates["unknown"][7].minCardinality = 0;
+	templates["unknown"][7].maxCardinality = 1;
+	templates["unknown"][7].defaultValue = "";
+	templates["unknown"][7].isRequired = false;
+	templates["unknown"][7].valueType = "number";
+	templates["unknown"][7].index = 7;
+
+	templates["unknown"][8] = new Object();
+	templates["unknown"][8].identifier = "pages";
+	templates["unknown"][8].label = "Pages"
+	templates["unknown"][8].description = "";
+	templates["unknown"][8].minCardinality = 0;
+	templates["unknown"][8].maxCardinality = 1;
+	templates["unknown"][8].defaultValue = "";
+	templates["unknown"][8].isRequired = false;
+	templates["unknown"][8].valueType = "number";
+	templates["unknown"][8].index = 8;
+
+	templates["unknown"][9] = new Object();
+	templates["unknown"][9].identifier = "startPage";
+	templates["unknown"][9].label = "Start Page"
+	templates["unknown"][9].description = "";
+	templates["unknown"][9].minCardinality = 0;
+	templates["unknown"][9].maxCardinality = 1;
+	templates["unknown"][9].defaultValue = "";
+	templates["unknown"][9].isRequired = false;
+	templates["unknown"][9].valueType = "number";
+	templates["unknown"][9].index = 9;
+
+	templates["unknown"][10] = new Object();
+	templates["unknown"][10].identifier = "endPage";
+	templates["unknown"][10].label = "End Page"
+	templates["unknown"][10].description = "";
+	templates["unknown"][10].minCardinality = 0;
+	templates["unknown"][10].maxCardinality = 1;
+	templates["unknown"][10].defaultValue = "";
+	templates["unknown"][10].isRequired = false;
+	templates["unknown"][10].valueType = "number";
+	templates["unknown"][10].index = 10;
+
+	templates["unknown"][11] = new Object();
+	templates["unknown"][11].identifier = "edition";
+	templates["unknown"][11].label = "Edition"
+	templates["unknown"][11].description = "";
+	templates["unknown"][11].minCardinality = 0;
+	templates["unknown"][11].maxCardinality = 1;
+	templates["unknown"][11].defaultValue = "";
+	templates["unknown"][11].isRequired = false;
+	templates["unknown"][11].valueType = "number";
+	templates["unknown"][11].index = 11;
+
+	templates["unknown"][12] = new Object();
+	templates["unknown"][12].identifier = "editor";
+	templates["unknown"][12].label = "Editor(s)"
+	templates["unknown"][12].description = "";
+	templates["unknown"][12].minCardinality = 0;
+	templates["unknown"][12].maxCardinality = 2147483647;
+	templates["unknown"][12].defaultValue = "";
+	templates["unknown"][12].isRequired = false;
+	templates["unknown"][12].valueType = "shorttext";
+	templates["unknown"][12].index = 12;
+
+	templates["unknown"][13] = new Object();
+	templates["unknown"][13].identifier = "sourceTitle";
+	templates["unknown"][13].label = "Source Title"
+	templates["unknown"][13].description = "";
+	templates["unknown"][13].minCardinality = 0;
+	templates["unknown"][13].maxCardinality = 1;
+	templates["unknown"][13].defaultValue = "";
+	templates["unknown"][13].isRequired = false;
+	templates["unknown"][13].valueType = "shorttext";
+	templates["unknown"][13].index = 13;
+
+	templates["unknown"][14] = new Object();
+	templates["unknown"][14].identifier = "Language";
+	templates["unknown"][14].label = "Language"
+	templates["unknown"][14].description = "";
+	templates["unknown"][14].minCardinality = 0;
+	templates["unknown"][14].maxCardinality = 1;
+	templates["unknown"][14].defaultValue = "";
+	templates["unknown"][14].isRequired = false;
+	templates["unknown"][14].valueType = "number";
+	templates["unknown"][14].index = 14;
+
+	templates["unknown"][15] = new Object();
+	templates["unknown"][15].identifier = "abstract";
+	templates["unknown"][15].label = "Abstract"
+	templates["unknown"][15].description = "";
+	templates["unknown"][15].minCardinality = 0;
+	templates["unknown"][15].maxCardinality = 1;
+	templates["unknown"][15].defaultValue = "";
+	templates["unknown"][15].isRequired = false;
+	templates["unknown"][15].valueType = "longtext";
+	templates["unknown"][15].index = 15;
+
+	templates["unknown"][16] = new Object();
+	templates["unknown"][16].identifier = "note";
+	templates["unknown"][16].label = "Note(s)"
+	templates["unknown"][16].description = "";
+	templates["unknown"][16].minCardinality = 0;
+	templates["unknown"][16].maxCardinality = 2147483647;
+	templates["unknown"][16].defaultValue = "";
+	templates["unknown"][16].isRequired = false;
+	templates["unknown"][16].valueType = "shorttext";
+	templates["unknown"][16].index = 16;
+
+	templates["unknown"][17] = new Object();
+	templates["unknown"][17].identifier = "isnIdentifier";
+	templates["unknown"][17].label = "ISBN or ISSN"
+	templates["unknown"][17].description = "";
+	templates["unknown"][17].minCardinality = 0;
+	templates["unknown"][17].maxCardinality = 1;
+	templates["unknown"][17].defaultValue = "";
+	templates["unknown"][17].isRequired = false;
+	templates["unknown"][17].valueType = "shorttext";
+	templates["unknown"][17].index = 17;
+
+	templates["unknown"][18] = new Object();
+	templates["unknown"][18].identifier = "subject";
+	templates["unknown"][18].label = "Subject(s)"
+	templates["unknown"][18].description = "";
+	templates["unknown"][18].minCardinality = 0;
+	templates["unknown"][18].maxCardinality = 2147483647;
+	templates["unknown"][18].defaultValue = "";
+	templates["unknown"][18].isRequired = false;
+	templates["unknown"][18].valueType = "shorttext";
+	templates["unknown"][18].index = 18;
+
+	templates["unknown"][19] = new Object();
+	templates["unknown"][19].identifier = "locIdentifier";
+	templates["unknown"][19].label = "Call Number"
+	templates["unknown"][19].description = "";
+	templates["unknown"][19].minCardinality = 0;
+	templates["unknown"][19].maxCardinality = 1;
+	templates["unknown"][19].defaultValue = "";
+	templates["unknown"][19].isRequired = false;
+	templates["unknown"][19].valueType = "shorttext";
+	templates["unknown"][19].index = 19;
+
+	templates["unknown"][20] = new Object();
+	templates["unknown"][20].identifier = "dateRetrieved";
+	templates["unknown"][20].label = "Date Retrieved"
+	templates["unknown"][20].description = "";
+	templates["unknown"][20].minCardinality = 0;
+	templates["unknown"][20].maxCardinality = 1;
+	templates["unknown"][20].defaultValue = "";
+	templates["unknown"][20].isRequired = false;
+	templates["unknown"][20].valueType = "date";
+	templates["unknown"][20].index = 20;
+
+	templates["unknown"][21] = new Object();
+	templates["unknown"][21].identifier = "openURL";
+	templates["unknown"][21].label = "Open URL"
+	templates["unknown"][21].description = "";
+	templates["unknown"][21].minCardinality = 0;
+	templates["unknown"][21].maxCardinality = 1;
+	templates["unknown"][21].defaultValue = "";
+	templates["unknown"][21].isRequired = false;
+	templates["unknown"][21].valueType = "shorttext";
+	templates["unknown"][21].index = 21;
+
+	templates["unknown"][22] = new Object();
+	templates["unknown"][22].identifier = "doi";
+	templates["unknown"][22].label = "DOI"
+	templates["unknown"][22].description = "";
+	templates["unknown"][22].minCardinality = 0;
+	templates["unknown"][22].maxCardinality = 1;
+	templates["unknown"][22].defaultValue = "";
+	templates["unknown"][22].isRequired = false;
+	templates["unknown"][22].valueType = "number";
+	templates["unknown"][22].index = 22;
+
+	templates["unknown"][23] = new Object();
+	templates["unknown"][23].identifier = "rights";
+	templates["unknown"][23].label = "Rights"
+	templates["unknown"][23].description = "";
+	templates["unknown"][23].minCardinality = 0;
+	templates["unknown"][23].maxCardinality = 2147483647;
+	templates["unknown"][23].defaultValue = "";
+	templates["unknown"][23].isRequired = false;
+	templates["unknown"][23].valueType = "shorttext";
+	templates["unknown"][23].index = 23;
+	
+	jQuery(document).data("templates", templates);
+	jQuery(document).data("defaultTemplate",defaultTemplate);
+	jQuery(document).data("templateIdentifiers",templateIdentifiers);
+						
+ </script>
