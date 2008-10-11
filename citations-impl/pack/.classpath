@@ -2,10 +2,14 @@
   <classpathentry kind="output" path="target/classes"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="var" path="M2_REPO/zing/cql-java/0.7/cql-java-0.7.jar"/>
-  <classpathentry kind="var" path="M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar" sourcepath="M2_REPO/junit/junit/3.8.1/junit-3.8.1-sources.jar"/>
   <classpathentry kind="src" path="/sakai-citations-impl"/>
   <classpathentry kind="src" path="/sakai-citations-util"/>
   <classpathentry kind="src" path="/sakai-citations-web2bridge"/>
   <classpathentry kind="src" path="/sakai-citations-xserver"/>
-  <classpathentry kind="var" path="M2_REPO/org/sakaiproject/kernel/sakai-kernel-util/1.0RC2-SNAPSHOT/sakai-kernel-util-1.0RC2-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/sakaiproject/kernel/sakai-kernel-util/1.0RC2-SNAPSHOT/sakai-kernel-util-1.0RC2-SNAPSHOT.jar" sourcepath="M2_REPO/org/sakaiproject/kernel/sakai-kernel-util/1.0RC2-SNAPSHOT/sakai-kernel-util-1.0RC2-SNAPSHOT-sources.jar">
+    <attributes>
+      <attribute value="jar:file:M2_REPO/org/sakaiproject/kernel/sakai-kernel-util/1.0RC2-SNAPSHOT/sakai-kernel-util-1.0RC2-SNAPSHOT-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
 </classpath>

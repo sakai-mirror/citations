@@ -19,36 +19,15 @@
  *
  **********************************************************************************/
 
-package org.sakaiproject.citations.helper.renderers;
+package org.sakaiproject.citation.api;
 
-import org.sakaiproject.citations.helper.api.CitationHelperRenderer;
-
-import uk.org.ponder.rsf.components.UIContainer;
-import uk.org.ponder.rsf.components.UIJointContainer;
+import org.sakaiproject.entitybroker.entityprovider.EntityProvider;
 
 /**
- * CitationRenderer 
+ * CitationsProvider 
  *
  */
-public class CitationRenderer implements CitationHelperRenderer
+public interface CitationsProvider extends EntityProvider
 {
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.citations.helper.api.CitationHelperRenderer#getRendererType()
-	 */
-	public String getRendererType()
-    {
-	    // TODO method stub for getRendererType
-	    return null;
-    }
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.citations.helper.api.CitationHelperRenderer#make(uk.org.ponder.rsf.components.UIContainer, java.lang.Object)
-	 */
-	public UIJointContainer make(UIContainer parent, Object item)
-    {
-	    // TODO method stub for make
-	    return null;
-    }
-
+	public static final String ENTITY_PREFIX = "citations";
 }

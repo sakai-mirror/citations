@@ -19,38 +19,33 @@
  *
  **********************************************************************************/
 
+package org.sakaiproject.citation.impl;
 
-
-package org.sakaiproject.citations.helper.renderers;
-
-import org.sakaiproject.citations.helper.api.CitationHelperRenderer;
-
-import uk.org.ponder.rsf.components.UIContainer;
-import uk.org.ponder.rsf.components.UIJointContainer;
+import org.sakaiproject.citation.api.CitationsProvider;
+import org.sakaiproject.entitybroker.entityprovider.CoreEntityProvider;
+import org.sakaiproject.entitybroker.entityprovider.capabilities.AutoRegisterEntityProvider;
 
 /**
- * ImportRenderer 
+ * CitationsProviderImpl 
  *
  */
-public class ImportRenderer implements CitationHelperRenderer
+public class CitationsProviderImpl implements CitationsProvider, CoreEntityProvider,
+        AutoRegisterEntityProvider
 {
-
 	/* (non-Javadoc)
-	 * @see org.sakaiproject.citations.helper.api.CitationHelperRenderer#getRendererType()
+	 * @see org.sakaiproject.entitybroker.entityprovider.EntityProvider#getEntityPrefix()
 	 */
-	public String getRendererType()
+	public String getEntityPrefix()
     {
-	    // TODO method stub for getRendererType
-	    return null;
+	    return ENTITY_PREFIX;
     }
 
 	/* (non-Javadoc)
-	 * @see org.sakaiproject.citations.helper.api.CitationHelperRenderer#make(uk.org.ponder.rsf.components.UIContainer, java.lang.Object)
+	 * @see org.sakaiproject.entitybroker.entityprovider.CoreEntityProvider#entityExists(java.lang.String)
 	 */
-	public UIJointContainer make(UIContainer parent, Object item)
-    {
-	    // TODO method stub for make
-	    return null;
-    }
+	public boolean entityExists(String id)
+	{
+		return true;
+	}
 
 }

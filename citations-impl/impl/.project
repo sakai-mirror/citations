@@ -6,7 +6,6 @@
     <project>sakai-citations-util</project>
     <project>sakai-citations-web2bridge</project>
     <project>sakai-citations-xserver</project>
-    <project>sakai-velocity-tool</project>
   </projects>
   <buildSpec>
     <buildCommand>

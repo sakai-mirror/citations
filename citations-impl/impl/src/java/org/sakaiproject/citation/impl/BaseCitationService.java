@@ -157,7 +157,7 @@ public abstract class BaseCitationService implements CitationService
 		GS_TAGS.put("rft.issn", "id");
 		GS_TAGS.put("rft.isbn", "id");
 	}
-
+	
 	/**
 	 *
 	 */

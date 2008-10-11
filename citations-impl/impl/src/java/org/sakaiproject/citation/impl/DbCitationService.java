@@ -1550,4 +1550,5 @@ public class DbCitationService extends BaseCitationService
 
 		return buf.toString();
 	}
+
 }

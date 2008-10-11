@@ -11,6 +11,11 @@
   <groupId>org.sakaiproject</groupId>
   <artifactId>citations-base</artifactId>
   <packaging>pom</packaging>
+  <properties>
+    <deploy.target/>
+    <sakairsf.sakai.version>2.2.x</sakairsf.sakai.version>
+    <rsfutil.version>0.7.4</rsfutil.version>
+  </properties>
   <scm>
     <connection>scm:svn:https://source.sakaiproject.org/svn/citations/trunk</connection>
     <developerConnection>scm:svn:https://source.sakaiproject.org/svn/citations/trunk</developerConnection>
@@ -20,6 +25,7 @@
     <module>citations-servlet/servlet</module>
     <module>citations-api/api</module>
     <module>citations-tool/tool</module>
+    <module>citations-helper/helper</module>
     <module>citations-util/util</module>
     <module>citations-osid/web2bridge</module>
     <module>citations-osid/xserver</module>
@@ -54,6 +60,17 @@
         <artifactId>sakai-citations-impl</artifactId>
         <version>2.6.0RC1-SNAPSHOT</version>
       </dependency>
+      <dependency>
+        <groupId>org.sakaiproject.entitybroker</groupId>
+        <artifactId>entitybroker-api</artifactId>
+        <version>[1.3.3,1.4.0)</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.sakaiproject.entitybroker</groupId>
+        <artifactId>entitybroker-utils</artifactId>
+        <version>[1.3.3,1.4.0)</version>
+      </dependency>  	
     </dependencies>
   </dependencyManagement>
 </project>

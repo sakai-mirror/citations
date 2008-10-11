@@ -32,6 +32,7 @@ import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.citation.api.Citation;
 import org.sakaiproject.citation.api.CitationCollection;
 import org.sakaiproject.citation.api.Schema;
+import org.sakaiproject.entitybroker.entityprovider.EntityProvider;
 
 public interface CitationService extends EntityProducer
 {
