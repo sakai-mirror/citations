@@ -404,7 +404,7 @@ var citation = function() {
 			var focusNum = String( count );
 			document.getElementById( identifier + focusNum ).focus();
 		},
-
+		
 		addUrl : function ()
 		{
 			// get the current count of urls

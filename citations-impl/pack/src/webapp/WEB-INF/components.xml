@@ -112,5 +112,10 @@
     	<property name="timeToLive" ><value>43200</value></property>
     	<property name="timeToIdle" ><value>900</value></property>
   	</bean>
+  	
+  	<bean id="org.sakaiproject.citation.api.CitationProvider"
+  		class="org.sakaiproject.citation.impl.CitationsProviderImpl">
+  		<property name="citationService" ref="org.sakaiproject.citation.api.CitationService"/>
+  	</bean>
 
 </beans>

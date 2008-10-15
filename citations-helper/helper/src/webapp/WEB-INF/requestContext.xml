@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- list the backing beans here -->
+
+   <bean id="citationsBean" class="org.sakaiproject.citations.helper.CitationsBean">
+   </bean>
+
+	<!-- list the producer beans here -->
+
+	<bean class="org.sakaiproject.citations.helper.producers.CitationCollectionProducer">
+		<property name="citationService" ref="org.sakaiproject.citation.api.CitationService"/>
+	</bean>
+
+
+</beans>

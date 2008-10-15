@@ -1,6 +1,3 @@
-<link rel="stylesheet" type="text/css" href="../css/citationCollection.css" />
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" src="../js/citationCollection.js"></script>
 <div rsf:id="citationCollection:" class="citationCollection">
 	<div rsf:id="citationContext:" class="citationContext">
 		<div rsf:id="titleBar:" class="citationTitleBar">
@@ -8,15 +5,15 @@
 				Revising Citations for SRG
 			</span> 
 			<span rsf:id="actions:" class="citationActions">
-				<span rsf:id="" class="">
-					12 citations in list
+				<span rsf:id="citationCount" class="">
+					10 citations in list
 				</span>
-				<input rsf:id="doneButton" type="button" value="Save" />
-				<input rsf:id="cancelButton" type="button" value="Cancel" />
+				<input id="doneButton" class="closeModalButton" type="button" value="Save" />
+				<input id="cancelButton" class="closeModalButton" type="button" value="Cancel" />
 			</span>
 		</div>
 		<div rsf:id="citationNavBar:" class="citationNavBar">
-			<span rsf:id="" class="chooseView disabledLink">
+			<span rsf:id="chooseView:" class="chooseView disabledLink">
 				<span rsf:id="" style="display: none">
 					<a rsf:id="" class="chooseViewLink" href="#" disabled="true">View Citations</a>
 				</span>
@@ -269,7 +266,6 @@
 				<p rsf:id="" class="">
 					<input type="button" value='Import' id="import1" />
 				</p>
-				
 			</form>		
 		</div>
 		<div rsf:id="citationNavAlternative:" class="citationNavAlternative citationAddContext hiddenContext">
@@ -507,7 +503,7 @@
 							<label class="block" for="pref_0">
 								Use as title link?
 							</label>
-							<input class="prefLink" name="pref_0" id="pref_0"  class="citationEditValue"
+							<input name="pref_0" id="pref_0"  class="prefLink citationEditValue"
 								type="checkbox" value="preferred" onclick="trackPreferredUrl('pref_0');" />
 						</td>
 
@@ -542,10 +538,9 @@
 						onclick=""/>
 				</p>
 			</form>
-		</div
+		</div>
 	</div>
-</div>
-<script type="text/javascript">
+	<script type="text/javascript">
 
 	var templates = new Array();
 	var defaultTemplate = "article";
@@ -1737,3 +1732,5 @@
 	jQuery(document).data("templateIdentifiers",templateIdentifiers);
 						
  </script>
+	
+</div>

@@ -192,6 +192,12 @@ public interface CitationService extends EntityProducer
      * @param collection
      */
     public void save(CitationCollection collection);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public boolean collectionExists(String id);
     
 }	// interface CitationService
 

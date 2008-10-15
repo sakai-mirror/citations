@@ -40,6 +40,7 @@ import org.sakaiproject.citation.api.CitationCollection;
 import org.sakaiproject.citation.api.Schema;
 import org.sakaiproject.citation.api.Schema.Field;
 import org.sakaiproject.db.api.SqlReader;
+import org.sakaiproject.db.api.SqlReaderFinishedException;
 import org.sakaiproject.db.api.SqlService;
 import org.sakaiproject.id.cover.IdManager;
 import org.sakaiproject.thread_local.cover.ThreadLocalManager;
@@ -1550,5 +1551,40 @@ public class DbCitationService extends BaseCitationService
 
 		return buf.toString();
 	}
+
+	public boolean collectionExists(String id)
+    {
+		String sql = "select count(*) as cc_count from " + m_collectionTableName + " where COLLECTION_ID = ?";
+		
+		Object fields[] = new Object[1];
+		fields[0] = id;
+
+		List list = m_sqlService.dbRead(sql, fields, new SqlReader(){
+
+			public Object readSqlResultRecord(final ResultSet result) throws SqlReaderFinishedException
+            {
+	            int count = 0;
+                try
+                {
+	                count = result.getInt("cc_count");
+                }
+                catch (final SQLException e)
+                {
+                	// ignore the exception and use default value, 0
+                	M_log.debug(".readSqlResultRecord --> SQLException ", e);
+                }
+	            return Integer.valueOf(count);
+            }
+			
+		});
+		
+		boolean exists = false;
+		if(list != null && ! list.isEmpty())
+		{
+			exists = ((Integer) list.get(0)).intValue() > 0;
+		}
+
+	    return exists;
+    }
 
 }

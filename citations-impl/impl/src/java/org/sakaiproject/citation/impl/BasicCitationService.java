@@ -318,5 +318,13 @@ public class BasicCitationService extends BaseCitationService
     public Storage newStorage()
     {
 	    return new BasicCitationStorage();
+    }
+
+	/* (non-Javadoc)
+	 * @see org.sakaiproject.citation.api.CitationService#collectionExists(java.lang.String)
+	 */
+	public boolean collectionExists(String id)
+    {
+	    return true;
     }    
 }

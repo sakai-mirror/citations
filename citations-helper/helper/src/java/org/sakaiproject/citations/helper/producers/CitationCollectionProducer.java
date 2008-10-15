@@ -21,17 +21,38 @@
 
 package org.sakaiproject.citations.helper.producers;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.citation.api.CitationCollection;
+import org.sakaiproject.citation.api.CitationService;
+import org.sakaiproject.citations.helper.params.CitationsViewParams;
+import org.sakaiproject.exception.IdUnusedException;
+
+import uk.org.ponder.rsf.components.UIBranchContainer;
 import uk.org.ponder.rsf.components.UIContainer;
+import uk.org.ponder.rsf.components.UIMessage;
+import uk.org.ponder.rsf.content.ContentTypeInfoRegistry;
+import uk.org.ponder.rsf.content.ContentTypeReporter;
 import uk.org.ponder.rsf.view.ComponentChecker;
 import uk.org.ponder.rsf.view.ViewComponentProducer;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
+import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
 
 /**
  * CitationCollectionProducer 
  *
  */
-public class CitationCollectionProducer implements ViewComponentProducer
+public class CitationCollectionProducer implements ViewComponentProducer, ViewParamsReporter, ContentTypeReporter
 {
+	public static final String VIEW_ID = "CitationCollection";
+	
+	private Log logger = LogFactory.getLog(CitationCollectionProducer.class);
+	
+	protected CitationService citationService;
+	public void setCitationService(CitationService citationService)
+	{
+		this.citationService = citationService;
+	}
 
 	/* (non-Javadoc)
 	 * @see uk.org.ponder.rsf.view.ViewComponentProducer#getViewID()
@@ -39,7 +60,7 @@ public class CitationCollectionProducer implements ViewComponentProducer
 	public String getViewID()
 	{
 		// TODO method stub for getViewID
-		return null;
+		return VIEW_ID;
 	}
 
 	/* (non-Javadoc)
@@ -48,8 +69,53 @@ public class CitationCollectionProducer implements ViewComponentProducer
 	public void fillComponents(UIContainer tofill, ViewParameters viewparams,
 	        ComponentChecker checker)
 	{
-		// TODO method stub for fillComponents
-
+		String citationCollectionId = null;
+		CitationCollection collection = null;
+		int citationCount = 0;
+		if(viewparams instanceof CitationsViewParams)
+		{
+			citationCollectionId = ((CitationsViewParams) viewparams).citationCollectionId;
+			if(citationCollectionId != null)
+			{
+				try
+                {
+	                collection = this.citationService.getCollection(citationCollectionId);
+	                citationCount = collection.size();
+                }
+                catch (IdUnusedException e)
+                {
+	                logger.warn("CitationCollectionProducer.fillComponents --> IdUnusedException: " + citationCollectionId + " " + e);
+                }
+			}
+		}
+		UIBranchContainer citationCollection = UIBranchContainer.make(tofill, "citationCollection:", citationCollectionId);
+		UIBranchContainer citationContext = UIBranchContainer.make(citationCollection, "citationContext:");
+		
+		UIBranchContainer titleBar = UIBranchContainer.make(citationContext, "titleBar:");
+		UIMessage.make(titleBar, "title", "citations.title");
+		UIBranchContainer actions = UIBranchContainer.make(titleBar, "actions:");
+		UIMessage.make(actions, "citationCount", "citations.count", new Object[]{ Integer.valueOf(citationCount) });
+		
+		UIBranchContainer citationNavBar = UIBranchContainer.make(citationContext, "citationNavBar:");
+		UIBranchContainer chooseView = UIBranchContainer.make(citationNavBar, "chooseView:");
+		
+		
 	}
+
+	/* (non-Javadoc)
+	 * @see uk.org.ponder.rsf.viewstate.ViewParamsReporter#getViewParameters()
+	 */
+	public ViewParameters getViewParameters()
+    {
+	    return new CitationsViewParams();
+    }
+
+	/* (non-Javadoc)
+	 * @see uk.org.ponder.rsf.content.ContentTypeReporter#getContentType()
+	 */
+	public String getContentType()
+    {
+	    return ContentTypeInfoRegistry.HTML_FRAGMENT;
+    }
 
 }

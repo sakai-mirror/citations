@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<registration>
+	<tool id="sakai.citations"
+		title="Citations Helper"
+		description="Citations Helper">
+		<category name="helper" />
+	</tool>	
+</registration>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- handles configuration of internationalization messages -->
+	<bean id="messageLocator"
+		class="uk.org.ponder.springutil.SpringMessageLocator">
+		<property name="messageSource">
+			<bean
+				class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+				<property name="basename">
+					<value>WEB-INF/bundle/messages</value>
+				</property>
+				<property name="cacheSeconds">
+					<value>10</value>
+				</property>
+			</bean>
+		</property>
+		<property name="localeGetter" ref="requestLocaleProxy" />
+	</bean>
+
+	<!-- Control the location of the html templates (default: content/templates/) -->
+	<bean id="templateResolverStrategy" parent="CRITemplateResolverStrategy">
+		<property name="baseDirectory" value="templates/" />
+	</bean>
+
+	<!-- Override this definition from RSF-evolvers, to reflect the fact we are
+		serving the RSF components templates from our own webapp (as provided using
+		the "partial WAR" build strategy -->
+	<bean id="componentsTemplateResourceBase" class="java.lang.String">
+		<constructor-arg value="/" />
+	</bean>
+	
+	<!-- For security purposes, only beans listed in the comma separated value list
+			may be the target of EL operations coming in over the request -->
+	<bean parent="requestAddressibleParent">
+  	  <property name="value" value="citationsBean" />
+	</bean>
+
+	<bean parent="templateContributorParent">
+		<property name="templateResourceBase" ref="componentsTemplateResourceBase"/>
+		<property name="templateNames" value="CitationCollection" />
+		<property name="baseDirectory" value="component-templates/" />
+	</bean>
+	
+	<bean id="org.sakaiproject.citation.api.CitationsProvider"
+		class="org.sakaiproject.citation.impl.CitationsProviderImpl">
+		
+	</bean>
+
+	<bean class="org.sakaiproject.citations.helper.CitationsViewParamsInferrer"/>
+	
+</beans>
+	
