@@ -3,13 +3,13 @@
  * $Id$
  ***********************************************************************************
  *
- * Copyright (c) 2006 The Sakai Foundation.
+ * Copyright (c) 2006, 2007, 2008, 2009 The Sakai Foundation
  *
- * Licensed under the Educational Community License, Version 1.0 (the "License");
+ * Licensed under the Educational Community License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.opensource.org/licenses/ecl1.php
+ *       http://www.osedu.org/licenses/ECL-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -1547,6 +1547,7 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 		pipe.setActionCompleted(true);
 
 		toolSession.setAttribute(ResourceToolAction.DONE, Boolean.TRUE);
+		toolSession.removeAttribute(CitationHelper.CITATION_HELPER_INITIALIZED);
 
 		cleanup(toolSession, CitationHelper.CITATION_PREFIX, state);
 
@@ -1615,6 +1616,7 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 		pipe.setActionCompleted(true);
 
 		toolSession.setAttribute(ResourceToolAction.DONE, Boolean.TRUE);
+		toolSession.removeAttribute(CitationHelper.CITATION_HELPER_INITIALIZED);
 
 		cleanup(toolSession, CitationHelper.CITATION_PREFIX, state);
 
@@ -3093,9 +3095,8 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 		/*
 		 * Resources Tool/Citation Helper support
 		 */
-		
-		String initId = pipe.getInitializationId();
-		if( initId == null )
+
+		if( toolSession.getAttribute(CitationHelper.CITATION_HELPER_INITIALIZED) == null )
 		{
 			// we're starting afresh: an action has been clicked in Resources
 			
@@ -3111,6 +3112,7 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 					// leave helper
 					pipe.setActionCompleted( true );
 					toolSession.setAttribute(ResourceToolAction.DONE, Boolean.TRUE);
+					toolSession.removeAttribute(CitationHelper.CITATION_HELPER_INITIALIZED);
 					cleanup( toolSession, CitationHelper.CITATION_PREFIX, state);
 					
 					return false;
@@ -3150,7 +3152,8 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 			}
 			
 			// set Citations Helper to "initialized"
-			pipe.setInitializationId( "initialized" );
+			//pipe.setInitializationId( "initialized" );
+			toolSession.setAttribute(CitationHelper.CITATION_HELPER_INITIALIZED, Boolean.toString(true));
 		}
 		
 		else
