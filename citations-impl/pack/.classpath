@@ -7,5 +7,5 @@
   <classpathentry kind="src" path="/sakai-citations-util"/>
   <classpathentry kind="src" path="/sakai-citations-web2bridge"/>
   <classpathentry kind="src" path="/sakai-citations-xserver"/>
-  <classpathentry kind="var" path="M2_REPO/org/sakaiproject/kernel/sakai-kernel-util/1.0.6/sakai-kernel-util-1.0.6.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/sakaiproject/kernel/sakai-kernel-util/1.0.7/sakai-kernel-util-1.0.7.jar"/>
 </classpath>
