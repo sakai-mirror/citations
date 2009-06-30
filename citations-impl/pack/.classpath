@@ -7,9 +7,5 @@
   <classpathentry kind="src" path="/sakai-citations-util"/>
   <classpathentry kind="src" path="/sakai-citations-web2bridge"/>
   <classpathentry kind="src" path="/sakai-citations-xserver"/>
-  <classpathentry kind="var" path="M2_REPO/org/sakaiproject/kernel/sakai-kernel-util/1.0.9/sakai-kernel-util-1.0.9.jar" sourcepath="M2_REPO/org/sakaiproject/kernel/sakai-kernel-util/1.0.9/sakai-kernel-util-1.0.9-sources.jar">
-    <attributes>
-      <attribute value="jar:file:/Users/arwhyte/.m2/repository/org/sakaiproject/kernel/sakai-kernel-util/1.0.9/sakai-kernel-util-1.0.9-javadoc.jar!/" name="javadoc_location"/>
-    </attributes>
-  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/sakaiproject/kernel/sakai-kernel-util/1.0.11/sakai-kernel-util-1.0.11.jar"/>
 </classpath>
