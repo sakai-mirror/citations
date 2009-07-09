@@ -137,8 +137,6 @@ public interface Citation 	// extends Entity
 	 */
 	public String getPreferredUrlId();
 	
-	public String getSaveUrl(String collectionId);
-
 	/**
 	 * Access the schema for the Citation
 	 * @return th
