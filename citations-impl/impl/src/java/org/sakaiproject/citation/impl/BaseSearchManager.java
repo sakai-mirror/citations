@@ -1783,7 +1783,7 @@ public class BaseSearchManager implements SearchManager, Observer
 
 
 	// google scholar constants
-	public static final String SAKAI_SESSION = "sakai.session";
+	public static final String SAKAI_SESSION = "sakai.session.key";
 	public static final String SAKAI_KEY = "sakai.key";
 	public static final String SAKAI_HOST = "sakai.host";
 
@@ -2492,8 +2492,8 @@ public class BaseSearchManager implements SearchManager, Observer
     public String getGoogleScholarUrl(String resourceId)
     {
     	String serverUrl = serverConfigurationService.getServerUrl();
- 		SessionManager sessionManager = (SessionManager) ComponentManager.get("org.sakaiproject.tool.api.SessionManager");
-		String sessionId = sessionManager.getCurrentSession().getId();
+ 		//SessionManager sessionManager = (SessionManager) ComponentManager.get("org.sakaiproject.tool.api.SessionManager");
+		//String sessionId = sessionManager.getCurrentSession().getId();
 
 		try
 		{
@@ -2506,8 +2506,7 @@ public class BaseSearchManager implements SearchManager, Observer
 							resourceId +
 							"?" +
 							SAKAI_SESSION +
-							"=" +
-							sessionId + "&", "UTF-8" )
+							"=nada&", "UTF-8" )
 					+ "&linkurl_id="
 					+ java.net.URLEncoder.encode( m_configService.getSiteConfigSakaiServerKey(), "UTF-8" ) );
 		}
