@@ -1,18 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-  <name>citations-xserver</name>
-  <comment></comment>
+  <name>sakai-citations-xserver</name>
+  <comment/>
   <projects>
+    <project>sakai-citations-api</project>
+    <project>sakai-citations-util</project>
   </projects>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
-      <arguments>
-      </arguments>
     </buildCommand>
   </buildSpec>
   <natures>
     <nature>org.eclipse.jdt.core.javanature</nature>
   </natures>
 </projectDescription>
-
