@@ -6,6 +6,6 @@
   <classpathentry kind="src" path="/sakai-citations-util"/>
   <classpathentry kind="src" path="/sakai-citations-web2bridge"/>
   <classpathentry kind="src" path="/sakai-citations-xserver"/>
-  <classpathentry kind="var" path="M2_REPO/org/sakaiproject/kernel/sakai-kernel-util/1.0.12/sakai-kernel-util-1.0.12.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/sakaiproject/kernel/sakai-kernel-util/1.0.13/sakai-kernel-util-1.0.13.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 </classpath>
