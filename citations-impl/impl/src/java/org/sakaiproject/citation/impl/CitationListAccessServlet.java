@@ -324,7 +324,7 @@ public class CitationListAccessServlet implements HttpAccess
     					String urlLabel = ( citation.getCustomUrlLabel( urlId ) == null ||
     							citation.getCustomUrlLabel( urlId ).trim().equals("") ) ? rb.getString( "nullUrlLabel.view" ) : Validator.escapeHtml( citation.getCustomUrlLabel( urlId ) );
 
-    					out.println("\t\t\t\t<a href=\"" + citation.getCustomUrl( urlId ).toString() + "\" target=\"_blank\">" + urlLabel + "</a>");
+    					out.println("\t\t\t\t<a href=\"" + Validator.escapeHtml(citation.getCustomUrl( urlId )) + "\" target=\"_blank\">" + urlLabel + "</a>");
     	    			out.println("\t\t\t\t |");
     				}
     			}

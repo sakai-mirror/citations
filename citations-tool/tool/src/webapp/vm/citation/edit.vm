@@ -97,7 +97,7 @@
 								<label for="url_${count}">
 									$tlang.getString("url.link")
 								</label>
-								<input name="url_$count" id="url_$count" value="$!{citation.getCustomUrl("$urlId")}" type="text" size="50" />
+								<input name="url_$count" id="url_$count" value="$!{xilator.escapeHtml(citation.getCustomUrl("$urlId"))}" type="text" size="50" />
 							</td>
 						</tr>
 						<tr>
