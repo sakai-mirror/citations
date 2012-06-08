@@ -34,10 +34,66 @@
 // create citations_new_resource namespace if it doesn't exist
 var citations_new_resource = citations_new_resource || {};
 
+/*
+ * used in the json returned by actions that
+ * need to be notified to the user 
+ */
+var reportSuccess = function(msg){
+    $('#messagePanel').html(msg).fadeTo("slow", 1).animate({
+        opacity: 1.0
+    }, 5000).fadeTo(3000, 0);
+};
+
+/*
+ * There has been an error
+ */
+var reportError = function(msg){
+    $('#messageError').html(msg).fadeTo("slow", 1).animate({
+        opacity: 1.0
+    }, 5000).fadeTo(3000, 0);
+};
+
+function resizeFrame(updown) {
+	if (top.location != self.location) 	 {
+		var frame = parent.document.getElementById(window.name);
+	}	
+	if( frame ) {
+		var clientH = document.body.clientHeight;
+		if(updown != 'shrink') {
+			clientH += 30;
+		}
+		$( frame ).height( clientH );
+	} else {
+//		throw( "resizeFrame did not get the frame (using name=" + window.name + ")" );
+	}
+}
+
+citations_new_resource.setupToggleAreas = function(toggler, togglee, openInit, speed){
+	// toggler=class of click target
+	// togglee=class of container to expand
+	// openInit=true - all togglee open on enter
+	// speed=speed of expand/collapse animation
+	if (openInit == true && openInit != null) {
+		$('.expand').hide();
+	}
+	else {
+	    $('.' + togglee).hide();
+	    $('.collapse').hide();
+	    resizeFrame();
+	}
+	$('.' + toggler).click(function(){
+	    $(this).next('.' + togglee).fadeToggle(speed);
+	    $(this).find('.expand').toggle();
+	    $(this).find('.collapse').toggle();
+	    resizeFrame();
+	});
+}
+
+
 citations_new_resource.processClick = function(successAction) {
 	var requestDisplayName = function() {
 		// TODO: use sakai message in DOM
-		alert('Please supply a name for the citation list.');
+		reportError('Please supply a name for the citation list.');
 		return;
 	};
 	var postAjaxRequest = function(params, successAction) {
@@ -51,9 +107,9 @@ citations_new_resource.processClick = function(successAction) {
 			success		: function(jsObj) {
 				$.each(jsObj, function(key, value) {
 					if(key === 'message' && value && 'null' !== value && '' !== $.trim(value)) {
-						alert(value);
+						reportSuccess(value);
 					} else if($.isArray(value)) {
-						alert('result for key ' + key + ' is an array: ' + value);
+						reportError('result for key ' + key + ' is an array: ' + value);
 					} else {
 						$('input[name=' + key + ']').val(value);
 					}
@@ -64,7 +120,7 @@ citations_new_resource.processClick = function(successAction) {
 			},
 			error		: function(jqXHR, textStatus, errorThrown) {
 				// TODO: replace with reasonable error handling
-				alert("failed: " + textStatus + " :: " + errorThrown);
+				reportError("failed: " + textStatus + " :: " + errorThrown);
 			}
 		});
 		
@@ -203,7 +259,7 @@ citations_new_resource.init = function() {
 						searchUrl += "&citationCollectionId=" + jsObj.citationCollectionId;
 					}
 				} catch (e) {
-					alert(e);
+					reportError(e);
 				}
 				if(childWindow && childWindow[this.linkId] && childWindow[this.linkId].close) {
 					childWindow[this.linkId].close();
@@ -282,5 +338,6 @@ citations_new_resource.init = function() {
 
 $(document).ready(function(){
 	citations_new_resource.init();
+	citations_new_resource.setupToggleAreas('toggleAnchor', 'toggledContent', false, 'fast');
 });
 

@@ -26,11 +26,16 @@
 <script type="text/javascript" src="#libraryLink('js/jquery-ui-latest/js/jquery-ui.min.js')">	
 </script>
 <link media="all" rel="stylesheet" type="text/css" href="#libraryLink('js/jquery-ui-latest/css/ui-lightness/jquery-ui.css')">
+<link media="all" rel="stylesheet" type="text/css" href="/sakai-citations-tool/css/citations.css">
 <style type="text/css">
 span.searchTargetLink { margin-right:50px; }
 </style>
 
 <div id="citationsPortletBody" class="portletBody">
+    <div id="messagePanel" style="display:none">
+    </div>
+    <div id="messageError" style="display:none">
+    </div>
 	<h3>
 		#if($resourceAdd)
 			$tlang.getString("resource.new")
@@ -62,15 +67,17 @@ span.searchTargetLink { margin-right:50px; }
 				<input type="text" size="40" id="displayName" name="displayName" value="$validator.escapeHtml("$!resourceTitle")" />
 			</p>
 		</div>
-		<div id="accessShown" style="display:none;">
-			<div style="border:none;background-color: #DDDDDD;padding: 0.3em;width:95%;">		
-				<h4>
-					<a id="hideAccess">
-						<img src="#imageLink("sakai/collapse.gif")" alt="$tlang.getString('resource.aaa.hide')" border="0" align="top" />
-						$tlang.getString("resource.aaa.title")
-					</a>
-				</h4>
-			</div>
+		<h4 id="toggleModel" class="toggleAnchor specialLink">
+			<span class="expand">
+				<img alt="expand" src="/library/image/sakai/expand.gif" />
+				$tlang.getString('resource.aaa.show')
+			</span>
+			<span class="collapse">
+				<img alt="collapse" src="/library/image/sakai/collapse.gif" />
+				$tlang.getString('resource.aaa.hide')
+			</span>
+		</h4>
+		<div id="toggledContent" class="toggledContent" style="display:none;">
 			######### begin access section ##########
 			<fieldset>
 			<legend>$tlang.getString("resource.access.title")</legend>
@@ -312,16 +319,6 @@ span.searchTargetLink { margin-right:50px; }
 			</fieldset>
 			######### end availability section ##########	
 			
-		</div>
-		<div id="accessHidden">
-			<div style="border:none;background-color: #DDDDDD;padding: 0.3em;width:95%;">		
-				<h4>
-					<a id="showAccess">
-						<img src="#imageLink("sakai/expand.gif")" alt="$tlang.getString('resource.aaa.show')" border="0" align="top" />
-						$tlang.getString("resource.aaa.title")
-					</a>
-				</h4>
-			</div>
 		</div>
 		
 		<p class="shorttext">
