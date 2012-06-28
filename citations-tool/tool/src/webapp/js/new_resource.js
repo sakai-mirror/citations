@@ -316,7 +316,9 @@ citations_new_resource.init = function() {
 		};
 		citations_new_resource.processClick(successObj)
 	});
-	
+	$('#access_mode_groups').change(function(eventObject) {
+		$('#groupTable').toggle();
+	});
 	$(window).unload(function() {
 		if(childWindow) {
 			for (key in childWindow) {

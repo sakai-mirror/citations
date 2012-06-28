@@ -30,6 +30,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -104,6 +105,7 @@ import org.sakaiproject.exception.PermissionException;
 import org.sakaiproject.exception.ServerOverloadException;
 import org.sakaiproject.exception.TypeException;
 import org.sakaiproject.site.api.Group;
+import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.time.api.Time;
 import org.sakaiproject.time.cover.TimeService;
@@ -1022,17 +1024,19 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 				new_groups.addAll(Arrays.asList(access_groups));
 			}
 			
-			Map<String,Map<String,String>> possibleGroups = (Map<String, Map<String, String>>) entityProperties.get(PROP_POSSIBLE_GROUPS);
+			List<Map<String,String>> possibleGroups = (List<Map<String, String>>) entityProperties.get(PROP_POSSIBLE_GROUPS);
 			if(possibleGroups == null) {
-				possibleGroups = new HashMap<String,Map<String,String>>();
+				possibleGroups = new ArrayList<Map<String,String>>();
 			}
-			SortedSet<String> new_group_refs = convertToRefs(new_groups, possibleGroups);
+			Map<String, String> possibleGroupMap = mapGroupRefs(possibleGroups);
+			SortedSet<String> new_group_refs = convertToRefs(new_groups, possibleGroupMap );
 			
-			boolean groups_are_inherited = (new_groups.size() == possibleGroups.size()) && possibleGroups.keySet().containsAll(new_groups);
+			boolean groups_are_inherited = (new_groups.size() == possibleGroupMap.size()) && possibleGroupMap.keySet().containsAll(new_groups);
 			
 			try {
 				if(groups_are_inherited) {
 					edit.clearGroupAccess();
+					edit.setGroupAccess(new_group_refs);
 				} else {
 					edit.setGroupAccess(new_group_refs);
 				}
@@ -1111,15 +1115,27 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 		results.put(PROP_IS_USER_SITE, siteService.isUserSite(ref.getContext()));
 	}
 
-	public SortedSet<String> convertToRefs(Collection<String> groupIds, Map<String, Map<String, String>> possibleGroups) 
+	private Map<String, String> mapGroupRefs(
+			List<Map<String, String>> possibleGroups) {
+		
+		Map<String, String> groupRefMap = new HashMap<String, String>();
+		for(Map<String, String> groupInfo : possibleGroups) {
+			if(groupInfo.get("groupId") != null && groupInfo.get("entityRef") != null) {
+				groupRefMap.put(groupInfo.get("groupId"), groupInfo.get("entityRef"));
+			}
+		}
+		return groupRefMap ;
+	}
+
+	public SortedSet<String> convertToRefs(Collection<String> groupIds, Map<String, String> possibleGroupMap) 
 	{
 		SortedSet<String> groupRefs = new TreeSet<String>();
 		for(String groupId : groupIds)
 		{
-			Map<String,String> group = possibleGroups.get(groupId);
-			if(group != null)
+			String groupRef = possibleGroupMap.get(groupId);
+			if(groupRef != null)
 			{
-				groupRefs.add(group.get("entityRef"));
+				groupRefs.add(groupRef);
 			}
 		}
 		return groupRefs;
@@ -4756,20 +4772,76 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 		props.put(PROP_IS_PUBVIEW_POSSIBLE, new Boolean(! preventPublicDisplay.booleanValue()));
 		
 		// accessMode
-		props.put(PROP_ACCESS_MODE, entity.getAccess());
+		AccessMode accessMode = entity.getAccess();
+		props.put(PROP_ACCESS_MODE, accessMode);
 		// isGroupInherited
 		props.put(PROP_IS_GROUP_INHERITED, AccessMode.GROUPED == entity.getInheritedAccess());
+				
+		SiteService siteService = (SiteService) ComponentManager.get(SiteService.class);
+		
+		Set<String> currentGroups = new TreeSet<String>();
+		if(AccessMode.GROUPED == accessMode) {
+			for(Group gr : (Collection<Group>) entity.getGroupObjects()) {
+				currentGroups.add(gr.getId());
+			}
+		} 
+		
 		// possibleGroups
-		Collection<Group> inheritedGroupObjs = entity.getInheritedGroupObjects();
-		Map<String,Map<String,String>> groups = new HashMap<String,Map<String,String>>();
+		Collection<Group> inheritedGroupObjs = null;
+		if(entity.getInheritedAccess() == AccessMode.GROUPED) {
+			inheritedGroupObjs = entity.getInheritedGroupObjects();
+		} else {
+			try {
+				Site site = siteService.getSite(ref.getContext());
+				inheritedGroupObjs = site.getGroups();
+			} catch (IdUnusedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		List<Map<String,String>> groups = new ArrayList<Map<String,String>>();
 		if(inheritedGroupObjs != null) {
+			Collection<Group> groupsWithRemovePermission = null;
+			if(AccessMode.GROUPED == accessMode)
+			{
+				groupsWithRemovePermission = contentService.getGroupsWithRemovePermission(entity.getId());
+				String container = ref.getContainer();
+				if(container != null)
+				{
+					Collection<Group> more = contentService.getGroupsWithRemovePermission(container);
+					if(more != null && ! more.isEmpty())
+					{
+						groupsWithRemovePermission.addAll(more);
+					}
+				}
+			} else if(AccessMode.GROUPED == entity.getInheritedAccess()) {
+				groupsWithRemovePermission = contentService.getGroupsWithRemovePermission(ref.getContainer());
+			}
+			else if(ref.getContext() != null && contentService.getSiteCollection(ref.getContext()) != null)
+			{
+				groupsWithRemovePermission = contentService.getGroupsWithRemovePermission(contentService.getSiteCollection(ref.getContext()));
+			}
+			
+			Set<String> idsOfGroupsWithRemovePermission = new TreeSet<String>();
+			if(groupsWithRemovePermission != null) {
+				for(Group gr : groupsWithRemovePermission) {
+					idsOfGroupsWithRemovePermission.add(gr.getId());
+				}
+ 			}
+			
 			for(Group group : inheritedGroupObjs) {
 				Map<String, String> grp = new HashMap<String, String>();
 				grp.put("groupId", group.getId());
 				grp.put("title", group.getTitle());
 				grp.put("description", group.getDescription());
 				grp.put("entityRef", group.getReference());
-				groups.put(grp.get("groupId"), grp);
+				if(currentGroups.contains(group.getId())) {
+					grp.put("isLocal", Boolean.toString(true));
+				}
+				if(idsOfGroupsWithRemovePermission.contains(group.getId())) {
+					grp.put("allowedRemove", Boolean.toString(true));
+				}
+				groups.add(grp);
 			}
 		}
 		props.put(PROP_POSSIBLE_GROUPS, groups);
@@ -4780,7 +4852,6 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 		// isSiteOnly = ! isPubviewPossible && ! isGroupPossible
 		props.put(PROP_IS_SITE_ONLY, new Boolean(preventPublicDisplay.booleanValue() && (groups == null || groups.size() < 1)));
 		// isUserSite
-		SiteService siteService = (SiteService) ComponentManager.get(SiteService.class);
 		props.put(PROP_IS_USER_SITE, siteService.isUserSite(ref.getContext()));
 
 		// getSelectedConditionKey

@@ -45,8 +45,8 @@ span.searchTargetLink { margin-right:50px; }
 	</h3>
 	#if ($alertMessage)<div class="alertMessage">$tlang.getString("label.alert") $validator.escapeHtml($alertMessage)</div>#end
 	<p class="instruction">
-		$instruction
-		$required
+		$!instruction
+		$!required
 	</p>
 	
 	<form id="newCitationListForm" action="#toolForm("CitationHelperAction")" method="post">
@@ -160,31 +160,31 @@ span.searchTargetLink { margin-right:50px; }
 						</tr>
 						#set($theGroups = $contentProperties.possibleGroups)
 						#foreach ($group in $!{theGroups})
-							#if($model.isPossible($group))
-								<tr>
-									<td headers="selected" style="padding-bottom:0;" style="width:2em">
-										#if($model.isLocal($group) && $model.allowedRemove($group))
-											<input type="checkbox" name="access_groups" id="access_groups_${group.Id}" title="$group.title" value="$group.Id" checked="checked" />
-										#elseif($model.isLocal($group))
-											<img src="#imageLink("sakai/checkon.gif")" border="0" width="17" height="13" align="top" />
-										#else
-											<input type="checkbox" name="access_groups" id="access_groups_${group.Id}" title="$group.title" value="$group.Id" />
-										#end
-									</td>
-									<td headers="groupname" style="padding-bottom:0;" class="checkbox">
-										<label for="access_groups_${group.Id}">
-											$validator.escapeHtml($group.title)
-										</label>	
-									</td>
-									<td headers="groupdescription" width="100%"> ##mozilla does not resize table children dynamically , so set here
-										#set($description = "")
-										#if($group.description)
-											#set($description = $group.Description)
-										#end
-										$validator.escapeHtml($!description)
-									</td>
-								</tr>
-							#end
+							
+							<tr>
+								<td headers="selected" style="padding-bottom:0;" style="width:2em">
+									#if($group.isLocal && $group.allowedRemove)
+										<input type="checkbox" name="access_groups" id="access_groups_${group.groupId}" title="$group.title" value="$group.groupId" checked="checked" />
+									#elseif($group.isLocal)
+										<img src="#imageLink("sakai/checkon.gif")" border="0" width="17" height="13" align="top" />
+									#else
+										<input type="checkbox" name="access_groups" id="access_groups_${group.groupId}" title="$group.title" value="$group.groupId" />
+									#end
+								</td>
+								<td headers="groupname" style="padding-bottom:0;" class="checkbox">
+									<label for="access_groups_${group.groupId}">
+										$validator.escapeHtml($group.title)
+									</label>	
+								</td>
+								<td headers="groupdescription" width="100%"> ##mozilla does not resize table children dynamically , so set here
+									#set($description = "")
+									#if($group.description)
+										#set($description = $group.Description)
+									#end
+									$validator.escapeHtml($!description)
+								</td>
+							</tr>
+							
 						#end
 					</table>
 				#end
