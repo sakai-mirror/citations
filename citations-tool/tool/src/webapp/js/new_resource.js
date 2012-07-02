@@ -305,10 +305,21 @@ citations_new_resource.init = function() {
 		};
 		citations_new_resource.processClick(successObj)
 	});
-	$('#Done').click(function(eventObject) {
+	$('.Done').click(function(eventObject) {
 		var successObj = {
 			invoke				: function(jsObj) {
 				$('#sakai_action').val('doFinish');
+				$('#ajaxRequest').val('false');
+				$('#newCitationListForm').attr('method', 'GET');
+				$('#newCitationListForm').submit();
+			}
+		};
+		citations_new_resource.processClick(successObj)
+	});
+	$('.Cancel').click(function(eventObject) {
+		var successObj = {
+			invoke				: function(jsObj) {
+				$('#sakai_action').val('doCancel');
 				$('#ajaxRequest').val('false');
 				$('#newCitationListForm').attr('method', 'GET');
 				$('#newCitationListForm').submit();
@@ -333,6 +344,12 @@ citations_new_resource.init = function() {
 		$('#accessHidden').toggle();
 		setFrameHeight();
 	});
+	// If changes are saved, "Done" button should be disabled and "Cancel" button should be enabled
+	// If changes are not saved, "Done" button should be enabled and "Cancel" button should be disabled
+	$('form').find('input').change(function(eventObject){
+		
+		// if values of input elements in form have changed since save, enable "Cancel" button and disable "Done" button
+	});
 	
 	setFrameHeight();
 
@@ -341,5 +358,6 @@ citations_new_resource.init = function() {
 $(document).ready(function(){
 	citations_new_resource.init();
 	citations_new_resource.setupToggleAreas('toggleAnchor', 'toggledContent', false, 'fast');
+	
 });
 

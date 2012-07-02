@@ -66,6 +66,7 @@ span.searchTargetLink { margin-right:50px; }
 				</label>
 				<input type="text" size="40" id="displayName" name="displayName" value="$validator.escapeHtml("$!resourceTitle")" />
 			</p>
+			<br />
 		</div>
 		<h4 id="toggleModel" class="toggleAnchor specialLink">
 			<span class="expand">
@@ -318,7 +319,7 @@ span.searchTargetLink { margin-right:50px; }
 			#end
 			</fieldset>
 			######### end availability section ##########	
-			
+			<br />
 		</div>
 		
 		<p class="shorttext">
@@ -333,71 +334,87 @@ span.searchTargetLink { margin-right:50px; }
 		</p>
 		<input type="hidden" name="sakai_csrf_token" value="$sakai_csrf_token" />
 	</form>	
-	<hr /><!-- class="itemSeparator" -->
-
-	<p class="shorttext">
-		<label>
-			$tlang.getString("resource.search.target")
-		</label>
+	<br />
+	<ul class="navIntraTool actionToolBar">
+		<li class="firstToolBarItem">
+			<span class="current">
+				$tlang.getString("resource.search.target")
+			</span>
+		</li>
 		#if( $saveciteClients )
 			#foreach($client in $saveciteClients)
-				<span class="saveciteClient searchTargetLink">
-					<a name="$client.id" id="$client.id" title="$client.searchurl_label">
-						$client.searchurl_label
-					</a>
-					<span class="saveciteClientUrl" style="display:none;">${client.searchurl_base}?linkurl_base=${client.saveciteUrl}#if(${client.linkurl_id})&linkurl_id=${client.linkurl_id}#end&</span>
-					<span class="popupTitle" style="display:none;">$client.searchurl_label</span>
-					<span class="windowHeight" style="display:none;">${client.window_height}</span>
-					<span class="windowWidth" style="display:none;">${client.window_width}</span>
-				</span>
+				<li>
+					<span class="saveciteClient searchTargetLink">
+						<a name="$client.id" id="$client.id" title="$client.searchurl_label">
+							$client.searchurl_label
+						</a>
+						<span class="saveciteClientUrl" style="display:none;">${client.searchurl_base}?linkurl_base=${client.saveciteUrl}#if(${client.linkurl_id})&linkurl_id=${client.linkurl_id}#end&</span>
+						<span class="popupTitle" style="display:none;">$client.searchurl_label</span>
+						<span class="windowHeight" style="display:none;">${client.window_height}</span>
+						<span class="windowWidth" style="display:none;">${client.window_width}</span>
+					</span>
+				</li>
 			#end
 		#end
 		
 		#if( $searchLibrary )
-		  <span class="searchTargetLink">
-		    <a name="Search" id="Search"  title="$tlang.getString("resource.library.search")">
-		    	$tlang.getString("resource.library")
-		    </a>
-			<span class="searchUrl" style="display:none;">#toolLink("CitationHelperAction" "doSearch")</span>
-			<span class="popupTitle" style="display:none;">$tlang.getString("resource.library.search")"</span>
-		  </span>
+		  <li>
+			  <span class="searchTargetLink">
+			    <a name="Search" id="Search"  title="$tlang.getString("resource.library.search")">
+			    	$tlang.getString("resource.library")
+			    </a>
+				<span class="searchUrl" style="display:none;">#toolLink("CitationHelperAction" "doSearch")</span>
+				<span class="popupTitle" style="display:none;">$tlang.getString("resource.library.search")"</span>
+			  </span>
+		  </li>
 		#end
 		
 		#if( $googleUrl )
-		  <span class="searchTargetLink">
-		    <a name="SearchGoogle" id="SearchGoogle" title="$tlang.getString("resource.google.search")">
-		    	$tlang.getString("resource.google")
-		    </a>
-		    <span class="googleUrl" style="display:none;">$googleUrl</span>
-		    <span class="popupTitle" style="display:none;">$tlang.getString("popup.title.google")</span>
-		  </span>
+		  <li>
+			  <span class="searchTargetLink">
+			    <a name="SearchGoogle" id="SearchGoogle" title="$tlang.getString("resource.google.search")">
+			    	$tlang.getString("resource.google")
+			    </a>
+			    <span class="googleUrl" style="display:none;">$googleUrl</span>
+			    <span class="popupTitle" style="display:none;">$tlang.getString("popup.title.google")</span>
+			  </span>
+		  </li>
 		#end
 		
 	    #if(! $fromListPage)
-		  <span class="searchTargetLink">
-		    <a name="CreateCitation" id="CreateCitation" title="$tlang.getString("addAction.create")">
-			  $tlang.getString("resource.editor")
-			</a>
-		  </span>
+		  <li>
+			  <span class="searchTargetLink">
+			    <a name="CreateCitation" id="CreateCitation" title="$tlang.getString("addAction.create")">
+				  $tlang.getString("resource.editor")
+				</a>
+			  </span>
+		  </li>
 		#end
-		<!-- Markup for Import/RIS -->
-	  <span class="searchTargetLink">
-	    <a name="ImportCitation" id="ImportCitation" title="$tlang.getString("resource.import.file")">
-		   $tlang.getString("resource.import")
-	    </a>
-		<span class="importUrl" style="display:none;">#toolLink("CitationHelperAction" "doGet")</span>
-		<span class="popupTitle" style="display:none;">$tlang.getString("resource.import.file")</span>
-	  </span>
-	</p>
+	  <!-- Markup for Import/RIS -->
+	  <li>
+		  <span class="searchTargetLink">
+		    <a name="ImportCitation" id="ImportCitation" title="$tlang.getString("resource.import.file")">
+			   $tlang.getString("resource.import")
+		    </a>
+			<span class="importUrl" style="display:none;">#toolLink("CitationHelperAction" "doGet")</span>
+			<span class="popupTitle" style="display:none;">$tlang.getString("resource.import.file")</span>
+		  </span>
+	  </li>
+	</ul>
 	<div class="act">
 		#if($collectionSize && $collectionSize > 0)
+			<div class="act">
+				<input class="active" type="button" name="Done" class="Done" value="$tlang.getString("label.done")" />
+				<input class="active" type="button" name="Cancel" class="Cancel" value="$tlang.getString("label.cancel")" />
+			</div>
 			#parse( "vm/citation/_listCitations.vm" )
 		#else
 			<p>No citations message goes here.</p>		
 		#end
 	</div>
 	<div class="act">
-		<input class="active" type="button" name="Done" id="Done" value="$tlang.getString("label.done")" />
+		<input class="active" type="button" name="Done" class="Done" value="$tlang.getString("label.done")" />
+		<input class="active" type="button" name="Cancel" class="Cancel" value="$tlang.getString("label.cancel")" />
 	</div>
 	<form id="fossils">
 		<input type="hidden" name="displayName" id="displayName_fossil" value="$validator.escapeHtml("$!resourceTitle")" />
