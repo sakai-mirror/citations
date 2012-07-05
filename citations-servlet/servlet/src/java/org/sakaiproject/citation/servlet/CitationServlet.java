@@ -226,7 +226,7 @@ public class CitationServlet extends VmServlet
 
 		}
 	}
-
+	
 	/**
 	 * Looks for an OpenURL citation in the request.
 	 * @param req

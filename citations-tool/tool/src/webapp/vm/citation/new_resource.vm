@@ -57,6 +57,10 @@ span.searchTargetLink { margin-right:50px; }
 		<input name="resourceId" id="resourceId" value="$!resourceId" type="hidden" />
 		<input name="citationCollectionId" id="citationCollectionId" value="$!citationCollectionId" type="hidden" />
 		<input name="sakai_action" id="sakai_action" value="" type="hidden" />
+		<input name="currentSort" id="currentSort" value="$currentSort" type="hidden" />
+		<input name="savedSort" id="savedSort" value="$savedSort" type="hidden" />
+		<input name="pageSelector" id="pageSelector" value="$pageSelector" type="hidden" />
+		<input name="newPageSize" id="newPageSize" value="$listPageSize" type="hidden" />
 				
 		<div id="propertiesDiv" style="display:block;">
 			<p class="shorttext">
@@ -73,7 +77,7 @@ span.searchTargetLink { margin-right:50px; }
 				<img alt="expand" src="/library/image/sakai/expand.gif" />
 				$tlang.getString('resource.aaa.show')
 			</span>
-			<span class="collapse">
+			<span class="collapse" style="display:none;">
 				<img alt="collapse" src="/library/image/sakai/collapse.gif" />
 				$tlang.getString('resource.aaa.hide')
 			</span>
@@ -402,19 +406,24 @@ span.searchTargetLink { margin-right:50px; }
 	  </li>
 	</ul>
 	<div class="act">
-		#if($collectionSize && $collectionSize > 0)
+		<div class="citationsDisplay"#if(! $collectionSize || $collectionSize < 1) style="display:none;"#end>
 			<div class="act">
-				<input class="active" type="button" name="Done" class="Done" value="$tlang.getString("label.done")" />
-				<input class="active" type="button" name="Cancel" class="Cancel" value="$tlang.getString("label.cancel")" />
+				<input type="button" name="Done" class="Done active" value="$tlang.getString("label.done")" />
+				<input type="button" name="Cancel" class="Cancel active" value="$tlang.getString("label.cancel")" />
 			</div>
-			#parse( "vm/citation/_listCitations.vm" )
-		#else
-			<p>No citations message goes here.</p>		
-		#end
+			<div class="currentListCitations">
+				#if($collectionSize && $collectionSize > 0)
+					#parse( "vm/citation/_listCitations.vm" )
+				#end
+			</div>
+		</div>
+		<p class="noCitationsDisplay"#if($collectionSize && $collectionSize > 0) style="display:none;"#end>
+			$tlang.getString("resource.nocitations")
+		</p>	
 	</div>
 	<div class="act">
-		<input class="active" type="button" name="Done" class="Done" value="$tlang.getString("label.done")" />
-		<input class="active" type="button" name="Cancel" class="Cancel" value="$tlang.getString("label.cancel")" />
+		<input type="button" name="Done" class="Done active" value="$tlang.getString("label.done")" />
+		<input type="button" name="Cancel" class="Cancel active" value="$tlang.getString("label.cancel")" />
 	</div>
 	<form id="fossils">
 		<input type="hidden" name="displayName" id="displayName_fossil" value="$validator.escapeHtml("$!resourceTitle")" />
@@ -429,16 +438,17 @@ span.searchTargetLink { margin-right:50px; }
 		<input type="hidden" name="use_end_date" id="use_end_date_fossil" value="$!{contentProperties.useRetractDate}" />
 		<input type="hidden" name="retractDate" id="retractDate_fossil" value="$!{contentProperties.retractDate}" />
 		<input type="hidden" name="retractDateStr" id="retractDateStr_fossil" value="$!{contentProperties.retractDateStr}" />
-		<input name="ajaxRequest" id="ajaxRequest_fossil" class="ajaxRequest" value="true" type="hidden" />
-		<input name="$REQUESTED_MIMETYPE" id="requested_mimetype_fossil" class="requested_mimetype" value="$MIMETYPE_JSON" type="hidden" />
-		<input name="citation_action" id="citation_action_fossil" class="citation_action" value="$citation_action" type="hidden" />
 		<input name="collectionId" id="collectionId_fossil" value="$!collectionId" type="hidden" />
 		<input name="resourceId" id="resourceId_fossil" value="$!resourceId" type="hidden" />
 		<input name="citationCollectionId" id="citationCollectionId_fossil" value="$!citationCollectionId" type="hidden" />
-		<input name="sakai_action" id="sakai_action_fossil" value="" type="hidden" />
-		<input type="hidden" name="sakai_csrf_token" value="$sakai_csrf_token" />
 	</form>
 </div>
+
+<script type="text/javascript" src="/sakai-citations-tool/js/citationscript.js">	
+</script>
+<script type="text/javascript" src="/sakai-citations-tool/js/new_resource.js">	
+</script>
+
 <script type="text/javascript">
 	focus_path = [ "displayName" ];
 	function focusOnNameElement()
@@ -449,8 +459,4 @@ span.searchTargetLink { margin-right:50px; }
 	}
 	setTimeout(focusOnNameElement, 25);
 </script>
-
-<script type="text/javascript" src="/sakai-citations-tool/js/new_resource.js">	
-</script>
-
 

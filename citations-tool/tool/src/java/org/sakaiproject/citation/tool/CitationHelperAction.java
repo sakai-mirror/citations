@@ -609,6 +609,7 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 	public static final String UPDATE_RESOURCE = "update_resource";
 	public static final String CREATE_RESOURCE = "create_resource";
 	public static final String IMPORT_CITATIONS = "import_citations";
+	public static final String UPDATE_SAVED_SORT = "update_saved_sort";
 
 	public static final String MIMETYPE_JSON = "application/json";
 	public static final String MIMETYPE_HTML = "text/html";
@@ -621,8 +622,6 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 	
 	/** A long representing the number of milliseconds in one week.  Used for date calculations */
 	public static final long ONE_WEEK = 7L * ONE_DAY;
-
-
 
 	/**
 	 * Check for the helper-done case locally and handle it before letting the VPPA.toolModeDispatch() handle the actual dispatch.
@@ -739,6 +738,9 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 		if(citation_action != null && citation_action.trim().equals(UPDATE_RESOURCE)) {
 			Map<String,Object> result = this.updateCitationList(params, state, req, res);
 			jsonMap.putAll(result);
+		} else if(citation_action != null && citation_action.trim().equals(UPDATE_SAVED_SORT)) {
+			Map<String,Object> result = this.updateSavedSort(params, state, req, res);
+			jsonMap.putAll(result);
 		} else {
 			Map<String,Object> result = this.createCitationList(params, state, req, res);
 			jsonMap.putAll(result);			
@@ -755,6 +757,33 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 			e.printStackTrace();
 		}
 
+	}
+
+	protected Map<String, Object> updateSavedSort(ParameterParser params,
+			SessionState state, HttpServletRequest req, HttpServletResponse res) {
+		Map<String, Object> results = new HashMap<String, Object>();
+		String message = null;
+		String citationCollectionId = params.getString("citationCollectionId");
+		String new_sort = params.getString("new_sort");
+		if(citationCollectionId == null || citationCollectionId.trim().equals("")) {
+			// need to report error
+			results.put("message", rb.getString("sort.save.error"));
+		} else {
+			if(new_sort == null || new_sort.trim().equals("")) {
+				new_sort = "default";
+			} 
+			try {
+				CitationCollection citationCollection = this.citationService.getCollection(citationCollectionId);
+				citationCollection.setSort(new_sort, true);
+				this.citationService.save(citationCollection);
+				results.put("message", rb.getString("sort.save.success"));
+			} catch (IdUnusedException e) {
+				// need to report error
+				results.put("message", rb.getString("sort.save.error"));
+			}
+			
+		}
+		return results;
 	}
 
 	protected Map<String, Object> createCitationList(ParameterParser params,
@@ -1897,7 +1926,28 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 			
 		} else {
 			context.put("openUrlLabel", getConfigurationService().getSiteConfigOpenUrlLabel());
+			
+			String currentSort = (String) state.getAttribute("sort");
 
+			if (currentSort == null  || currentSort.trim().length() == 0)
+				currentSort = citationCollection.getSort();
+
+			if(currentSort == null || currentSort.trim().length() == 0) {
+				currentSort = CitationCollection.SORT_BY_TITLE;
+			}
+			
+			context.put("currentSort", currentSort);
+			
+			String savedSort = citationCollection.getSort();
+			if(savedSort == null || savedSort.trim().equals("")) {
+				savedSort = CitationCollection.SORT_BY_TITLE;
+			}
+			
+			if(savedSort != currentSort) {
+				
+				citationCollection.setSort(currentSort, true);
+			}
+			
 			//context.put(PARAM_FORM_NAME, ELEMENT_ID_LIST_FORM);
 
 			// collection size
@@ -3809,7 +3859,9 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 
 		CitationCollection collection = getCitationCollection(state, true);
 		if(collection == null) {
-		CitationIterator listIterator = (CitationIterator) state.getAttribute(STATE_LIST_ITERATOR);
+			// error
+		} else {
+			CitationIterator listIterator = (CitationIterator) state.getAttribute(STATE_LIST_ITERATOR);
 			if(listIterator == null)
 			{
 				listIterator = collection.iterator();
@@ -4071,16 +4123,18 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 		int requestStateId = params.getInt("requestStateId", 0);
 		restoreRequestState(state, new String[]{CitationHelper.RESOURCES_REQUEST_PREFIX, CitationHelper.CITATION_PREFIX}, requestStateId);
 
-		// check for top or bottom page selector
-		String pageSelector = params.get( "pageSelector" );
-		int pageSize;
-		if( pageSelector.equals( "top" ) )
-		{
-			pageSize = params.getInt( "pageSizeTop" );
-		}
-		else
-		{
-			pageSize = params.getInt("pageSizeBottom");
+		int pageSize = params.getInt( "newPageSize" );
+		if(pageSize < 1) {
+			// check for top or bottom page selector
+			String pageSelector = params.get( "pageSelector" );
+			if( pageSelector.equals( "top" ) )
+			{
+				pageSize = params.getInt( "pageSizeTop" );
+			}
+			else
+			{
+				pageSize = params.getInt("pageSizeBottom");
+			}
 		}
 
 		if(pageSize > 0)
@@ -4524,7 +4578,10 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 
 		String collectionId = params.getString("collectionId");
 
-		String sort = params.getString("sort");
+		String sort = params.getString("currentSort");
+        if(sort == null || sort.trim().equals("")) {
+        	sort = CitationCollection.SORT_BY_TITLE;
+        }
 
 		CitationCollection collection = null;
 
@@ -4547,28 +4604,28 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 			// sort the citation list
 
 	        logger.debug("doSortCollection() ready to sort");
-
-	        if (sort.equalsIgnoreCase(CitationCollection.SORT_BY_TITLE))
-				  collection.setSort(CitationCollection.SORT_BY_TITLE, true);
-	        else if (sort.equalsIgnoreCase(CitationCollection.SORT_BY_AUTHOR))
-			       collection.setSort(CitationCollection.SORT_BY_AUTHOR, true);
-	        else if (sort.equalsIgnoreCase(CitationCollection.SORT_BY_YEAR))
-				   collection.setSort(CitationCollection.SORT_BY_YEAR , true);
+	        
+//	        if (sort.equalsIgnoreCase(CitationCollection.SORT_BY_TITLE))
+//				  collection.setSort(CitationCollection.SORT_BY_TITLE, true);
+//	        else if (sort.equalsIgnoreCase(CitationCollection.SORT_BY_AUTHOR))
+//			       collection.setSort(CitationCollection.SORT_BY_AUTHOR, true);
+//	        else if (sort.equalsIgnoreCase(CitationCollection.SORT_BY_YEAR))
+//				   collection.setSort(CitationCollection.SORT_BY_YEAR , true);
 
 	        state.setAttribute("sort", sort);
 
-			Iterator iter = collection.iterator();
-
-			while (iter.hasNext())
-			{
-				Citation tempCit = (Citation) iter.next();
-
-				logger.debug("doSortCollection() tempcit 1 -------------");
-				logger.debug("doSortCollection() tempcit 1 (author) = " + tempCit.getFirstAuthor());
-		        logger.debug("doSortCollection() tempcit 1 (year)   = " + tempCit.getYear());
-
-		        logger.debug("doSortCollection() tempcit 1 = " + tempCit.getDisplayName());
-			} // end while
+//			Iterator iter = collection.iterator();
+//
+//			while (iter.hasNext())
+//			{
+//				Citation tempCit = (Citation) iter.next();
+//
+//				logger.debug("doSortCollection() tempcit 1 -------------");
+//				logger.debug("doSortCollection() tempcit 1 (author) = " + tempCit.getFirstAuthor());
+//		        logger.debug("doSortCollection() tempcit 1 (year)   = " + tempCit.getYear());
+//
+//		        logger.debug("doSortCollection() tempcit 1 = " + tempCit.getDisplayName());
+//			} // end while
 
 			// set the list iterator to the start of the list after a change in sort
 			CitationIterator listIterator = (CitationIterator) state.getAttribute(STATE_LIST_ITERATOR);

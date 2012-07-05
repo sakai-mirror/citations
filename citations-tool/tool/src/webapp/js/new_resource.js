@@ -53,7 +53,7 @@ var reportError = function(msg){
     }, 5000).fadeTo(3000, 0);
 };
 
-function resizeFrame(updown) {
+var resizeFrame = function(updown) {
 	if (top.location != self.location) 	 {
 		var frame = parent.document.getElementById(window.name);
 	}	
@@ -66,7 +66,79 @@ function resizeFrame(updown) {
 	} else {
 //		throw( "resizeFrame did not get the frame (using name=" + window.name + ")" );
 	}
+};
+
+var countCitationsSelected = function() {
+	return $( ".itemCheckbox input:checked" ).length;
+};
+var resetSelectableActions = function() {
+	if( countCitationsSelected() > 0 ) {
+		$( ".selectAction" ).removeAttr("disabled");
+	} else {
+		$( ".selectAction" ).attr( "disabled", "disabled" );
+	}
 }
+var exportCheckedCitations = function( baseUrl, collectionId ) {
+  var exportUrl = baseUrl + "?collectionId=" + collectionId;
+  
+  // get each selected checkbox and append it to be exported
+  $( ".itemCheckbox input:checked" ).each( function() {
+      exportUrl += "&citationId=" + this.value;
+    }
+  );
+  
+  window.location.assign( exportUrl );
+};
+
+var deleteSelectedCitations = function( baseUrl ) {
+  // get each selected checkbox and append it to be removed
+  $( ".itemCheckbox input:checked" ).each( function() {
+      baseUrl += "&citationId=" + this.value;
+    }
+  );
+  
+  // do the action
+  window.location.assign( baseUrl );
+};
+
+
+var doCitationAction = function( eventTarget ) {
+	// do action
+	var action = $(eventTarget).val();
+	if( action == "exportSelected" ) {
+		if( countCitationsSelected() > 0 ) {
+			var url = $(eventTarget).siblings('#exportUrlSel').text();
+			var collectionId = $(eventTarget).siblings('.collectionId').text();
+			exportCheckedCitations( url, collectionId );
+		} else {
+			var msg = $(eventTarget).siblings('#selectActionWarnLabel').text();
+			alert( msg );
+		}
+	} else if( action == "exportList" ) {
+		var url = $(eventTarget).siblings('#exportUrlAll').text();
+		var collectionId = $(eventTarget).siblings('.collectionId').text();
+		exportAllCitations( url, collectionId );
+	} else if( action == "removeSelected" ) {
+		if( countCitationsSelected() > 0 ) {
+			var url = $(eventTarget).siblings('#removeUrlSel').text();
+			deleteSelectedCitations( url );
+		} else {
+			var msg = $(eventTarget).siblings('#selectActionWarnLabel').text();
+			alert( msg );
+		}
+	} else if( action == "removeList" ) {
+		$('#ajaxRequest').val('false');
+		$('#newCitationListForm').attr('method', 'GET');
+		$('#sakai_action').val('doRemoveAllCitations');
+		$('#newCitationListForm').submit();
+	}
+	  
+	// reset select boxes
+	$( ".citationActionSelect" ).each( function() {
+		this.selectedIndex = 0;
+	});
+};
+
 
 citations_new_resource.setupToggleAreas = function(toggler, togglee, openInit, speed){
 	// toggler=class of click target
@@ -81,13 +153,13 @@ citations_new_resource.setupToggleAreas = function(toggler, togglee, openInit, s
 	    $('.collapse').hide();
 	    resizeFrame();
 	}
-	$('.' + toggler).click(function(){
+	$('.' + toggler).on('click', function(eventObject){
 	    $(this).next('.' + togglee).fadeToggle(speed);
 	    $(this).find('.expand').toggle();
 	    $(this).find('.collapse').toggle();
 	    resizeFrame();
 	});
-}
+};
 
 
 citations_new_resource.processClick = function(successAction) {
@@ -96,6 +168,26 @@ citations_new_resource.processClick = function(successAction) {
 		reportError('Please supply a name for the citation list.');
 		return;
 	};
+	/*
+	 * Convert from an array of params to an object
+	 */
+	var mapParameters = function(array) {
+		var map = {};
+		for(var i = 0; i < array.length; i++) {
+			var obj = array[i];
+			if(obj.name && map[obj.name]) {
+				if(typeof(map[obj.name]) == 'string' || typeof(map[obj.name]) == 'number') {
+					map[obj.name] = [ map[obj.name], obj.value ];
+				} else {
+					// assume map[obj.name] is an array
+					map[obj.name].push(obj.value);
+				}
+			} else {
+				map[obj.name] = obj.value;
+			}
+		} 
+		return map;
+	}
 	var postAjaxRequest = function(params, successAction) {
 		var actionUrl = $('#newCitationListForm').attr('action');
 		$.ajax({
@@ -122,9 +214,45 @@ citations_new_resource.processClick = function(successAction) {
 				// TODO: replace with reasonable error handling
 				reportError("failed: " + textStatus + " :: " + errorThrown);
 			}
-		});
-		
+		});		
 	};
+	var paramsChanged = function() {
+		var params = $('#newCitationListForm').serializeArray();
+		var fossils = $('#fossils').serializeArray();
+		var paramsMap = mapParameters(params);
+		var fossilMap = mapParameters(fossils);
+		
+		for(key in fossilMap) {
+			if(typeof(paramsMap[key]) == 'undefined') {
+				return true
+			}
+			if(typeof(paramsMap[key]) != typeof(fossilMap[key])) {
+				return true;
+			}
+			if((typeof(fossilMap[key]) == 'string' || typeof(fossilMap[key]) == 'number')) { 
+				if(paramsMap[key] != fossilMap[key]) {
+					return true;
+				}
+			} else {
+				// check items in list
+				var fossilValues = fossilMap[key];
+				var paramsValues = paramsMap[key];
+				if(fossilValues.length != paramsValues.length) {
+					return true;
+				}
+				fossilValues.sort();
+				paramsValues.sort();
+				for(var i = 0; i < fossilValues.length; i++) {
+					if(fossilValues[i] != paramsValues[i]) {
+						return true;
+					}
+				}
+			}	
+		}
+		return false;
+	}
+	
+	
 	var handleNewResource = function(successAction) {
     	$('.citation_action').val('create_resource');
     	$('.requested_mimetype').val('application/json');
@@ -136,56 +264,8 @@ citations_new_resource.processClick = function(successAction) {
     	$('.citation_action').val('update_resource');
     	$('.requested_mimetype').val('application/json');
     	$('.ajaxRequest').val('true');
-        var newValues = $('#newCitationListForm').find('input').serializeArray();
-        var newValuesObj = {};
-        var oldValues = $('#fossils').find('input').serializeArray();
-        var oldValuesObj = {};
-        $.each(newValues, function(index, obj) {
-        	if(newValuesObj[obj.name]) {
-        		newValuesObj[obj.name].push(obj.value);
-        	} else {
-        		newValuesObj[obj.name] = [ obj.value ];
-        	}
-        });
-        $.each(oldValues, function(index, obj) {
-        	if(oldValuesObj[obj.name]) {
-        		oldValuesObj[obj.name].push(obj.value);
-        	} else {
-        		oldValuesObj[obj.name] = [ obj.value ];
-        	}
-        });
-        var changes = false;
-        $.each(newValuesObj, function(key, value) {
-            if(! oldValuesObj[key] || oldValuesObj[key].length != value.length) {
-                newValues.push({ 'name':'resource_changes', 'value':key });
-                changes = true;
-            } else if(value.length > 1) {
-                var differences = false;
-                value.sort();
-                if(oldValuesObj[key] && oldValuesObj[key].length > 1) {
-                    oldValuesObj[key].sort();
-                }
-                $.each(value,function(i,v){
-                    if(oldValuesObj[key] && oldValuesObj[key][i] && oldValuesObj[key][i] === v) {
-                        // do nothing
-                    } else {
-                        differences = true;
-                        return;
-                    }
-                });
-                if(differences) {
-                	newValues.push({ 'name':'resource_changes', 'value':key });
-                	changes = true;
-                }
-            } else if(value.length > 0) {
-                if(value[0] !== oldValuesObj[key][0]) {
-                	newValues.push({ 'name':'resource_changes', 'value':key });
-                	changes = true;
-                }
-            }
-        	//alert('newValuesObj[' + key + '] == ' + value + '\noldValuesObj[' + key + '] == ' + oldValuesObj[key] + '\n' + changes);
-        });
-        if(changes) {
+        if(paramsChanged()) {
+            var newValues = $('#newCitationListForm').serializeArray();
         	postAjaxRequest(newValues, successAction);
         } else {
             var jsObj = {};
@@ -228,7 +308,7 @@ citations_new_resource.init = function() {
 	
 	var childWindow = {};
 	
-	$('.saveciteClient a').click(function(eventObject) {
+	$('.saveciteClient a').on('click', function(eventObject) {
 		var successObj = {
 			linkId				: $(eventObject.target).attr('id'),
 			saveciteClientUrl	: $(eventObject.target).siblings('.saveciteClientUrl').text(),
@@ -243,9 +323,9 @@ citations_new_resource.init = function() {
 				childWindow[this.linkId].focus();
 			}
 		};
-		citations_new_resource.processClick(successObj)
+		citations_new_resource.processClick(successObj);
 	});
-	$('#Search').click(function(eventObject) {
+	$('#Search').on('click', function(eventObject) {
 		var successObj = {
 			linkId				: $(eventObject.target).attr('id'),
 			searchUrl			: $(eventObject.target).siblings('.searchUrl').text(),
@@ -268,9 +348,9 @@ citations_new_resource.init = function() {
 				childWindow[this.linkId].focus();
 			}
 		};
-		citations_new_resource.processClick(successObj)
+		citations_new_resource.processClick(successObj);
 	});
-	$('#SearchGoogle').click(function(eventObject) {
+	$('#SearchGoogle').on('click', function(eventObject) {
 		var successObj = {
 			linkId				: $(eventObject.target).attr('id'),
 			googleUrl			: $(eventObject.target).siblings('.googleUrl').text(),
@@ -283,9 +363,9 @@ citations_new_resource.init = function() {
 				childWindow[this.linkId].focus();
 			}
 		};
-		citations_new_resource.processClick(successObj)
+		citations_new_resource.processClick(successObj);
 	});
-	$('#CreateCitation').click(function(eventObject) {
+	$('#CreateCitation').on('click', function(eventObject) {
 		var successObj = {
 			invoke				: function(jsObj) {
 				$('#sakai_action').val('doCreate');
@@ -295,7 +375,7 @@ citations_new_resource.init = function() {
 		};
 		citations_new_resource.processClick(successObj)
 	});
-	$('#ImportCitation').click(function(eventObject) {
+	$('#ImportCitation').on('click', function(eventObject) {
 		var successObj = {
 			invoke				: function(jsObj) {
 				$('#sakai_action').val('doImportPage');
@@ -305,18 +385,13 @@ citations_new_resource.init = function() {
 		};
 		citations_new_resource.processClick(successObj)
 	});
-	$('.Done').click(function(eventObject) {
-		var successObj = {
-			invoke				: function(jsObj) {
-				$('#sakai_action').val('doFinish');
-				$('#ajaxRequest').val('false');
-				$('#newCitationListForm').attr('method', 'GET');
-				$('#newCitationListForm').submit();
-			}
-		};
-		citations_new_resource.processClick(successObj)
+	$('.Done').on('click', function(eventObject) {
+		$('#sakai_action').val('doFinish');
+		$('#ajaxRequest').val('false');
+		$('#newCitationListForm').attr('method', 'GET');
+		$('#newCitationListForm').submit();
 	});
-	$('.Cancel').click(function(eventObject) {
+	$('.Cancel').on('click', function(eventObject) {
 		var successObj = {
 			invoke				: function(jsObj) {
 				$('#sakai_action').val('doCancel');
@@ -327,10 +402,140 @@ citations_new_resource.init = function() {
 		};
 		citations_new_resource.processClick(successObj)
 	});
-	$('#access_mode_groups').change(function(eventObject) {
+	$('#access_mode_groups').on('change', function(eventObject) {
 		$('#groupTable').toggle();
 	});
-	$(window).unload(function() {
+	$('#hideAccess, #showAccess').on('click', function(eventObject){
+		$('#accessShown').toggle();
+		$('#accessHidden').toggle();
+		setFrameHeight();
+	});
+	$('.firstPage').on('click', function(eventObject){
+		showSpinner( '.pageLoad' );
+		$('#sakai_action').val('doFirstListPage');
+		$('#requested_mimetype').val('text/html');
+		$('#ajaxRequest').val('false');
+		$('#newCitationListForm').attr('method', 'GET');
+		$('#newCitationListForm').submit();
+	});
+	$('.prevPage').on('click', function(eventObject){
+		// onclick="javascript: showSpinner( '.pageLoad' ); document.getElementById('sakai_action').value='doPrevListPage'; submitform('$FORM_NAME');"
+		showSpinner( '.pageLoad' );
+		$('#sakai_action').val('doPrevListPage');
+		$('#requested_mimetype').val('text/html');
+		$('#ajaxRequest').val('false');
+		$('#newCitationListForm').attr('method', 'GET');
+		$('#newCitationListForm').submit();
+	});
+	$('.nextPage').on('click', function(eventObject){
+		// onclick="javascript: showSpinner( '.pageLoad' ); document.getElementById('sakai_action').value='doPrevListPage'; submitform('$FORM_NAME');"
+		showSpinner( '.pageLoad' );
+		$('#sakai_action').val('doNextListPage');
+		$('#requested_mimetype').val('text/html');
+		$('#ajaxRequest').val('false');
+		$('#newCitationListForm').attr('method', 'GET');
+		$('#newCitationListForm').submit();
+	});
+	$('.lastPage').on('click', function(eventObject){
+		// onclick="javascript: showSpinner( '.pageLoad' ); document.getElementById('sakai_action').value='doPrevListPage'; submitform('$FORM_NAME');"
+		showSpinner( '.pageLoad' );
+		$('#sakai_action').val('doLastListPage');
+		$('#requested_mimetype').val('text/html');
+		$('#ajaxRequest').val('false');
+		$('#newCitationListForm').attr('method', 'GET');
+		$('#newCitationListForm').submit();
+	});
+	$('.pageSize').on('focus', function(eventObject){
+		//alert('feelin focused');
+	});
+	$('.pageSize').on('change', function(eventObject){
+		// onchange="javascript: changePageSize( 'doChangeListPageSize', 'top', '$FORM_NAME' );"
+		showSpinner( '.pageLoad' );
+		$('#ajaxRequest').val('false');
+		var newPageSize = $(eventObject.target).val();
+		var location = $(eventObject.target).siblings('.pageSizeLocation').val();
+		$('#requested_mimetype').val('text/html');
+		$('#sakai_action').val('doChangeListPageSize');
+		$('#pageSelector').val(location);
+		$('#newPageSize').val(newPageSize);
+		$('#newCitationListForm').attr('method', 'GET');
+		$('#newCitationListForm').submit();
+	});
+	$('.citationActionSelect').on('focus', function(eventObject){
+		//onfocus="resetSelectableActions()" 
+		resetSelectableActions();
+	});
+	$('.citationActionSelect').on('change', function(eventObject){
+		//onchange="doCitationAction(this.value)"
+		doCitationAction(eventObject.target);
+	});
+	$('.citationSortAction').on('change', function(eventObject){
+		// onchange="doCitationSortAction(this.value)"
+		var newSort = $(eventObject.target).val();
+		var oldSort = $('#currentSort').val();
+		if(newSort !== oldSort) {
+			$('#currentSort').val(newSort);
+			$('#ajaxRequest').val('false');
+			$('#newCitationListForm').attr('method', 'GET');
+			$('#sakai_action').val('doSortCollection');
+			//alert("citationSortAction submitting form");
+			$('#newCitationListForm').submit();
+		}
+	});
+	$('#savesort').on('click', function(eventObject){
+		//  onclick="document.getElementById('sakai_action').value='doSaveCollection';submitform('$FORM_NAME');"
+		var actionUrl = $('#newCitationListForm').attr('action');
+		//alert("savesort actionUrl:: " + actionUrl);
+		$('#ajaxRequest').val('true');
+		$('#requested_mimetype').val('text/json');
+		$('#citation_action').val('update_saved_sort');
+		var params = $('#newCitationListForm').find('input').serializeArray();
+		params.push({'new_sort': $('#citationSortAction').val()});
+		//alert("savesort params: " + params);
+		$.ajax({
+			type		: 'POST',
+			url			: actionUrl,
+			cache		: false,
+			data		: params,
+			dataType	: 'json',
+			success		: function(jsObj) {
+				//alert("savesort success: " + jsObj);
+				$.each(jsObj, function(key, value) {
+					if(key === 'message' && value && 'null' !== value && '' !== $.trim(value)) {
+						reportSuccess(value);
+					} else if($.isArray(value)) {
+						reportError('result for key ' + key + ' is an array: ' + value);
+					} else {
+						$('input[name=' + key + ']').val(value);
+					}
+				});
+			},
+			error		: function(jqXHR, textStatus, errorThrown) {
+				// TODO: replace with reasonable error handling
+				//alert("savesort error: " + errorThrown);
+				reportError("failed: " + textStatus + " :: " + errorThrown);
+			}
+		});	
+		//alert("savesort done");
+		return false;
+	});
+	$('.selectAll').on('click', function(eventObject) {
+		$( ".itemCheckbox input:checkbox" ).attr("checked","checked");
+		highlightCheckedSelections();
+	});
+	$('.selectNone').on('click', function(eventObject) {
+		$( ".itemCheckbox input:checkbox" ).removeAttr("checked");
+		highlightCheckedSelections();
+	});
+	
+	
+	// If changes are saved, "Done" button should be disabled and "Cancel" button should be enabled
+	// If changes are not saved, "Done" button should be enabled and "Cancel" button should be disabled
+	$('form').find('input').on('change', function(eventObject){
+		
+		// if values of input elements in form have changed since save, enable "Cancel" button and disable "Done" button
+	});
+	$(window).on('unload', function() {
 		if(childWindow) {
 			for (key in childWindow) {
 				if(childWindow[key] && childWindow[key].close) {
@@ -338,17 +543,6 @@ citations_new_resource.init = function() {
 				}
 			}
 		}
-	});
-	$('#hideAccess, #showAccess').click(function(eventObject){
-		$('#accessShown').toggle();
-		$('#accessHidden').toggle();
-		setFrameHeight();
-	});
-	// If changes are saved, "Done" button should be disabled and "Cancel" button should be enabled
-	// If changes are not saved, "Done" button should be enabled and "Cancel" button should be disabled
-	$('form').find('input').change(function(eventObject){
-		
-		// if values of input elements in form have changed since save, enable "Cancel" button and disable "Done" button
 	});
 	
 	setFrameHeight();
