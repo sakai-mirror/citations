@@ -29,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -2885,6 +2886,12 @@ public abstract class BaseCitationService implements CitationService
 		public String getId()
 		{
 			return this.m_id;
+		}
+		
+		@Override
+		public Date getLastModifiedDate() {
+			checkForUpdates();
+			return new Date(this.m_mostRecentUpdate);
 		}
 
 		public ResourceProperties getProperties()

@@ -65,7 +65,7 @@ span.searchTargetLink { margin-right:50px; }
 		<div id="propertiesDiv" style="display:block;">
 			<p class="shorttext">
 				<span class="reqStar">*</span>
-				<label for="name">
+				<label for="displayName">
 					$tlang.getString("resource.title") 
 				</label>
 				<input type="text" size="40" id="displayName" name="displayName" value="$validator.escapeHtml("$!resourceTitle")" />
@@ -338,6 +338,12 @@ span.searchTargetLink { margin-right:50px; }
 		</p>
 		<input type="hidden" name="sakai_csrf_token" value="$sakai_csrf_token" />
 	</form>	
+	<div id="refreshButtonDiv" style="display:none">
+		<p>$tlang.getString("resource.citations.added")</p>
+		<p>
+			<input id="refreshButton" value="$tlang.getString("resource.refresh.now")" type="button" />
+		</p>
+	</div>
 	<br />
 	<ul class="navIntraTool actionToolBar">
 		<li class="firstToolBarItem">
@@ -408,8 +414,7 @@ span.searchTargetLink { margin-right:50px; }
 	<div class="act">
 		<div class="citationsDisplay"#if(! $collectionSize || $collectionSize < 1) style="display:none;"#end>
 			<div class="act">
-				<input type="button" name="Done" class="Done active" value="$tlang.getString("label.done")" />
-				<input type="button" name="Cancel" class="Cancel active" value="$tlang.getString("label.cancel")" />
+				<input type="button" name="Cancel" class="Cancel active" value="$tlang.getString("resource.done")" />
 			</div>
 			<div class="currentListCitations">
 				#if($collectionSize && $collectionSize > 0)
@@ -422,8 +427,7 @@ span.searchTargetLink { margin-right:50px; }
 		</p>	
 	</div>
 	<div class="act">
-		<input type="button" name="Done" class="Done active" value="$tlang.getString("label.done")" />
-		<input type="button" name="Cancel" class="Cancel active" value="$tlang.getString("label.cancel")" />
+		<input type="button" name="Cancel" class="Cancel active" value="$tlang.getString("resource.done")" />
 	</div>
 	<form id="fossils">
 		<input type="hidden" name="displayName" id="displayName_fossil" value="$validator.escapeHtml("$!resourceTitle")" />

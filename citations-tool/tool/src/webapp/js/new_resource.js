@@ -293,6 +293,69 @@ citations_new_resource.processClick = function(successAction) {
 	
 };
 
+citations_new_resource.childWindow = {};
+
+citations_new_resource.checkForClosedWindows = function() {
+	for (key in citations_new_resource.childWindow) {
+		if (citations_new_resource.childWindow.hasOwnProperty(key)) {
+			if(citations_new_resource.childWindow[key].closed) {
+				delete citations_new_resource.childWindow[key];
+			}
+		}
+	}
+}
+
+citations_new_resource.watchForUpdates = function(timestamp) {
+	var actionUrl = $('#newCitationListForm').attr('action');
+
+	var params = {
+			'requested_mimetype' : 'application/json',
+			'ajaxRequest' : 'true',
+			'citationCollectionId' : $('#citationCollectionId').val(),
+			'citation_action' : 'check_for_updates',
+			'lastcheck' : timestamp
+	};
+	
+	var size = function(obj) {
+        var size = 0, key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) size++;
+        }
+        return size;
+    };
+	
+	// check for status change in citationCollection 
+	$.ajax({
+		type		: 'GET',
+		url			: actionUrl,
+		cache		: false,
+		data		: params,
+		dataType	: 'json',
+
+		success: function(jsObj) {
+			// in case of status change, update this view
+			if(jsObj && jsObj.changed && jsObj.changed == 'true') {
+				$('#refreshButtonDiv').fadeTo("slow", 1).animate({
+			        opacity: 1.0
+			    }, 5000);
+			}
+			// if the child window is still open, schedule another check
+			if(citations_new_resource.childWindow && size(citations_new_resource.childWindow) > 0) {
+				setTimeout(function() { citations_new_resource.watchForUpdates(jsObj.timestamp); }, 10000);
+			}
+		},
+		error		: function(jqXHR, textStatus, errorThrown) {
+			// TODO: replace with reasonable error handling
+			//alert("savesort error: " + errorThrown);
+			reportError("failed: " + textStatus + " :: " + errorThrown);
+		},
+		complete: function(jqXHR, textStatus){
+			citations_new_resource.checkForClosedWindows();
+		}
+	});
+	
+	
+};
 
 citations_new_resource.init = function() {
 	var DEFAULT_DIALOG_HEIGHT = 610;
@@ -306,27 +369,45 @@ citations_new_resource.init = function() {
 	    }		
 	};
 	
-	var childWindow = {};
+	var needToSaveAnyChanges = function() {
+		var resourceId = $('#resourceId').val();
+		if(resourceId && resourceId.length && resourceId.length > 0) {
+			// in this case, resource already exists, so return true to check for changes
+			return true;
+		} else {
+			var displayName = $('#displayName').val();
+			if(displayName && displayName.length && displayName.length > 0) {
+				// in this case, return true to save any changes in props
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 	
 	$('.saveciteClient a').on('click', function(eventObject) {
 		var successObj = {
+			citationCollectionId: $('#citationCollectionId').val(),
 			linkId				: $(eventObject.target).attr('id'),
 			saveciteClientUrl	: $(eventObject.target).siblings('.saveciteClientUrl').text(),
 			popupTitle			: $(eventObject.target).siblings('.popupTitle').text(),
 			windowHeight		: $(eventObject.target).siblings('.windowHeight').text(),
 			windowWidth			: $(eventObject.target).siblings('.windowWidth').text(),
 			invoke				: function(jsObj) {
-				if(childWindow && childWindow[this.linkId] && childWindow[this.linkId].close) {
-					childWindow[this.linkId].close();
+				if(citations_new_resource.childWindow && citations_new_resource.childWindow[this.linkId] && citations_new_resource.childWindow[this.linkId].close) {
+					citations_new_resource.childWindow[this.linkId].close();
 				}
-				childWindow[this.linkId] = openWindow(this.saveciteClientUrl,this.popupTitle,'scrollbars=yes,toolbar=yes,resizable=yes,height=' + this.windowHeight + ',width=' + this.windowWidth);
-				childWindow[this.linkId].focus();
+				citations_new_resource.childWindow[this.linkId] = openWindow(this.saveciteClientUrl,this.popupTitle,'scrollbars=yes,toolbar=yes,resizable=yes,height=' + this.windowHeight + ',width=' + this.windowWidth);
+				citations_new_resource.childWindow[this.linkId].focus();
+				setTimeout(function() { citations_new_resource.watchForUpdates(jsObj.timestamp); }, 10000);
 			}
 		};
 		citations_new_resource.processClick(successObj);
 	});
 	$('#Search').on('click', function(eventObject) {
 		var successObj = {
+			citationCollectionId: $('#citationCollectionId').val(),
 			linkId				: $(eventObject.target).attr('id'),
 			searchUrl			: $(eventObject.target).siblings('.searchUrl').text(),
 			popupTitle			: $(eventObject.target).siblings('.popupTitle').text(),
@@ -341,26 +422,29 @@ citations_new_resource.init = function() {
 				} catch (e) {
 					reportError(e);
 				}
-				if(childWindow && childWindow[this.linkId] && childWindow[this.linkId].close) {
-					childWindow[this.linkId].close();
+				if(citations_new_resource.childWindow && citations_new_resource.childWindow[this.linkId] && citations_new_resource.childWindow[this.linkId].close) {
+					citations_new_resource.childWindow[this.linkId].close();
 				}
-				childWindow[this.linkId] = openWindow(this.searchUrl,this.popupTitle,'scrollbars=yes,toolbar=yes,resizable=yes,height=' + DEFAULT_DIALOG_HEIGHT + ',width=' + DEFAULT_DIALOG_WIDTH);
-				childWindow[this.linkId].focus();
+				citations_new_resource.childWindow[this.linkId] = openWindow(this.searchUrl,this.popupTitle,'scrollbars=yes,toolbar=yes,resizable=yes,height=' + DEFAULT_DIALOG_HEIGHT + ',width=' + DEFAULT_DIALOG_WIDTH);
+				citations_new_resource.childWindow[this.linkId].focus();
+				setTimeout(function() { citations_new_resource.watchForUpdates(jsObj.timestamp); }, 10000);
 			}
 		};
 		citations_new_resource.processClick(successObj);
 	});
 	$('#SearchGoogle').on('click', function(eventObject) {
 		var successObj = {
+			citationCollectionId: $('#citationCollectionId').val(),
 			linkId				: $(eventObject.target).attr('id'),
 			googleUrl			: $(eventObject.target).siblings('.googleUrl').text(),
 			popupTitle			: $(eventObject.target).siblings('.popupTitle').text(),
 			invoke				: function(jsObj) {
-				if(childWindow && childWindow[this.linkId] && childWindow[this.linkId].close) {
-					childWindow[this.linkId].close();
+				if(citations_new_resource.childWindow && citations_new_resource.childWindow[this.linkId] && citations_new_resource.childWindow[this.linkId].close) {
+					citations_new_resource.childWindow[this.linkId].close();
 				}
-				childWindow[this.linkId] = openWindow(this.googleUrl,this.popupTitle,'scrollbars=yes,toolbar=yes,resizable=yes,height=' + DEFAULT_DIALOG_HEIGHT + ',width=' + DEFAULT_DIALOG_WIDTH);
-				childWindow[this.linkId].focus();
+				citations_new_resource.childWindow[this.linkId] = openWindow(this.googleUrl,this.popupTitle,'scrollbars=yes,toolbar=yes,resizable=yes,height=' + DEFAULT_DIALOG_HEIGHT + ',width=' + DEFAULT_DIALOG_WIDTH);
+				citations_new_resource.childWindow[this.linkId].focus();
+				setTimeout(function() { citations_new_resource.watchForUpdates(jsObj.timestamp); }, 10000);
 			}
 		};
 		citations_new_resource.processClick(successObj);
@@ -385,22 +469,23 @@ citations_new_resource.init = function() {
 		};
 		citations_new_resource.processClick(successObj)
 	});
-	$('.Done').on('click', function(eventObject) {
-		$('#sakai_action').val('doFinish');
-		$('#ajaxRequest').val('false');
-		$('#newCitationListForm').attr('method', 'GET');
-		$('#newCitationListForm').submit();
-	});
 	$('.Cancel').on('click', function(eventObject) {
-		var successObj = {
-			invoke				: function(jsObj) {
-				$('#sakai_action').val('doCancel');
-				$('#ajaxRequest').val('false');
-				$('#newCitationListForm').attr('method', 'GET');
-				$('#newCitationListForm').submit();
-			}
-		};
-		citations_new_resource.processClick(successObj)
+		if(needToSaveAnyChanges()) {
+			var successObj = {
+					invoke				: function(jsObj) {
+						$('#sakai_action').val('doCancel');
+						$('#ajaxRequest').val('false');
+						$('#newCitationListForm').attr('method', 'GET');
+						$('#newCitationListForm').submit();
+					}
+				};
+				citations_new_resource.processClick(successObj);			
+		} else {
+			$('#sakai_action').val('doCancel');
+			$('#ajaxRequest').val('false');
+			$('#newCitationListForm').attr('method', 'GET');
+			$('#newCitationListForm').submit();
+		}
 	});
 	$('#access_mode_groups').on('change', function(eventObject) {
 		$('#groupTable').toggle();
@@ -409,6 +494,14 @@ citations_new_resource.init = function() {
 		$('#accessShown').toggle();
 		$('#accessHidden').toggle();
 		setFrameHeight();
+	});
+	$('#refreshButton').on('click', function(eventObject){
+		showSpinner( '.pageLoad' );
+		$('#sakai_action').val('doFirstListPage');
+		$('#requested_mimetype').val('text/html');
+		$('#ajaxRequest').val('false');
+		$('#newCitationListForm').attr('method', 'GET');
+		$('#newCitationListForm').submit();
 	});
 	$('.firstPage').on('click', function(eventObject){
 		showSpinner( '.pageLoad' );
@@ -487,7 +580,7 @@ citations_new_resource.init = function() {
 		var actionUrl = $('#newCitationListForm').attr('action');
 		//alert("savesort actionUrl:: " + actionUrl);
 		$('#ajaxRequest').val('true');
-		$('#requested_mimetype').val('text/json');
+		$('#requested_mimetype').val('application/json');
 		$('#citation_action').val('update_saved_sort');
 		var params = $('#newCitationListForm').find('input').serializeArray();
 		params.push({'new_sort': $('#citationSortAction').val()});
@@ -536,10 +629,10 @@ citations_new_resource.init = function() {
 		// if values of input elements in form have changed since save, enable "Cancel" button and disable "Done" button
 	});
 	$(window).on('unload', function() {
-		if(childWindow) {
-			for (key in childWindow) {
-				if(childWindow[key] && childWindow[key].close) {
-					childWindow[key].close();
+		if(citations_new_resource.childWindow) {
+			for (key in citations_new_resource.childWindow) {
+				if(citations_new_resource.childWindow[key] && citations_new_resource.childWindow[key].close) {
+					citations_new_resource.childWindow[key].close();
 				}
 			}
 		}

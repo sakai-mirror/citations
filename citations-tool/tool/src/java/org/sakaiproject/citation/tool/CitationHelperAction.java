@@ -610,6 +610,7 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 	public static final String CREATE_RESOURCE = "create_resource";
 	public static final String IMPORT_CITATIONS = "import_citations";
 	public static final String UPDATE_SAVED_SORT = "update_saved_sort";
+	public static final String CHECK_FOR_UPDATES = "check_for_updates";
 
 	public static final String MIMETYPE_JSON = "application/json";
 	public static final String MIMETYPE_HTML = "text/html";
@@ -622,6 +623,7 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 	
 	/** A long representing the number of milliseconds in one week.  Used for date calculations */
 	public static final long ONE_WEEK = 7L * ONE_DAY;
+
 
 	/**
 	 * Check for the helper-done case locally and handle it before letting the VPPA.toolModeDispatch() handle the actual dispatch.
@@ -661,6 +663,112 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 		}
 
 		super.toolModeDispatch(methodBase, methodExt, req, res);
+	}
+	
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException {
+		logger.info("doGet()");
+		String isAjaxRequest = req.getParameter("ajaxRequest"); 
+		if(isAjaxRequest != null && isAjaxRequest.trim().equalsIgnoreCase(Boolean.toString(true))) {
+			ParameterParser params = (ParameterParser) req.getAttribute(ATTR_PARAMS);
+			if(params == null) {
+				params = new ParameterParser(req);
+			}
+			
+			SessionState state = getState(req);
+			
+			// Check whether this is an AJAX request expecting a JSON response and if it is
+			// dispatch the request to the buildJsonResponse() method, avoiding VPPA's 
+			// html rendering. Other options might be HTML-fragment, XML, etc.
+			//String requestedMimetype = (String) toolSession.getAttribute(REQUESTED_MIMETYPE);
+			String requestedMimetype = params.getString(REQUESTED_MIMETYPE);
+			logger.info("doGet() requestedMimetype == " + requestedMimetype);
+			if(requestedMimetype != null && requestedMimetype.equals(MIMETYPE_JSON)) {
+				doGetJsonResponse(params, state, req, res);
+			} else if(requestedMimetype != null && requestedMimetype.equals(MIMETYPE_HTML)) {
+				doGetHtmlFragmentResponse(params, state, req, res);
+			} else {
+				// throw something
+			}
+	
+			return;
+		}
+		super.doGet(req, res);
+			
+	}
+
+	protected void doGetHtmlFragmentResponse(ParameterParser params,
+			SessionState state, HttpServletRequest req, HttpServletResponse res) {
+		
+	}
+
+	protected void doGetJsonResponse(ParameterParser params, SessionState state,
+			HttpServletRequest req, HttpServletResponse res) {
+		res.setCharacterEncoding(CHARSET_UTF8);
+		res.setContentType(MIMETYPE_JSON);
+		
+		Map<String,Object> jsonMap = new HashMap<String,Object>();
+		String sakai_csrf_token = params.getString("sakai_csrf_token");
+		if(sakai_csrf_token != null && ! sakai_csrf_token.trim().equals("")) {
+			jsonMap.put("sakai_csrf_token", sakai_csrf_token);
+		}
+		jsonMap.put("timestamp", Long.toString(System.currentTimeMillis()));
+		
+		String citation_action = params.getString("citation_action");
+		if(citation_action != null && citation_action.trim().equals(CHECK_FOR_UPDATES)) {
+			Map<String,Object> result = this.checkForUpdates(params, state, req, res);
+			jsonMap.putAll(result);
+		} 
+		
+		// convert to json string
+		String jsonString = JSONObject.fromObject(jsonMap).toString();
+		try {
+			PrintWriter writer = res.getWriter();
+			writer.print(jsonString);
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	protected Map<String, Object> checkForUpdates(ParameterParser params,
+			SessionState state, HttpServletRequest req, HttpServletResponse res) {
+
+		Map<String, Object> result = new HashMap<String, Object>();
+		boolean changed = false;
+		long lastcheckLong = 0L;
+		String lastcheck = params.getString("lastcheck");
+		if(lastcheck == null || lastcheck.trim().equals("")) {
+			// do nothing
+		} else {
+			try {
+				lastcheckLong = Long.parseLong(lastcheck);
+			} catch(Exception e) {
+				logger.warn("Error parsing long from string: " + lastcheck, e);
+			}
+		}
+		if(lastcheckLong > 0L) {
+			String citationCollectionId = params.getString("citationCollectionId");
+			if(citationCollectionId != null && !citationCollectionId.trim().equals("")) {
+				try {
+					CitationCollection citationCollection = this.citationService.getCollection(citationCollectionId);
+					if(citationCollection.getLastModifiedDate().getTime() > lastcheckLong) {
+						changed = true;
+						result.put("html", "<div>something goes here</div>");
+					}
+					
+				} catch (IdUnusedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		}
+
+		result.put("changed", Boolean.toString(changed));
+		
+		return result;
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException {
@@ -733,6 +841,7 @@ public class CitationHelperAction extends VelocityPortletPaneledAction
 		if(sakai_csrf_token != null && ! sakai_csrf_token.trim().equals("")) {
 			jsonMap.put("sakai_csrf_token", sakai_csrf_token);
 		}
+		jsonMap.put("timestamp", Long.toString(System.currentTimeMillis()));
 		
 		String citation_action = params.getString("citation_action");
 		if(citation_action != null && citation_action.trim().equals(UPDATE_RESOURCE)) {
