@@ -29,21 +29,27 @@
     <module>citations-shared-deploy</module>
   </modules>
   <dependencyManagement>
-    <dependencies>
+     <dependencies>
+      <dependency>
+        <groupId>org.sakaiproject</groupId>
+        <artifactId>sakai-citations-api</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
       <dependency>
         <groupId>org.sakaiproject</groupId>
         <artifactId>sakai-citations-web2bridge</artifactId>
-        <version>2.9-SNAPSHOT</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.sakaiproject</groupId>
         <artifactId>sakai-citations-xserver</artifactId>
-        <version>2.9-SNAPSHOT</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.sakaiproject</groupId>
         <artifactId>sakai-citations-util</artifactId>
-        <version>2.9-SNAPSHOT</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.sakaiproject.velocity</groupId>
@@ -53,7 +59,7 @@
       <dependency>
         <groupId>org.sakaiproject</groupId>
         <artifactId>sakai-citations-impl</artifactId>
-        <version>2.9-SNAPSHOT</version>
+        <version>${project.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
