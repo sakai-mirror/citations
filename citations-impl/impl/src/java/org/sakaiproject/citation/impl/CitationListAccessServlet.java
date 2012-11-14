@@ -163,7 +163,7 @@ public class CitationListAccessServlet implements HttpAccess
 				}
 				citationIds.addAll(Arrays.asList(paramCitationIds));
 				
-				fileName = rb.getFormattedMessage("export.filename.selected.ris", fileName);
+				fileName = rb.getFormattedMessage("export.filename.selected.ris", new Object[]{ fileName });
 			}
 			else
 			{
@@ -188,7 +188,7 @@ public class CitationListAccessServlet implements HttpAccess
 				{
 					citationIds.add( citation.getId() );
 				}
-				fileName = rb.getFormattedMessage("export.filename.all.ris", fileName);
+				fileName = rb.getFormattedMessage("export.filename.all.ris", new Object[]{ fileName });
 			}
 						
 			// We need to write to a temporary stream for better speed, plus
