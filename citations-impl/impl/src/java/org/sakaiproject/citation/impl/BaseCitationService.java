@@ -939,10 +939,10 @@ public abstract class BaseCitationService implements CitationService
 				else
 				{
 					value = "";
-				} else if (List.class.isInstance(value)) {
-					if(needSingleValue ) {
-						value = ((List) value).get(0);
-					}
+				}
+                        }else if (List.class.isInstance(value)) {
+			        if(needSingleValue ) {
+					value = ((List) value).get(0);
 				}
 			}
 
